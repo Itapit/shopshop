@@ -30,7 +30,36 @@
       "e2eTestRunner": "none",
       "linter": "eslint",
       "style": "scss",
-      "unitTestRunner": "none"
+      "unitTestRunner": "none",
+      "standalone": false
+    },
+    "@nx/angular:component": {
+      "style": "css",
+      "type": "component",
+      "skipTests": true,
+      "standalone": false
+    },
+    "@nx/angular:directive": {
+      "type": "directive",
+      "skipTests": true,
+      "standalone": false
+    },
+    "@nx/angular:pipe": {
+      "skipTests": true,
+      "standalone": false
+    },
+    "@nx/angular:service": {
+      "type": "service",
+      "skipTests": true
+    },
+    "@nx/angular:class": {
+      "skipTests": true
+    },
+    "@nx/angular:guard": {
+      "skipTests": true
+    },
+    "@nx/angular:interceptor": {
+      "skipTests": true
     }
   }
 }
