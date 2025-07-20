@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ButtonModule } from 'primeng/button';
 import { NavbarRoutingModule } from './navbar-routing-module';
 import { SignInLinkComponent } from './sign-in-link/sign-in-link.component';
 import { NavbarComponent } from './navbar.component';
 
 @NgModule({
   declarations: [SignInLinkComponent, NavbarComponent],
-  imports: [CommonModule, NavbarRoutingModule],
+  imports: [CommonModule, NavbarRoutingModule, ButtonModule],
   exports: [NavbarComponent]
 })
 export class NavbarModule {}
