@@ -1,0 +1,42 @@
+<div class="signin-card">
+  <h2 class="signin-title">{{ title }}</h2>
+
+  <!-- Email -->
+  <div class="field">
+    <label for="email" class="label-with-icon">
+      <i class="pi pi-envelope"></i>
+      {{ emailLabel }}
+    </label>
+    <input
+      id="email"
+      type="email"
+      pInputText
+      [(ngModel)]="email"
+      [placeholder]="emailPlaceholder"
+      class="full-width"
+    />
+  </div>
+
+  <!-- Password -->
+  <div class="field">
+    <label for="password" class="label-with-icon">
+      <i class="pi pi-lock"></i>
+      {{ passwordLabel }}
+    </label>
+    <p-password
+      inputId="password"
+      [(ngModel)]="password"
+      [placeholder]="passwordPlaceholder"
+      [feedback]="false"
+      styleClass="full-width"
+    ></p-password>
+  </div>
+
+  <!-- Button -->
+  <p-button
+    class="signin-button"
+    [label]="buttonLabel"
+    icon="pi pi-sign-in"
+    (onClick)="onSubmit()"
+  ></p-button>
+</div>
