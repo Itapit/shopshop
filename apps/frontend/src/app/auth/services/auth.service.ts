@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
-import { SignInResponse } from 'common/src/lib/DTOs/sign-In-response.dto';
+import { SignInResponseDTO } from 'common/src/lib/DTOs/sign-In-response.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient) {}
   
-  signIn(dto: SignInDto): Observable<SignInResponse> {
-    return this.http.post<SignInResponse>(`${this.baseUrl}/login`, dto);
+  signIn(dto: SignInDto): Observable<SignInResponseDTO> {
+    return this.http.post<SignInResponseDTO>(`${this.baseUrl}/login`, dto);
   }
 }

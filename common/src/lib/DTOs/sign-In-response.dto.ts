@@ -1,7 +1,7 @@
 import { Role } from "../Enums/role.enum";
 
 
-export class SignInResponse {
+export class SignInResponseDTO {
     access_token!: string;
     role!: Role; 
 }
