@@ -20,9 +20,21 @@
           {
             "glob": "**/*",
             "input": "apps/frontend/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/frontend/src/assets",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/frontend/src/styles.scss"]
+        "styles": [
+          "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/primeflex/primeflex.css",
+          "apps/frontend/src/styles.scss"
+        ]
+
       },
       "configurations": {
         "production": {
@@ -69,9 +81,6 @@
       "options": {
         "buildTarget": "frontend:build"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
     },
     "serve-static": {
       "continuous": true,
