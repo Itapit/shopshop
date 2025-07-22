@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -29,7 +30,11 @@ export class SigninComponent {
   email: string | undefined
   password: string | undefined
 
-  onSignin() {
+  onSignin(form: NgForm) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
     console.log("sign in: ", this.email, this.password);
     const dto: SignInDto = {
       email : this.email ?? '',
