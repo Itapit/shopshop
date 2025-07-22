@@ -6,28 +6,22 @@ import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async signIn(@Body() signInDto: SignInDto): Promise<{ access_token: string }> {
-    return this.authService.signIn(signInDto.email, signInDto.password);
-  } 
+    return this.authService.signIn(signInDto);
+  }
    
   @Get()
-  test()
-  {
-    return { message: 'Auth module is working'
-  }  
+  test() {
+    return { message: 'Auth module is working'}  
+  } 
 
-  
-} 
-
- @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Req() req: Request) {
     return req['user']; 
   }
-
-
 }
