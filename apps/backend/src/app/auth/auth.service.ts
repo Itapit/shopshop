@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import {AuthResponseDto} from 'common/src/lib/DTOs/auth-response.dto';
+import { SignInResponse } from 'common/src/lib/DTOs/sign-In-response.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -19,9 +19,9 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const payload = { sub: user.email, username: user.username };
-    const authResponse: AuthResponseDto = new AuthResponseDto();
+    const authResponse: SignInResponse = new SignInResponse();
     authResponse.access_token = await this.jwtService.signAsync(payload);
     authResponse.role = user.role;
     return authResponse;
-} 
+  } 
 }

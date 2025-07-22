@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
 
 @Component({
   selector: 'app-signin',
@@ -22,7 +23,7 @@ export class SigninComponent {
   passwordLabel = 'Password';
   passwordPlaceholder = 'Enter your password';
   passwordRequiredMsg = 'Password is required.';
-  passwordMinLength = 8;  // This is for the validator and the string output
+  passwordMinLength = 6;  // This is for the validator and the string output
   passwordMinLengthMsg = `Password must be at least ${this.passwordMinLength} characters.`;
 
   email: string | undefined
@@ -30,9 +31,9 @@ export class SigninComponent {
 
   onSignin() {
     console.log("sign in: ", this.email, this.password);
-    const dto: signinDto = {
-      email: this.email,
-      password: this.password,
+    const dto: SignInDto = {
+      email : this.email ?? '',
+      password : this.password ?? '',
     };
     this.authService.signIn(dto).subscribe({
       next: (res) => {
