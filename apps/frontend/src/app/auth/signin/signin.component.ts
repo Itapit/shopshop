@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './signin.component.css'
 })
 export class SigninComponent {
+  constructor(private readonly authService: AuthService) {}
 
   title = 'Sign In';
   buttonLabel = 'Sign In';
@@ -20,13 +22,25 @@ export class SigninComponent {
   passwordLabel = 'Password';
   passwordPlaceholder = 'Enter your password';
   passwordRequiredMsg = 'Password is required.';
-  passwordMinLength = 8;
+  passwordMinLength = 8;  // This is for the validator and the string output
   passwordMinLengthMsg = `Password must be at least ${this.passwordMinLength} characters.`;
 
   email: string | undefined
   password: string | undefined
 
-  onSubmit() {
+  onSignin() {
     console.log("sign in: ", this.email, this.password);
+    const dto: signinDto = {
+      email: this.email,
+      password: this.password,
+    };
+    this.authService.signIn(dto).subscribe({
+      next: (res) => {
+        console.log('Signed in!', res);
+      },
+      error: (err) => {
+        console.error('Signin failed', err);
+      },
+    });
   }
 }
