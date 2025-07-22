@@ -1,4 +1,5 @@
-import { IsInt, IsOptional, Max, Min } from "class-validator";
+import { IsEnum, IsInt, IsOptional, Max, Min } from "class-validator";
+import { ProductSortBy } from "../Enums/sort-by.enum";
 
 export class GetProductsListDTO {
     @IsInt()
@@ -6,7 +7,8 @@ export class GetProductsListDTO {
     page?: number = 1;
 
     @IsOptional()
-    sortBy?: string;
+    @IsEnum(ProductSortBy)
+    sortBy?: ProductSortBy;
 
     @IsInt()
     @IsOptional()
