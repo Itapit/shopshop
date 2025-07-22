@@ -45,7 +45,7 @@
         #passwordRef="ngModel"
       ></p-password>
       <div *ngIf="passwordRef.invalid && passwordRef.touched" class="error-message">
-        <small *ngIf="passwordRef.errors?.['required']">{{ passwordRequiredMsg }}.</small>
+        <small *ngIf="passwordRef.errors?.['required']">{{ passwordRequiredMsg }}</small>
         <small *ngIf="passwordRef.errors?.['minlength']">{{ passwordMinLengthMsg}}</small>
       </div>
     </div>
