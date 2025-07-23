@@ -10,6 +10,7 @@ export class AuthService {
   constructor(private readonly userService: UserService , private jwtService: JwtService ) {} 
   
   async signIn( dto: SignInDto): Promise<{ access_token: string }> {
+    dto.email = dto.email.toLowerCase()
     const user = await this.userService.findUserByEmail(dto.email);
 
     const match = await bcrypt.compare(dto.password, user.password);
