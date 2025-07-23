@@ -1,0 +1,14 @@
+<div>
+<p-card header="{{ product.name }}" subheader="₪{{ product.price }}">
+  <ng-template pTemplate="header">
+    <img
+      [src]="product.imageUrl"
+      alt="{{ product.name }}"
+      class="product-image"
+    />
+  </ng-template>
+
+  <p class="product-description">{{ product.description }}</p>
+  <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
+</p-card>
+</div>
