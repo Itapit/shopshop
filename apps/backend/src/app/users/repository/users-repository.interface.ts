@@ -1,10 +1,10 @@
-import { User } from 'common/src/lib/Interfaces/user.interface';
+import { UserBase } from 'common/src/lib/Interfaces/user.interface';
 
 export const USERS_REPOSITORY = Symbol('USERS_REPOSITORY');
 
 export interface IUsersRepository {
-  findUserByEmail(email: string): Promise<User | null>;
-  findUserById(id: string): Promise<User | null>;
-  createUser(user: Partial<User>): Promise<User>;
-  getAllUsers(): Promise<User[]>;
+  findUserByEmail(email: string): Promise<UserBase | null>;
+  findUserById(id: string): Promise<UserBase | null>;
+  createUser(user: Partial<UserBase>): Promise<UserBase>;
+  getAllUsers(): Promise<UserBase[]>;
 }

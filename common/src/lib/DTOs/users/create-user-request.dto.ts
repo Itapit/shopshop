@@ -1,9 +1,8 @@
 import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator';
-import { Role } from '../Enums/role.enum';
-import { User } from '../Interfaces/user.interface';
+import { Role } from '../../Enums/role.enum';
+import { UserBase } from '../../Interfaces/user.interface';
 
-
-export class CreateUserDto implements User {
+export class CreateUserRequestDto implements UserBase {
   @IsString()
   username!: string;
 

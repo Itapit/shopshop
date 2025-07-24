@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from 'common/src/lib/DTOs/create-user.dto';
+import { CreateUserRequestDto } from 'common/src/lib/DTOs/users/create-user-request.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Role } from 'common/src/lib/Enums/role.enum';
@@ -13,7 +13,7 @@ export class UsersController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserRequestDto) {
     return this.userService.createUser(createUserDto);
   }
 

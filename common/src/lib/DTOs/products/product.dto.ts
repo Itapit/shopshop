@@ -1,4 +1,4 @@
-import { ProductBase } from "../Interfaces/product.interface";
+import { ProductBase } from "../../Interfaces/product.interface";
 
 export class ProductDto implements ProductBase{
     name!: string;

@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ProductBase } from "common/src/lib/Interfaces/product.interface";
 import { Document } from 'mongoose';
 
-export type ProductDocument = Product & Document;
+export type ProductDocument = ProductSchema & Document;
 
-@Schema({ timestamps: true })
-export class Product implements ProductBase{
+@Schema({ collection: 'products',timestamps: true })
+export class ProductSchema implements ProductBase{
     @Prop({ required: true })
     name: string;
 
@@ -22,4 +22,4 @@ export class Product implements ProductBase{
     imageUrl: string;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductSchemaFactory = SchemaFactory.createForClass(ProductSchema);

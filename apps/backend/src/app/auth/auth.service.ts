@@ -1,8 +1,8 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignInResponseDTO } from 'common/src/lib/DTOs/sign-In-response.dto';
+import { SignInResponseDTO } from 'common/src/lib/DTOs/users/sign-In-response.dto';
 import * as bcrypt from 'bcrypt';
-import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
+import { SignInRequestDto } from 'common/src/lib/DTOs/users/sign-In-request.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-repository.interface';
 
@@ -10,7 +10,7 @@ import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-re
 export class AuthService {    
   constructor( @Inject(USERS_REPOSITORY) private readonly usersRepo: IUsersRepository, private jwtService: JwtService ) {}
   
-  async signIn( dto: SignInDto): Promise<{ access_token: string }> {
+  async signIn( dto: SignInRequestDto): Promise<SignInResponseDTO> {
     dto.email = dto.email.toLowerCase()
 
     const user = await this.usersRepo.findUserByEmail(dto.email);
@@ -21,7 +21,7 @@ export class AuthService {
   
     const payload: JwtPayload = {
       username: user.username,
-      email: user.username,
+      email: user.email,
       role: user.role
     }
     const authResponse: SignInResponseDTO = new SignInResponseDTO();

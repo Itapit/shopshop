@@ -1,44 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { GetProductsListDTO } from 'common/src/lib/DTOs/Get-Products-list.dto';
-import { Model } from 'mongoose';
-import { Product, ProductDocument } from './product.schema';
-import { GetProductsListResponseDTO } from 'common/src/lib/DTOs/Get-Products-list-response.dto';
-import { ProductSortBy } from 'common/src/lib/Enums/sort-by.enum';
-import { ProductDto } from 'common/src/lib/DTOs/Product.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { GetProductsListRequestDTO } from 'common/src/lib/DTOs/products/Get-Products-list-request.dto';
+import { GetProductsListResponseDTO } from 'common/src/lib/DTOs/products/Get-Products-list-response.dto';
+import { ProductDto } from 'common/src/lib/DTOs/products/product.dto';
+import { IProductsRepository, PRODUCTS_REPOSITORY } from './repository/products-repository.interface';
+import { mapToProductDto } from './product.mapper';
 
 @Injectable()
 export class ProductsService {
-    constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>) {}
-    
-    async GetProductsList(dto: GetProductsListDTO): Promise<GetProductsListResponseDTO> {
-        const {page = 1, limit = 10, sortBy} = dto
-        const skip = (page - 1) * limit;
+    constructor(
+        @Inject(PRODUCTS_REPOSITORY)
+        private readonly productsRepo: IProductsRepository
+    ) {}
 
-        
-        const sort: Record<string, 1> = {
-            [sortBy ?? ProductSortBy.CREATED_AT]: 1,
-        };
-        
-        const [products, totalCount] = await Promise.all([
-            this.productModel.find().skip(skip).limit(limit).sort(sort).exec(),
-            this.productModel.countDocuments(),
-        ]);
+    async GetProductsList(dto: GetProductsListRequestDTO): Promise<GetProductsListResponseDTO> {
+        const { page = 1, limit = 10, sortBy } = dto;
 
-        const productDtos: ProductDto[] = products.map((product) => ({
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            quantity: product.quantity,
-            imageUrl: product.imageUrl,
-        }));
+        const { products, totalCount } = await this.productsRepo.getPaginatedProducts(page, limit, sortBy);
 
-        return {
-            data: productDtos,
-            page,
-            limit,
-            totalCount,
-            totalPages: Math.ceil(totalCount / limit),
-        };
+        const productDtos: ProductDto[] = products.map(mapToProductDto);
+
+        const response = new GetProductsListResponseDTO();
+        response.data = productDtos;
+        response.page = page;
+        response.limit = limit;
+        response.totalCount = totalCount;
+        response.totalPages = Math.ceil(totalCount / limit);
+
+        return response;
     }
 }
