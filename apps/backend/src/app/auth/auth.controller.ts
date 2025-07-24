@@ -15,10 +15,6 @@ export class AuthController {
     return this.authService.signIn(signInDto);
   }
    
-  @Get()
-  test() {
-    return { message: 'Auth module is working'}  
-  } 
 
   @UseGuards(AuthGuard)
   @Get('profile')
