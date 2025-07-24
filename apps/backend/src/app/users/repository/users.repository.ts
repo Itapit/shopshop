@@ -12,16 +12,6 @@ export class UsersRepository implements IUsersRepository {
     private readonly userModel: Model<UserDocument>
   ) {}
 
-  async findUserByEmail(email: string): Promise<UserBase | null> {
-    const doc = await this.userModel.findOne({ email: email.toLowerCase() }).exec();
-    return doc ? this.toUser(doc) : null;
-  }
-
-  async findUserById(id: string): Promise<UserBase | null> {
-    const doc = await this.userModel.findById(id).exec();
-    return doc ? this.toUser(doc) : null;
-  }
-
   async createUser(user: Partial<UserBase>): Promise<UserBase> {
     const created = new this.userModel(user);
     const saved = await created.save();
@@ -32,7 +22,6 @@ export class UsersRepository implements IUsersRepository {
     const docs = await this.userModel.find().exec();
     return docs.map(this.toUser);
   }
-
   
   private toUser(doc: UserDocument): UserBase {
     return {
