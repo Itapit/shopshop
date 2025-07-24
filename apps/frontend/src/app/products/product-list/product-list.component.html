@@ -1,6 +1,21 @@
-<div class="products-grid">
+<div *ngIf="mode==='cart'" class="main-layout">
+  <!-- עמודת כפתורים -->
+  
+
+  <!-- עמודת מוצרים -->
+  <div class="products-list">
+    <app-product-card
+      *ngFor="let product of products"
+      [product]="product"
+      mode="cart"
+    ></app-product-card>
+  </div>
+</div> 
+
+<div *ngIf="mode === 'view'" class="products-list-view">
   <app-product-card
     *ngFor="let product of products"
     [product]="product"
+    mode = "view"
   ></app-product-card>
 </div>

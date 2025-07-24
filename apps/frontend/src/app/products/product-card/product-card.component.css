@@ -1,26 +1,119 @@
-:host {
-  display: block;
-  width: 250px;
-  margin: 0.5rem;
+.cart-card {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.cart-row {
+  display: flex;
+  flex-direction: row-reverse; /* עברית - מימין לשמאל */
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .product-image {
-  width: 100%;
-  height: 180px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  border-radius: 4px;
-  padding-top: 12px; /* מרווח מהחלק העליון */
+  border-radius: 8px;
+}
+
+.cart-name-desc {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  min-width: 180px;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .product-description {
-  margin-top: 6px;
-  margin-bottom: 4px;
-  color: #555;
+  color: #666;
   font-size: 0.95rem;
 }
 
+.cart-price,
+.cart-quantity {
+  min-width: 80px;
+  text-align: right;
+  font-size: 0.95rem;
+}
+
+.cart-remove {
+  min-width: 80px;
+}
+
+/* עיצוב כללי לכרטיס במצב view */
+.view-card {
+  width: 240px;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* משתלט על כל הכרטיס של PrimeNG */
+.view-card ::ng-deep .p-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* כותרת התמונה */
+.view-card ::ng-deep .p-card .p-card-header {
+  height: 140px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* תמונת המוצר */
+.view-card .product-image {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* גוף הכרטיס */
+.view-card ::ng-deep .p-card .p-card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* טקסטים */
+.product-description,
 .product-quantity {
   margin: 0;
-  font-size: 0.9rem;
-  color: #777;
+  text-align: right;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+
+
+.products-list-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.view-card {
+  flex: 1 1 200px;
+  display: flex;
+}
+
+::ng-deep p-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }

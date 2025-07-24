@@ -5,6 +5,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsRoutingModule } from './products-routing-module';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
     declarations: [ProductsComponent , ProductCardComponent , ProductListComponent],   
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
     ProductsRoutingModule,
     CardModule,
     CommonModule,
+    ButtonModule,
     
 
   ]

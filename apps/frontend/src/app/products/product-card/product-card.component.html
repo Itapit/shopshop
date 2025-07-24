@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="mode === 'view'" class="view-card">
 <p-card header="{{ product.name }}" subheader="₪{{ product.price }}">
   <ng-template pTemplate="header">
     <img
@@ -11,4 +11,24 @@
   <p class="product-description">{{ product.description }}</p>
   <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
 </p-card>
+</div> 
+
+<div *ngIf="mode === 'cart'" class="cart-card">
+  <div class="cart-row">
+    <img
+      [src]="product.imageUrl"
+      alt="{{ product.name }}"
+      class="product-image"
+    />
+
+    <div class="cart-name-desc">
+      <div class="product-name">{{ product.name }}</div>
+      <div class="product-description">{{ product.description }}</div>
+    </div>
+
+    <div class="cart-price">₪{{ product.price }}</div>
+    <div class="cart-quantity">Quantity: {{ product.quantity }}</div>
+
+    <p-button label="Remove" class="cart-remove"></p-button>
+  </div>
 </div>
