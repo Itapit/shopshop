@@ -19,5 +19,5 @@ export class UserSchema implements UserInterface {
   @Prop({ type: String, enum: Role, default: Role.Client })
   role: Role;
 }
-1
+
 export const UserSchemaFactory = SchemaFactory.createForClass(UserSchema);
