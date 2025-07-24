@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CreateUserRequestDto } from 'common/src/lib/DTOs/users/create-user-request.dto';
 import { IUsersRepository, USERS_REPOSITORY } from './repository/users-repository.interface';
-import { UserBase } from 'common/src/lib/Interfaces/user.interface';
+import { UserBase } from 'common/src/lib/Interfaces/user-base.interface';
 
 @Injectable()
 export class UsersService {
@@ -23,8 +23,4 @@ export class UsersService {
   async getAllUsers(): Promise<UserBase[]> {
     return this.usersRepo.getAllUsers();
   } 
-
-  async findUserByEmail(email: string): Promise<UserBase | null> {
-    return this.usersRepo.findUserByEmail(email);   
-  }
 }

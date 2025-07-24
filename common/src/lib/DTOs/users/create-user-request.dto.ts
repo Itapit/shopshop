@@ -1,6 +1,6 @@
 import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator';
 import { Role } from '../../Enums/role.enum';
-import { UserBase } from '../../Interfaces/user.interface';
+import { UserBase } from '../../Interfaces/user-base.interface';
 
 export class CreateUserRequestDto implements UserBase {
   @IsString()
