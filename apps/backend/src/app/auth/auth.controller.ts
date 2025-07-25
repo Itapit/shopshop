@@ -14,8 +14,7 @@ export class AuthController {
   async signIn(@Body() signInDto: SignInRequestDto): Promise<SignInResponseDTO> {
     return this.authService.signIn(signInDto);
   }
-   
-
+  
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Req() req: Request) {

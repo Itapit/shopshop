@@ -4,6 +4,8 @@ import { GetProductsListResponseDTO } from 'common/src/lib/DTOs/products/Get-Pro
 import { ProductDto } from 'common/src/lib/DTOs/products/product.dto';
 import { IProductsRepository, PRODUCTS_REPOSITORY } from './repository/products-repository.interface';
 import { mapToProductDto } from './product.mapper';
+import { CreateProductRequestDto } from 'common/src/lib/DTOs/products/Create-Product-request.dto';
+import { CreateProductResponseDto } from 'common/src/lib/DTOs/products/Create-Product-response.dto';
 
 @Injectable()
 export class ProductsService {
@@ -27,5 +29,10 @@ export class ProductsService {
         response.totalPages = Math.ceil(totalCount / limit);
 
         return response;
+    }
+
+    async CreateProduct(dto: CreateProductRequestDto): Promise<CreateProductResponseDto> {
+        const created = await this.productsRepo.create(dto);
+        return new CreateProductResponseDto(created);
     }
 }
