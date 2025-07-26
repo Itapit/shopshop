@@ -1,5 +1,4 @@
-import { UserBase } from 'common/src/lib/Interfaces/user-base.interface';
-import { UserFull } from 'common/src/lib/Interfaces/user-full.interface';
+import { UserBase, UserFull } from "@common/Interfaces";
 
 export const USERS_REPOSITORY = Symbol('USERS_REPOSITORY');
 

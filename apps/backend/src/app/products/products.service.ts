@@ -1,11 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { GetProductsListRequestDTO } from 'common/src/lib/DTOs/products/Get-Products-list-request.dto';
-import { GetProductsListResponseDTO } from 'common/src/lib/DTOs/products/Get-Products-list-response.dto';
-import { ProductDto } from 'common/src/lib/DTOs/products/product.dto';
 import { IProductsRepository, PRODUCTS_REPOSITORY } from './repository/products-repository.interface';
 import { mapToProductDto } from './product.mapper';
-import { CreateProductRequestDto } from 'common/src/lib/DTOs/products/Create-Product-request.dto';
-import { CreateProductResponseDto } from 'common/src/lib/DTOs/products/Create-Product-response.dto';
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, ProductDto } from '@common/DTOs';
 
 @Injectable()
 export class ProductsService {

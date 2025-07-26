@@ -1,10 +1,9 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignInResponseDTO } from 'common/src/lib/DTOs/users/sign-In-response.dto';
 import * as bcrypt from 'bcrypt';
-import { SignInRequestDto } from 'common/src/lib/DTOs/users/sign-In-request.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-repository.interface';
+import { SignInRequestDto, SignInResponseDTO } from '@common/DTOs';
 
 @Injectable()
 export class AuthService {    

@@ -1,5 +1,5 @@
-import { ProductBase } from 'common/src/lib/Interfaces/product.interface';
-import { ProductDto } from 'common/src/lib/DTOs/products/product.dto';
+import { ProductDto } from "@common/DTOs";
+import { ProductBase } from "@common/Interfaces";
 
 export function mapToProductDto(product: ProductBase): ProductDto {
   const dto = new ProductDto();

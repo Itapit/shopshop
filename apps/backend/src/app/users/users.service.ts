@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { CreateUserRequestDto } from 'common/src/lib/DTOs/users/create-user-request.dto';
 import { IUsersRepository, USERS_REPOSITORY } from './repository/users-repository.interface';
-import { UserBase } from 'common/src/lib/Interfaces/user-base.interface';
+import { CreateUserRequestDto } from '@common/DTOs';
+import { UserBase } from '@common/Interfaces';
 
 @Injectable()
 export class UsersService {

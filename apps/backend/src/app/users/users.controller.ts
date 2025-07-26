@@ -1,11 +1,10 @@
 import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserRequestDto } from 'common/src/lib/DTOs/users/create-user-request.dto';
-import { CreateUserResponseDto } from 'common/src/lib/DTOs/users/create-user-response.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Role } from 'common/src/lib/Enums/role.enum';
 import { Roles } from '../auth/roles.decorator';
+import { CreateUserRequestDto, CreateUserResponseDto } from '@common/DTOs';
+import { Role } from '@common/Enums';
 
 @Controller('users')
 export class UsersController {

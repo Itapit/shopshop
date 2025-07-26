@@ -1,5 +1,5 @@
+import { ProductBase } from "@common/Interfaces";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ProductBase } from "common/src/lib/Interfaces/product.interface";
 import { Document } from 'mongoose';
 
 export type ProductDocument = ProductSchema & Document;

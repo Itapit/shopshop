@@ -1,4 +1,4 @@
-import { ProductBase } from 'common/src/lib/Interfaces/product.interface';
+import { ProductBase } from "@common/Interfaces";
 
 export const PRODUCTS_REPOSITORY = Symbol('PRODUCTS_REPOSITORY');
 

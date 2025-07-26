@@ -4,8 +4,9 @@ import { Model } from 'mongoose';
 
 import { ProductSchema, ProductDocument } from './product.schema';
 import { IProductsRepository } from './products-repository.interface';
-import { ProductBase } from 'common/src/lib/Interfaces/product.interface';
-import { ProductSortBy } from 'common/src/lib/Enums/sort-by.enum';
+import { ProductSortBy } from '@common/Enums';
+import { ProductBase } from '@common/Interfaces';
+
 
 @Injectable()
 export class ProductsRepository implements IProductsRepository {
