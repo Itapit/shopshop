@@ -25,5 +25,4 @@ export class TokenService{
         return localStorage.getItem(this.roleKey) || '';
     }
 
-
 }

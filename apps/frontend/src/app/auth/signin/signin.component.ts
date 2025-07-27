@@ -43,14 +43,15 @@ export class SigninComponent {
       email : this.email ?? '',
       password : this.password ?? '',
     };
-    this.authService.signIn(dto).subscribe({
+    this.authService.signIn(dto).subscribe({  //TODO add a loading screen for the back wait
       next: (res) => {
         console.log('Signed in!', res);
+        if (res.access_token && res.role) {
+          this.tokenService.saveToken(res.access_token);
+          this.tokenService.saveRole(res.role);
+        }
         if(this.tokenService.getRole() === Role.Client)
-             this.router.navigate(['/user']);
-        this.tokenService.saveToken(res.access_token);
-        this.tokenService.saveRole(res.role);
-
+          this.router.navigate(['/user']);
       },
       error: (err) => {
         console.error('Signin failed', err);

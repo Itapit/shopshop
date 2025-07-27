@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { productListOptionsEnum } from "./product-list/product-list-options-enum";
 
 @Component({
     selector: "app-products",
@@ -7,6 +8,9 @@ import { Component } from "@angular/core";
     styleUrls: ["./products.component.css"],
 })
 export class ProductsComponent {
+
+  productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
+
     products = [
     {
       name: 'Bamba',
