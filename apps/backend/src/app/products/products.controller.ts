@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -32,4 +32,14 @@ export class ProductsController {
         return this.productService.GetProductById(id)
     }
 
+    @UseGuards(AuthGuard, RolesGuard)
+    @Roles(Role.Admin)
+    @Delete(':id')
+    async deleteProductById(@Param('id') id: string) : Promise<{message: string}> {
+        if (!isValidObjectId(id)) {
+            throw new BadRequestException(`Invalid ObjectId: ${id}`);
+        }
+        await this.productService.DeleteProductById(id)
+        return { message: `Product ${id} deleted successfully.` };
+    }
 }

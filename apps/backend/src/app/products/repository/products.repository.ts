@@ -48,6 +48,11 @@ export class ProductsRepository implements IProductsRepository {
         const saved = await created.save();
         return this.toProduct(saved);
     }
+    
+    async deleteById(id: string): Promise<boolean> {
+        const result = await this.productModel.deleteOne({ _id:id }).exec();
+        return result.deletedCount > 0;
+    }
 
     private toProduct(doc: ProductDocument): ProductBase {
         return {

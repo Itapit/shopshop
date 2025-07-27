@@ -16,4 +16,5 @@ export interface IProductsRepository {
   findById(id: string): Promise<ProductDto | null>;
 
   create(product: ProductBase): Promise<ProductBase>;
+  deleteById(id: string): Promise<boolean>;
 }
