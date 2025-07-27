@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
 import { ProductBase } from "@common/Interfaces";
+import { productListOptionsEnum } from "../products/product-list/product-list-options-enum";
 
 @Component({
   selector: "app-user",
@@ -9,6 +10,8 @@ import { ProductBase } from "@common/Interfaces";
   styleUrls: ["./user.component.css"],
 })
 export class UserComponent {
+  
+  productListOptionsEnum = productListOptionsEnum;
     
     constructor(private sharedService: SharedService) {}
     totalPrice: number = 0;
