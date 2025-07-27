@@ -18,7 +18,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@shopshop/common": ["common/src/index.ts"]
+      "@shopshop/common": ["common/src/index.ts"],
+      "@common/*": ["common/src/lib/*"]
     }
   },
   "exclude": [

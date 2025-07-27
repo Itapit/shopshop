@@ -1,7 +1,7 @@
-export interface Product {
+export interface ProductBase {
   name: string;
-  price: number;
   description: string;
+  price: number;
   quantity: number;
   imageUrl: string;
 }

@@ -1,15 +1,24 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
-import { UserService } from './users.service';
-import { CreateUserDto } from 'common/src/lib/DTOs/create-user.dto';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { CreateUserRequestDto, CreateUserResponseDto } from '@common/DTOs';
+import { Role } from '@common/Enums';
 
 @Controller('users')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UsersController {
+  constructor(private readonly userService: UsersService) {}
+
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserRequestDto) : Promise<CreateUserResponseDto>{
     return this.userService.createUser(createUserDto);
   }
 
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @Get()
   findAll() {
     return this.userService.getAllUsers();

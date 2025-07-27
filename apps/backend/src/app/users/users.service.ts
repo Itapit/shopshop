@@ -1,25 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import {User} from 'common/src/lib/Interfaces/user.interface';
+import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { IUsersRepository, USERS_REPOSITORY } from './repository/users-repository.interface';
+import { CreateUserRequestDto } from '@common/DTOs';
+import { UserBase } from '@common/Interfaces';
 
 @Injectable()
-export class UserService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+export class UsersService {
+  constructor( @Inject(USERS_REPOSITORY) private readonly usersRepo: IUsersRepository ) {}
 
-  async createUser(data: { username: string; email: string; password: string; role: string }) {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    data.password = hashedPassword; 
-    const createdUser = new this.userModel(data);
-    return createdUser.save();
+  async createUser(createUserDto: CreateUserRequestDto): Promise<UserBase> {
+    const email = createUserDto.email.toLowerCase();
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+    return this.usersRepo.createUser({
+      username: createUserDto.username,
+      email: email,
+      password: hashedPassword,
+      role: createUserDto.role,
+    });
   }
 
-  async getAllUsers() {
-    return this.userModel.find().exec();
+  async getAllUsers(): Promise<UserBase[]> {
+    return this.usersRepo.getAllUsers();
   } 
-
-  async findUserByEmail(email: string) {
-    return this.userModel.findOne({ email }).exec();    
-  }
 }
