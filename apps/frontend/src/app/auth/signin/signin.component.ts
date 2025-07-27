@@ -4,6 +4,7 @@ import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenService } from '../services/token.service';
+import { Role } from 'common/src/lib/Enums/role.enum';
 
 @Component({
   selector: 'app-signin',
@@ -45,7 +46,8 @@ export class SigninComponent {
     this.authService.signIn(dto).subscribe({
       next: (res) => {
         console.log('Signed in!', res);
-        this.router.navigate(['/user']);
+        if(this.tokenService.getRole() === Role.User)
+             this.router.navigate(['/user']);
         this.tokenService.saveToken(res.access_token);
 
       },
