@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 
 export type UserDocument = UserSchema & Document;
 
-@Schema({ collection: 'users' })
+@Schema({ collection: 'users', timestamps: true })
 export class UserSchema implements UserFull {
   @Prop({ required: true })
   username: string;

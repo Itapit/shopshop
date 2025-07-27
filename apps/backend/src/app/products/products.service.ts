@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IProductsRepository, PRODUCTS_REPOSITORY } from './repository/products-repository.interface';
-import { mapToProductDto } from './product.mapper';
-import { CreateProductRequestDto, CreateProductResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, ProductDto } from '@common/DTOs';
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO } from '@common/DTOs';
 
 @Injectable()
 export class ProductsService {
@@ -12,13 +11,10 @@ export class ProductsService {
 
     async GetProductsList(dto: GetProductsListRequestDTO): Promise<GetProductsListResponseDTO> {
         const { page = 1, limit = 10, sortBy } = dto;
-
         const { products, totalCount } = await this.productsRepo.getPaginatedProducts(page, limit, sortBy);
 
-        const productDtos: ProductDto[] = products.map(mapToProductDto);
-
         const response = new GetProductsListResponseDTO();
-        response.data = productDtos;
+        response.data = products;
         response.page = page;
         response.limit = limit;
         response.totalCount = totalCount;
@@ -31,4 +27,9 @@ export class ProductsService {
         const created = await this.productsRepo.create(dto);
         return new CreateProductResponseDto(created);
     }
+
+    async GetProductById(id: string ) : Promise<GetProductByIdResponseDto> {
+        const product = await this.productsRepo.findById(id)
+        return new GetProductByIdResponseDto(product);
+    } 
 }

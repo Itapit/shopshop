@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -6,6 +6,8 @@ import { ProductSchema, ProductDocument } from './product.schema';
 import { IProductsRepository } from './products-repository.interface';
 import { ProductSortBy } from '@common/Enums';
 import { ProductBase } from '@common/Interfaces';
+import { ProductDto } from '@common/DTOs';
+import { mapToProductDto } from '../product.mapper';
 
 
 @Injectable()
@@ -16,7 +18,7 @@ export class ProductsRepository implements IProductsRepository {
         page: number,
         limit: number,
         sortBy: string = ProductSortBy.CREATED_AT
-    ): Promise<{ products: ProductBase[]; totalCount: number }> {
+    ): Promise<{ products: ProductDto[]; totalCount: number }> {
         const skip = (page - 1) * limit;
         
         const sort: Record<string, 1 | -1> = {
@@ -28,14 +30,17 @@ export class ProductsRepository implements IProductsRepository {
             this.productModel.countDocuments().exec(),
         ]);
 
-        const products = docs.map(this.toProduct);
+        const products = docs.map(mapToProductDto);
 
         return { products, totalCount };
     }
 
-    async findById(id: string): Promise<ProductBase | null> {
+    async findById(id: string): Promise<ProductDto | null> {
         const doc = await this.productModel.findById(id).exec();
-        return doc ? this.toProduct(doc) : null;
+        if (!doc){ 
+            throw new NotFoundException(`Product with id ${id} not found`);
+        }
+        return doc ? mapToProductDto(doc) : null;
     }
 
     async create(product: ProductBase): Promise<ProductBase> {

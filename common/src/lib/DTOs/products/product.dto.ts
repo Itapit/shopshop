@@ -6,4 +6,6 @@ export class ProductDto implements ProductBase{
     price!: number;
     quantity!:number;
     imageUrl!: string;
+
+    _id?: string;
 }

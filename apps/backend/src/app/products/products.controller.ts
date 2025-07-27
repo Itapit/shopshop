@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { CreateProductRequestDto, CreateProductResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO } from '@common/DTOs';
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO } from '@common/DTOs';
 import { Role } from '@common/Enums';
+import { isValidObjectId } from 'mongoose';
 
 @Controller('products')
 export class ProductsController {
@@ -20,6 +21,15 @@ export class ProductsController {
     @Post()
     async createProduct(@Body() dto: CreateProductRequestDto) : Promise<CreateProductResponseDto> {
         return this.productService.CreateProduct(dto);
+    }
+
+    @UseGuards(AuthGuard)
+    @Get(':id')
+    async getProductById(@Param('id') id: string) : Promise<GetProductByIdResponseDto> {
+        if (!isValidObjectId(id)) {
+            throw new BadRequestException(`Invalid ObjectId: ${id}`);
+        }
+        return this.productService.GetProductById(id)
     }
 
 }
