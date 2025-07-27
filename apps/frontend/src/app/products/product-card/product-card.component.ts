@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { Product } from "common/src/lib/Interfaces/product.interface";
+import { ProductBase } from "@common/Interfaces";
 
 @Component({
   selector: "app-product-card",
@@ -9,6 +9,6 @@ import { Product } from "common/src/lib/Interfaces/product.interface";
 })
 export class ProductCardComponent{
     @Input() mode!: 'view' | 'cart';
-    @Input() product!: Product;
+    @Input() product!: ProductBase;
     
 }

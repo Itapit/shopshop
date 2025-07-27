@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { Product } from "common/src/lib/Interfaces/product.interface";
 import { SharedService } from "../../shared/shared.service";
 
 @Component({

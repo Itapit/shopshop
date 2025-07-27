@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import {Product} from 'common/src/lib/Interfaces/product.interface';
+import {ProductBase} from '@common/Interfaces';
 @Component({
   selector: "app-product-list",
     standalone: false,
@@ -8,7 +8,7 @@ import {Product} from 'common/src/lib/Interfaces/product.interface';
 })
 export class ProductListComponent {
   @Input() mode!: 'view' | 'cart' ; // Default mode can be set to 'view' or 'cart'
-  @Input() products!: Product[];
+  @Input() products!: ProductBase[];
   
 
 

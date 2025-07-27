@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { Product } from "common/src/lib/Interfaces/product.interface";
 import { SharedService } from "../shared/shared.service";
+import { ProductBase } from "@common/Interfaces";
 
 @Component({
   selector: "app-user",
@@ -14,7 +14,7 @@ export class UserComponent {
     totalPrice: number = 0;
     first: number = 0;
     rows: number = 4;
-    productsCart: Product[]  = []; // נטו בשביל לעשות PAGANTION
+    productsCart: ProductBase[]  = []; // נטו בשביל לעשות PAGANTION
     onPageChange(event: any, rows?: number) {
         this.first = event.first;
         this.rows = event.rows;
@@ -33,7 +33,7 @@ export class UserComponent {
   }
     
 
-    products: Product[]  = [  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
+    products: ProductBase[]  = [  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
     {// כרגע זה רק דוגמא
       name: 'Bamba',
       price: 4.99,
