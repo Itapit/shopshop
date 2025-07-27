@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
+import { SignInRequestDto } from '@common/DTOs'
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenService } from '../services/token.service';
@@ -39,16 +39,17 @@ export class SigninComponent {
       return;
     }
     console.log("sign in: ", this.email, this.password);
-    const dto: SignInDto = {
+    const dto: SignInRequestDto = {
       email : this.email ?? '',
       password : this.password ?? '',
     };
     this.authService.signIn(dto).subscribe({
       next: (res) => {
         console.log('Signed in!', res);
-        if(this.tokenService.getRole() === Role.User)
+        if(this.tokenService.getRole() === Role.Client)
              this.router.navigate(['/user']);
         this.tokenService.saveToken(res.access_token);
+        this.tokenService.saveRole(res.role);
 
       },
       error: (err) => {
