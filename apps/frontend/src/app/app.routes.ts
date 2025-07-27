@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { UserComponent } from './user/user.component';
 
 export const appRoutes: Route[] = [
   {
@@ -9,5 +10,9 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadChildren: () => import('./products/products-module').then((m) => m.ProductsModule)
+  },
+  {
+    path: 'user',
+    component: UserComponent
   }
 ];

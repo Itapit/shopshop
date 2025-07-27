@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
-    declarations: [ProductsComponent , ProductCardComponent , ProductListComponent],   
+  declarations: [ProductsComponent , ProductCardComponent , ProductListComponent],   
   imports: [
     ProductsRoutingModule,
     CardModule,
@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
     
 
-  ]
+  ],
+  exports: [ProductsComponent, ProductListComponent ],
 })
 export class ProductsModule {}

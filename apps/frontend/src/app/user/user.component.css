@@ -1,0 +1,31 @@
+/* עטיפת כל אזור הסיכום */
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* תווית המחיר */
+.total-price {
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* קבוצה של הכפתורים */
+.cart-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* כפתורים */
+.cart-buttons :deep(button) {
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+}

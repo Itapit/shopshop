@@ -1,14 +1,40 @@
 import { Component } from "@angular/core";
+import { Product } from "common/src/lib/Interfaces/product.interface";
+import { SharedService } from "../shared/shared.service";
 
 @Component({
-    selector: "app-products",
-    standalone: false,
-    templateUrl: "./products.component.html",
-    styleUrls: ["./products.component.css"],
+  selector: "app-user",
+  standalone: false,
+  templateUrl: "./user.component.html",
+  styleUrls: ["./user.component.css"],
 })
-export class ProductsComponent {
-    products = [
-    {
+export class UserComponent {
+    
+    constructor(private sharedService: SharedService) {}
+    totalPrice: number = 0;
+    first: number = 0;
+    rows: number = 4;
+    productsCart: Product[]  = []; // נטו בשביל לעשות PAGANTION
+    onPageChange(event: any, rows?: number) {
+        this.first = event.first;
+        this.rows = event.rows;
+        this.productsCart = this.products.slice(this.first, this.first + this.rows);
+        
+    } 
+
+    ngOnInit() {
+      this.sharedService.orderClicked$.subscribe(() => {
+       
+        this.handleOrder();
+      });
+    }
+  handleOrder() {
+    console.log("Order has been placed!");
+  }
+    
+
+    products: Product[]  = [  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
+    {// כרגע זה רק דוגמא
       name: 'Bamba',
       price: 4.99,
       description: 'Classic peanut snack.',
@@ -78,6 +104,13 @@ export class ProductsComponent {
       quantity: 20,
       imageUrl: 'https://images.weserv.nl/?url=images.snack/10.jpg'
     }
-  ];
+  ]; 
+
+
+  
+ 
+    
+
+
 
 }
