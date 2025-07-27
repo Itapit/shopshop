@@ -1,9 +1,9 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO } from '@common/DTOs';
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from '@common/DTOs';
 import { Role } from '@common/Enums';
 import { isValidObjectId } from 'mongoose';
 
@@ -41,5 +41,15 @@ export class ProductsController {
         }
         await this.productService.DeleteProductById(id)
         return { message: `Product ${id} deleted successfully.` };
+    }
+
+    @UseGuards(AuthGuard, RolesGuard)
+    @Roles(Role.Admin)
+    @Put(':id')
+    async editProductById(@Param('id') id:string ,@Body() dto: UpdateProductRequestDto) : Promise<UpdateProductResponseDto> {
+        if (!isValidObjectId(id)) {
+            throw new BadRequestException(`Invalid ObjectId: ${id}`);
+        }
+        return this.productService.updateProduct(id, dto)
     }
 }

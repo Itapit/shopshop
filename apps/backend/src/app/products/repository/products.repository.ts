@@ -43,10 +43,10 @@ export class ProductsRepository implements IProductsRepository {
         return doc ? mapToProductDto(doc) : null;
     }
 
-    async create(product: ProductBase): Promise<ProductBase> {
+    async create(product: ProductBase): Promise<ProductDto> {
         const created = new this.productModel(product);
         const saved = await created.save();
-        return this.toProduct(saved);
+        return mapToProductDto(saved);
     }
     
     async deleteById(id: string): Promise<boolean> {
@@ -54,13 +54,8 @@ export class ProductsRepository implements IProductsRepository {
         return result.deletedCount > 0;
     }
 
-    private toProduct(doc: ProductDocument): ProductBase {
-        return {
-            name: doc.name,
-            description: doc.description,
-            price: doc.price,
-            quantity: doc.quantity,
-            imageUrl: doc.imageUrl,
-        };
+    async updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null> {
+        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { new: false }).exec();
+        return updatedDoc ? mapToProductDto(updatedDoc) : null
     }
 }
