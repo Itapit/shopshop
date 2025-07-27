@@ -8,6 +8,15 @@
   </div>
 
   <div class="actions">
+  <div *ngIf="showAddItemButton" class="addItem">
+    <app-add-item></app-add-item>
+  </div>
+  <div *ngIf="showOrderButton" class="order">
+    <app-order></app-order>
+  </div>
+  <div *ngIf="showSignInLink" class="sign-in">
     <app-sign-in-link></app-sign-in-link>
   </div>
+</div>
+  
 </nav>

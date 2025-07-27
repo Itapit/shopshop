@@ -1,0 +1,37 @@
+.main-layout {
+  display: flex;
+  flex-direction: row-reverse; /* שומר על עברית */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 20px;
+}
+
+.side-panel {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+}
+
+.products-list {
+  flex: 1;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+} 
+.products-list-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.products-list-view app-product-card {
+  width: 240px;
+   /* או כל רוחב שמתאים לך */
+}
+

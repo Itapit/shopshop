@@ -6,10 +6,12 @@ import { appRoutes } from './app.routes';
 import { NavbarModule } from "./navbar/navbar-module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import { ProductsModule } from './products/products-module';
+import { UserModule } from './user/user-module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, RouterModule.forRoot(appRoutes), NavbarModule, BrowserAnimationsModule],
+  imports: [BrowserModule, RouterModule.forRoot(appRoutes), NavbarModule, BrowserAnimationsModule, ProductsModule, UserModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [AppComponent],
 })

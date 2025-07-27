@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { SignInDto } from 'common/src/lib/DTOs/sign-In.dto';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TokenService } from '../services/token.service';
+import { Role } from 'common/src/lib/Enums/role.enum';
 
 @Component({
   selector: 'app-signin',
@@ -10,7 +13,7 @@ import { NgForm } from '@angular/forms';
   styleUrl: './signin.component.css'
 })
 export class SigninComponent {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService , private router: Router , private tokenService: TokenService) {}
 
   title = 'Sign In';
   buttonLabel = 'Sign In';
@@ -43,6 +46,10 @@ export class SigninComponent {
     this.authService.signIn(dto).subscribe({
       next: (res) => {
         console.log('Signed in!', res);
+        if(this.tokenService.getRole() === Role.User)
+             this.router.navigate(['/user']);
+        this.tokenService.saveToken(res.access_token);
+
       },
       error: (err) => {
         console.error('Signin failed', err);
