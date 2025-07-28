@@ -10,8 +10,13 @@ export class ProductsService {
     ) {}
 
     async GetProductsList(dto: GetProductsListRequestDTO): Promise<GetProductsListResponseDTO> {
-        const { page = 1, limit = 10, sortBy } = dto;
-        const { products, totalCount } = await this.productsRepo.getPaginatedProducts(page, limit, sortBy);
+        const { page = 1, limit = 10, sortBy } = dto; 
+        const { products, totalCount } = dto.keyword
+            ? await this.productsRepo.findByNameContains(dto.keyword, page, limit, sortBy)
+            : await this.productsRepo.getPaginatedProducts(page, limit, sortBy);
+        if (!products || products.length === 0) {
+            throw new NotFoundException('No products found');
+        }    
 
         const response = new GetProductsListResponseDTO();
         response.data = products;
@@ -46,5 +51,22 @@ export class ProductsService {
             throw new NotFoundException(`Product with id ${id} not found`);
         }
         return new UpdateProductResponseDto(updated);
-    }
+    } 
+
+    async findByNameContains(dto: GetProductsListRequestDTO): Promise<GetProductsListResponseDTO>{
+        const { keyword, page = 1, limit = 10, sortBy } = dto;
+        const { products, totalCount } = await this.productsRepo.findByNameContains(keyword, page, limit, sortBy);
+
+        const response = new GetProductsListResponseDTO();
+        response.data = products;
+        response.page = page;
+        response.limit = limit;
+        response.totalCount = totalCount;
+        response.totalPages = Math.ceil(totalCount / limit);
+
+        return response;
+    }  
+        
+        
 }
+

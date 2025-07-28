@@ -23,6 +23,8 @@ export class ProductsController {
         return this.productService.CreateProduct(dto);
     }
 
+    
+
     @UseGuards(AuthGuard)
     @Get(':id')
     async getProductById(@Param('id') id: string) : Promise<GetProductByIdResponseDto> {
@@ -51,5 +53,10 @@ export class ProductsController {
             throw new BadRequestException(`Invalid ObjectId: ${id}`);
         }
         return this.productService.updateProduct(id, dto)
-    }
+    } 
+    
+    
+    
 }
+
+
