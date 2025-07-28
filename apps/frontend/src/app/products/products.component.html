@@ -1,9 +1,5 @@
 <app-product-list
-  [mode]="productListOptionsEnum.LoggedIn"
+  [mode]="productListMode"
   [fetchFunction]="fetchProducts"
   [totalRecords]="productsResponse?.totalCount || 0"
 />
-
-<!-- TODO add ngif or something for the loading of the products and visualize error -->
-<!-- TODO add an ng if that will be if the user is logged in or not and handle that to the product list-->
-

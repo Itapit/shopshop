@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from "primeng/paginator";
 import { AddToCartButtonComponent } from './add-to-cart-button/add-to-cart-button.component';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [ProductsComponent , ProductCardComponent , ProductListComponent, AddToCartButtonComponent],   
@@ -17,7 +17,8 @@ import { AddToCartButtonComponent } from './add-to-cart-button/add-to-cart-butto
     CardModule,
     CommonModule,
     ButtonModule,
-    PaginatorModule
+    PaginatorModule,
+    ProgressSpinnerModule
 ],
   exports: [ProductsComponent, ProductListComponent ],
 })

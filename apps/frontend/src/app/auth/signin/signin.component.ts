@@ -51,7 +51,7 @@ export class SigninComponent {
           this.tokenService.saveRole(res.role);
         }
         if(this.tokenService.getRole() === Role.Client)
-          this.router.navigate(['/user']);
+          this.router.navigate(['/']);
       },
       error: (err) => {
         console.error('Signin failed', err);
