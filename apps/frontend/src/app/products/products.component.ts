@@ -30,10 +30,11 @@ export class ProductsComponent implements OnInit {
     this.page = page;
     this.limit = limit;
   
-    const query: GetProductsListRequestDTO = {
-      page: this.page+1,  // start the page from 1
-      limit,
-    };
+    this.fetchProducts(this.page + 1, this.limit); // PrimeNG is 0-based, backend is 1-based
+  }
+
+  fetchProducts(page: number, limit: number) {
+    const query: GetProductsListRequestDTO = { page, limit };
   
     this.productService.getProducts(query).subscribe({
       next: (res) => {
@@ -45,4 +46,5 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
+
 }

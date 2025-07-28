@@ -9,6 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AddToCartButtonComponent {
     @Input() initialQuantity = 0;
+    @Input() maxQuantity = 0;
     @Output() quantityChange = new EventEmitter<number>();
     
     quantity = 0;
