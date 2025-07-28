@@ -3,15 +3,15 @@
     <app-product-card
       *ngFor="let product of products"
       [product]="product"
-      mode="cart"
+      [mode]=productListOptionsEnum.Cart
     ></app-product-card>
   </div>
 </div> 
 
-<div *ngIf="mode === 'view'" class="products-list-view">
+<div *ngIf="mode === 'loggedOut' || mode === 'loggedIn'" class="products-list-view">
   <app-product-card
     *ngFor="let product of products"
     [product]="product"
-    mode = "view"
+    [mode] = mode
   ></app-product-card>
 </div>
