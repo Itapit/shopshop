@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { productListOptionsEnum } from "./product-list/product-list-options-enum";
 import { ProductsHttpService } from "./services/products-http.service";
 import { GetProductsListRequestDTO, GetProductsListResponseDTO } from "@common/DTOs";
+import { PaginatorState } from "primeng/paginator";
 
 @Component({
     selector: "app-products",
@@ -10,25 +11,38 @@ import { GetProductsListRequestDTO, GetProductsListResponseDTO } from "@common/D
     styleUrls: ["./products.component.css"],
 })
 export class ProductsComponent implements OnInit {
+  productsResponse?: GetProductsListResponseDTO;
+  totalRecords = 0;
+  page = 0;
+  limit = 10;
 
   constructor(private productService: ProductsHttpService) {}
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
-  productsResponse: GetProductsListResponseDTO | null = null
 
   ngOnInit(): void {
-    const requestDto: GetProductsListRequestDTO = { //TODO fix this hardcoded so the user can select page
-      page:1,
-      limit:10
-    }
-
-    this.productService.getProducts(requestDto).subscribe({
-      next: (response) => {
-        this.productsResponse = response;
-        console.log('products loaded:', response);
+    this.loadProducts();
+  }
+  
+  loadProducts(event?: PaginatorState) {
+    const page = event?.page ?? 0;
+    const limit = event?.rows ?? this.limit;
+  
+    this.page = page;
+    this.limit = limit;
+  
+    const query: GetProductsListRequestDTO = {
+      page: this.page+1,  // start the page from 1
+      limit,
+    };
+  
+    this.productService.getProducts(query).subscribe({
+      next: (res) => {
+        this.productsResponse = res;
+        this.totalRecords = res.totalCount;
       },
-      error: (error) => {
-        console.error('not good at all', error);
-      }
+      error: (err) => {
+        console.error('Error fetching products:', err);
+      },
     });
   }
 }

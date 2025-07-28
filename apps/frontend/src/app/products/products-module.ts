@@ -6,6 +6,7 @@ import { ProductsRoutingModule } from './products-routing-module';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from "primeng/paginator";
 
 @NgModule({
   declarations: [ProductsComponent , ProductCardComponent , ProductListComponent],   
@@ -14,9 +15,8 @@ import { ButtonModule } from 'primeng/button';
     CardModule,
     CommonModule,
     ButtonModule,
-    
-
-  ],
+    PaginatorModule
+],
   exports: [ProductsComponent, ProductListComponent ],
 })
 export class ProductsModule {}
