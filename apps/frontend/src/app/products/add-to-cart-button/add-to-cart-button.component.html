@@ -9,6 +9,7 @@
   *ngIf="quantity > 0"
   [(ngModel)]="quantity"
   [min]="0"
+  [max]="maxQuantity"
   [showButtons]="true"
   buttonLayout="horizontal"
   (onInput)="onQuantityChange($event.value)"
