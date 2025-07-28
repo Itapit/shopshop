@@ -1,4 +1,4 @@
-<div *ngIf="mode === 'view'" class="view-card">
+<div *ngIf="mode === 'loggedIn' || mode === 'loggedOut'" class="view-card">
 <p-card header="{{ product.name }}" subheader="₪{{ product.price }}">
   <ng-template pTemplate="header">
     <img
@@ -10,6 +10,9 @@
 
   <p class="product-description">{{ product.description }}</p>
   <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
+  <div *ngIf="mode === 'loggedIn'">
+    <app-add-to-cart-button></app-add-to-cart-button>
+  </div>
 </p-card>
 </div> 
 

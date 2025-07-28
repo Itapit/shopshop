@@ -1,4 +1,6 @@
 export enum productListOptionsEnum {
-    View = 'view',
-    Cart = 'cart'
+    LoggedIn = 'loggedIn',
+    LoggedOut = 'loggedOut',
+    Cart = 'cart',
+    Admin = 'admin'
 }

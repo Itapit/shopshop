@@ -1,0 +1,18 @@
+<p-button
+  *ngIf="quantity === 0"
+  label="Add to Cart"
+  icon="pi pi-shopping-cart"
+  (onClick)="addToCart()"
+/>
+
+<p-inputNumber
+  *ngIf="quantity > 0"
+  [(ngModel)]="quantity"
+  [min]="0"
+  [showButtons]="true"
+  buttonLayout="horizontal"
+  (onInput)="onQuantityChange($event.value)"
+  incrementButtonIcon="pi pi-plus"
+  decrementButtonIcon="pi pi-minus"
+  inputStyleClass="text-center w-4rem"
+/>
