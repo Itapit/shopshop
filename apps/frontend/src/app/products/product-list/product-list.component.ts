@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import {ProductBase} from '@common/Interfaces';
 import { productListOptionsEnum } from "./product-list-options-enum";
+import { ProductDto } from "@common/DTOs";
 @Component({
   selector: "app-product-list",
     standalone: false,
@@ -9,7 +9,7 @@ import { productListOptionsEnum } from "./product-list-options-enum";
 })
 export class ProductListComponent {
   @Input() mode!: productListOptionsEnum ; // 'view' or 'cart'
-  @Input() products!: ProductBase[];
+  @Input() products!: ProductDto[];
 
   productListOptionsEnum = productListOptionsEnum;
 }

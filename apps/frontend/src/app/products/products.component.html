@@ -1,1 +1,2 @@
-<app-product-list [mode]="productListOptionsEnum.View" [products]="products"></app-product-list>
+<app-product-list [mode]="productListOptionsEnum.View" [products]="productsResponse?.data || []"></app-product-list>
+<!-- TODO add ngif or something for the loading of the products and visualize error -->
