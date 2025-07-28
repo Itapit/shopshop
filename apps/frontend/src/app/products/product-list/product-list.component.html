@@ -15,3 +15,15 @@
     [mode] = mode
   ></app-product-card>
 </div>
+
+<!-- the -1 with the page is because the primeng start from 0 -->
+<p-paginator
+    class="fixed-bottom"
+    [rows]="limit"
+    [totalRecords]="totalRecords"
+    (onPageChange)="loadProducts($event)"
+    [first]="(page -1 )* limit"  
+    styleClass="mt-4"
+/>
+
+<!-- TODO add ngif or something for the loading of the products and visualize error upon calling the loadProducts function-->
