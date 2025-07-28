@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({providedIn: 'root'})
+@Injectable({providedIn: 'root'}) // TODO change it to use the roles enum
 export class TokenService{
     private tokenKey:string = 'token'
     private roleKey:string = 'role'

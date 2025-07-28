@@ -18,7 +18,7 @@ export class ProductListComponent implements OnInit {
 
   products: ProductDto[] = [];
   page = 1;
-  limit = 10;
+  limit = 12;
   
   ngOnInit() {
     this.loadProducts();
