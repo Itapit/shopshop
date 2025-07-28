@@ -16,11 +16,11 @@ export class ProductsComponent implements OnInit{
   productsResponse?: GetProductsListResponseDTO;
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
-  productListMode= productListOptionsEnum.LoggedOut
+  productListMode= productListOptionsEnum.PublicView
 
   ngOnInit(): void {
     if(this.tokenService.getRole() == Role.Client) {
-      this.productListMode = productListOptionsEnum.LoggedIn
+      this.productListMode = productListOptionsEnum.CustomerView
     }
   }
 
