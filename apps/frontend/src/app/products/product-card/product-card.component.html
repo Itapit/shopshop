@@ -1,4 +1,4 @@
-<div *ngIf="mode === 'loggedIn' || mode === 'loggedOut'" class="view-card">
+<div *ngIf="mode === 'customerView' || mode === 'publicView'" class="view-card">
 <p-card header="{{ product.name }}" subheader="₪{{ product.price }}">
   <ng-template pTemplate="header">
     <img
@@ -10,13 +10,13 @@
 
   <p class="product-description">{{ product.description }}</p>
   <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
-  <div *ngIf="mode === 'loggedIn'">
+  <div *ngIf="mode === 'customerView'">
     <app-add-to-cart-button [maxQuantity]="product.quantity"></app-add-to-cart-button>
   </div>
 </p-card>
 </div> 
 
-<div *ngIf="mode === 'cart'" class="cart-card">
+<div *ngIf="mode === 'cartView'" class="cart-card">
   <div class="cart-row">
     <img
       [src]="product.imageUrl"

@@ -1,14 +1,14 @@
-<div *ngIf="mode==='cart'" class="main-layout">
+<div *ngIf="mode==='cartView'" class="main-layout">
     <div class="products-list">
     <app-product-card
       *ngFor="let product of products"
       [product]="product"
-      [mode]=productListOptionsEnum.Cart
+      [mode]=productListOptionsEnum.CartView
     ></app-product-card>
   </div>
 </div> 
 
-<div *ngIf="mode === 'loggedOut' || mode === 'loggedIn'" class="products-list-view">
+<div *ngIf="mode === 'publicView' || mode === 'customerView'" class="products-list-view">
   <app-product-card
     *ngFor="let product of products"
     [product]="product"
