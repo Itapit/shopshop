@@ -1,0 +1,8 @@
+<app-product-list 
+    [mode]="productListOptionsEnum.CartView"
+    [fetchFunction]="fetchProducts"
+    [totalRecords]="totalRecords"
+/>
+<div class="cart-summary">
+  <p class="total-price">Total price: ₪{{ totalPrice }}</p>
+</div>
