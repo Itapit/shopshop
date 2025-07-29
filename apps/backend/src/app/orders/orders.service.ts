@@ -6,6 +6,8 @@ import { OrdersRepository } from "./repository/orders.repository";
 import { OrderDto } from "@common/DTOs/orders/order.dto";
 import { GetOrdersListRequestDto } from "@common/DTOs/orders/get-orders-list-request.dto";
 import { GetOrdersListResponseDTO } from "@common/DTOs/orders/get-orders-list-response.dto";
+import { mapOrderToDto } from "./order.mapper";
+import { PaginationResultDto } from "@common/DTOs/orders/pagination-result.dto";
 @Injectable()
 export class OrdersService {
         constructor(
@@ -55,23 +57,25 @@ export class OrdersService {
         if (!order) {
             throw new NotFoundException(`Order with ID ${id} not found`);
         }
-        return order;
+        return mapOrderToDto(order);
     } 
 
     async getOrdersByUser(dto: GetOrdersListRequestDto): Promise<GetOrdersListResponseDTO> {
         const { page = 1, limit = 10, sortBy } = dto;
-        const { orders, totalCount } = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
+        
+        //const { orders, totalCount } = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
+        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
 
-        if (!orders || orders.length === 0) {
+        if (!paginatedDto.items || paginatedDto.items.length === 0) {
             throw new NotFoundException('No orders found for this customer');
         }
 
         const response = new GetOrdersListResponseDTO();
-        response.data = orders;
+        response.data = paginatedDto.items;
         response.page = page;
         response.limit = limit;
-        response.totalCount = totalCount;
-        response.totalPages = Math.ceil(totalCount / limit);
+        response.totalCount = paginatedDto.totalCount;
+        response.totalPages = Math.ceil(paginatedDto.totalCount / limit);
 
         return response;
     }

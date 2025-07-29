@@ -42,7 +42,7 @@ export class OrdersController {
     @Req() req: any 
   ): Promise<GetOrdersListResponseDTO> {
 
-    console.log("siondffonskokosmdo");
+    
     
     const userId = req.user.sub; 
     dto.customer_id = userId;

@@ -6,6 +6,7 @@ import { mapOrderToDto } from "../order.mapper";
 import { OrderBase } from "@common/Interfaces/order.interface";
 import { InjectModel } from "@nestjs/mongoose";
 import { OrdersSortBy } from "@common/Enums/orders-sort-by";
+import { PaginationResultDto } from "@common/DTOs/orders/pagination-result.dto";
 
 @Injectable()
 export class OrdersRepository {
@@ -15,7 +16,7 @@ export class OrdersRepository {
       page: number,
       limit: number,
       sortBy: string
-    ): Promise<{ orders: OrderDto[]; totalCount: number }> {
+    ): Promise<PaginationResultDto> {
         const skip = (page - 1) * limit; 
 
         const sort: Record<string, 1 | -1> = {
@@ -28,7 +29,8 @@ export class OrdersRepository {
         ]); 
 
         const orders = docs.map(mapOrderToDto); 
-        return { orders, totalCount };
+        const dto = new PaginationResultDto(orders, totalCount);
+        return dto;
 
   } 
   
@@ -61,7 +63,7 @@ export class OrdersRepository {
       page: number,
       limit: number,
       sortBy: string = OrdersSortBy.CREATED_AT
-    ): Promise<{ orders: OrderDto[]; totalCount: number }> {
+    ): Promise<PaginationResultDto> {
       const skip = (page - 1) * limit;
 
       const sort: Record<string, 1 | -1> = {
@@ -79,7 +81,8 @@ export class OrdersRepository {
       ]);
 
       const orders = docs.map(mapOrderToDto);
-      return { orders, totalCount };
+      const dto = new PaginationResultDto(orders, totalCount);
+      return dto;
     }
 
 
