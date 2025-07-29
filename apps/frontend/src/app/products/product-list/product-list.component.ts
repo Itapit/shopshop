@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { productListOptionsEnum } from "./product-list-options-enum";
-import { ProductDto } from "@common/DTOs";
 import { Observable } from "rxjs";
 import { PaginatorState } from "primeng/paginator";
+import { ProductFull } from "@common/Interfaces";
 @Component({
   selector: "app-product-list",
     standalone: false,
@@ -11,12 +11,12 @@ import { PaginatorState } from "primeng/paginator";
 })
 export class ProductListComponent implements OnInit {
   @Input() mode!: productListOptionsEnum ; // 'view' or 'cart'
-  @Input() fetchFunction!: (page: number, limit: number) => Observable<ProductDto[]>;
+  @Input() fetchFunction!: (page: number, limit: number) => Observable<ProductFull[]>;
   @Input() totalRecords!: number;
 
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
-  products: ProductDto[] = [];
+  products: ProductFull[] = [];
   page = 1;
   limit = 12;
   

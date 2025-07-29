@@ -1,3 +1,2 @@
-export * from './product.interface';
-export * from './user-base.interface';
-export * from './user-full.interface';
+export * from './products';
+export * from './users'

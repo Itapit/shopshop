@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
-import { ProductBase } from "../../Interfaces/product.interface";
+import { CreateProductRequest } from "@common/Interfaces";
 
-export class CreateProductRequestDto implements ProductBase {
+export class CreateProductRequestDto implements CreateProductRequest {
     @IsString()
     @IsNotEmpty()
     name!: string;
@@ -19,6 +19,5 @@ export class CreateProductRequestDto implements ProductBase {
     quantity!: number;
 
     @IsString()
-    @IsOptional()
     imageUrl!: string;
 }

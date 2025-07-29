@@ -1,8 +1,9 @@
 import { IsEnum, IsInt, IsOptional, Max, Min } from "class-validator";
-import { ProductSortBy } from "../../Enums/sort-by.enum";
 import { Type } from 'class-transformer';
+import { ProductSortBy } from "@common/Enums";
+import { GetProductsListRequest } from "@common/Interfaces";
 
-export class GetProductsListRequestDTO {
+export class GetProductsListRequestDTO implements Partial<GetProductsListRequest> {
     @IsOptional()
     @Type(() => Number)
     @IsInt()

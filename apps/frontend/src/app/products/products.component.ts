@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { productListOptionsEnum } from "./product-list/product-list-options-enum";
 import { ProductsHttpService } from "./services/products-http.service";
-import { GetProductsListRequestDTO, GetProductsListResponseDTO, ProductDto } from "@common/DTOs";
 import { map, Observable, tap } from "rxjs";
 import { TokenService } from "../auth/services/token.service";
 import { Role } from "@common/Enums"
+import { GetProductsListRequest, GetProductsListResponse, ProductFull } from "@common/Interfaces";
 @Component({
     selector: "app-products",
     standalone: false,
@@ -13,7 +13,7 @@ import { Role } from "@common/Enums"
 })
 export class ProductsComponent implements OnInit{
   constructor(private productService: ProductsHttpService, private tokenService: TokenService) {}
-  productsResponse?: GetProductsListResponseDTO;
+  productsResponse?: GetProductsListResponse;
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
   productListMode= productListOptionsEnum.PublicView
@@ -24,12 +24,12 @@ export class ProductsComponent implements OnInit{
     }
   }
 
-  fetchProducts = (page: number, limit: number): Observable<ProductDto[]> => {
-    const query: GetProductsListRequestDTO = { page, limit };
+  fetchProducts = (page: number, limit: number): Observable<ProductFull[]> => {
+    const query: GetProductsListRequest= { page, limit };
     
     return this.productService.getProducts(query).pipe(
       tap((res) => this.productsResponse = res),
-      map((res) => res.data)
+      map((res) => res.products)
     );
   };
 }
