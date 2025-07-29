@@ -1,13 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IProductsRepository, PRODUCTS_REPOSITORY } from './repository/products-repository.interface';
-import { GetProductsListRequestDTO } from './DTOs/request/Get-Products-list-request.dto';
-import { GetProductsListResponseDTO } from './DTOs/response/Get-Products-list-response.dto';
-import { CreateProductRequestDto } from './DTOs/request/Create-Product-request.dto';
-import { CreateProductResponseDto } from './DTOs/response/Create-Product-response.dto';
-import { GetProductByIdResponseDto } from './DTOs/response/Get-Product-by-ID-response.dto';
-import { UpdateProductRequestDto } from './DTOs/request/Update-Product-request.dto';
-import { UpdateProductResponseDto } from './DTOs/response/Update-Product-response.dto';
-//TODO fix the dto imports
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from './DTOs';
+
 @Injectable()
 export class ProductsService {
     constructor(

@@ -4,8 +4,8 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '@common/Enums';
-import { CreateUserRequestDto } from './DTOs/request/create-user-request.dto';
-import { CreateUserResponseDto } from './DTOs/response/create-user-response.dto';
+import { CreateUserRequestDto, CreateUserResponseDto } from './DTOs';
+
 
 @Controller('users')
 export class UsersController {

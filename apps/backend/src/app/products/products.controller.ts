@@ -5,14 +5,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '@common/Enums';
 import { isValidObjectId } from 'mongoose';
-import { GetProductsListRequestDTO } from './DTOs/request/Get-Products-list-request.dto';
-import { GetProductsListResponseDTO } from './DTOs/response/Get-Products-list-response.dto';
-import { CreateProductResponseDto } from './DTOs/response/Create-Product-response.dto';
-import { CreateProductRequestDto } from './DTOs/request/Create-Product-request.dto';
-import { GetProductByIdResponseDto } from './DTOs/response/Get-Product-by-ID-response.dto';
-import { UpdateProductRequestDto } from './DTOs/request/Update-Product-request.dto';
-import { UpdateProductResponseDto } from './DTOs/response/Update-Product-response.dto';
-//TODO fix the dto imports
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from './DTOs';
 
 @Controller('products')
 export class ProductsController {
