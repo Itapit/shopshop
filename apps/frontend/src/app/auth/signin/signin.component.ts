@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { SignInRequestDto } from '@common/DTOs'
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenService } from '../services/token.service';
 import { Role } from 'common/src/lib/Enums/role.enum';
+import { SignInRequest } from '@common/Interfaces';
 
 @Component({
   selector: 'app-signin',
@@ -39,18 +39,19 @@ export class SigninComponent {
       return;
     }
     console.log("sign in: ", this.email, this.password);
-    const dto: SignInRequestDto = {
+    const dto: SignInRequest = {
       email : this.email ?? '',
       password : this.password ?? '',
     };
-    this.authService.signIn(dto).subscribe({
+    this.authService.signIn(dto).subscribe({  //TODO add a loading screen for the back wait
       next: (res) => {
         console.log('Signed in!', res);
+        if (res.access_token && res.role) {
+          this.tokenService.saveToken(res.access_token);
+          this.tokenService.saveRole(res.role);
+        }
         if(this.tokenService.getRole() === Role.Client)
-             this.router.navigate(['/user']);
-        this.tokenService.saveToken(res.access_token);
-        this.tokenService.saveRole(res.role);
-
+          this.router.navigate(['/']);
       },
       error: (err) => {
         console.error('Signin failed', err);

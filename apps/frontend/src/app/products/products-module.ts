@@ -6,17 +6,20 @@ import { ProductsRoutingModule } from './products-routing-module';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from "primeng/paginator";
+import { AddToCartButtonComponent } from './add-to-cart-button/add-to-cart-button.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
-  declarations: [ProductsComponent , ProductCardComponent , ProductListComponent],   
+  declarations: [ProductsComponent , ProductCardComponent , ProductListComponent, AddToCartButtonComponent],   
   imports: [
     ProductsRoutingModule,
     CardModule,
     CommonModule,
     ButtonModule,
-    
-
-  ],
+    PaginatorModule,
+    ProgressSpinnerModule
+],
   exports: [ProductsComponent, ProductListComponent ],
 })
 export class ProductsModule {}

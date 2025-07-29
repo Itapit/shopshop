@@ -1,7 +1,8 @@
-<app-product-list [mode]="'cart'" [products]="productsCart"></app-product-list>
-<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="120" />
+<app-product-list 
+    [mode]="productListOptionsEnum.CartView"
+    [fetchFunction]="fetchProducts"
+    [totalRecords]="totalRecords"
+/>
 <div class="cart-summary">
   <p class="total-price">Total price: ₪{{ totalPrice }}</p>
-
-  
 </div>

@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IProductsRepository, PRODUCTS_REPOSITORY } from './repository/products-repository.interface';
-import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from '@common/DTOs';
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from './DTOs';
 
 @Injectable()
 export class ProductsService {
@@ -14,7 +14,7 @@ export class ProductsService {
         const { products, totalCount } = await this.productsRepo.getPaginatedProducts(page, limit, sortBy);
 
         const response = new GetProductsListResponseDTO();
-        response.data = products;
+        response.products = products;
         response.page = page;
         response.limit = limit;
         response.totalCount = totalCount;

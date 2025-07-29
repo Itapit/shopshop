@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
-import { ProductBase } from "@common/Interfaces";
+import { ProductBase, ProductFull } from "@common/Interfaces";
+import { productListOptionsEnum } from "../products/product-list/product-list-options-enum";
+import { Observable, of } from "rxjs";
 
 @Component({
   selector: "app-user",
@@ -9,6 +11,8 @@ import { ProductBase } from "@common/Interfaces";
   styleUrls: ["./user.component.css"],
 })
 export class UserComponent {
+  
+  productListOptionsEnum = productListOptionsEnum;
     
     constructor(private sharedService: SharedService) {}
     totalPrice: number = 0;
@@ -33,8 +37,9 @@ export class UserComponent {
   }
     
 
-    products: ProductBase[]  = [  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
+    products: ProductFull[]  = [  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
     {// כרגע זה רק דוגמא
+      _id:"2",
       name: 'Bamba',
       price: 4.99,
       description: 'Classic peanut snack.',
@@ -42,6 +47,7 @@ export class UserComponent {
       imageUrl: 'assets/images/bamba.png'
     },
     {
+      _id:"2",
       name: 'Chocolate Bar',
       price: 6.5,
       description: 'High-quality milk chocolate.',
@@ -49,6 +55,7 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/2.jpg'
     },
     {
+      _id:"a",
       name: 'Coca-Cola Can',
       price: 3.5,
       description: 'Refreshing fizzy drink.',
@@ -56,6 +63,7 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/3.jpg'
     },
     {
+      _id:"1",
       name: 'Potato Chips',
       price: 5.0,
       description: 'Crunchy salted chips.',
@@ -63,54 +71,23 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/4.jpg'
     },
     {
+      _id:"d0",
       name: 'Energy Drink',
       price: 8.0,
       description: 'Boost your energy anytime.',
       quantity: 18,
       imageUrl: 'https://images.weserv.nl/?url=images.snack/5.jpg'
     },
-    {
-      name: 'Orange Juice',
-      price: 7.0,
-      description: 'Freshly squeezed orange juice.',
-      quantity: 10,
-      imageUrl: 'https://images.weserv.nl/?url=images.snack/6.jpg'
-    },
-    {
-      name: 'Chocolate Cookies',
-      price: 9.99,
-      description: 'Bite-sized chocolate chip cookies.',
-      quantity: 40,
-      imageUrl: 'assets/images/bamba.png'
-    },
-    {
-      name: 'Mint Gum',
-      price: 2.99,
-      description: 'Long-lasting mint flavor.',
-      quantity: 100,
-      imageUrl: 'https://images.weserv.nl/?url=images.snack/8.jpg'
-    },
-    {
-      name: 'Granola Bar',
-      price: 3.5,
-      description: 'Healthy and delicious snack.',
-      quantity: 60,
-      imageUrl: 'https://images.weserv.nl/?url=images.snack/9.jpg'
-    },
-    {
-      name: 'Strawberry Yogurt',
-      price: 4.0,
-      description: 'Creamy strawberry flavored yogurt.',
-      quantity: 20,
-      imageUrl: 'https://images.weserv.nl/?url=images.snack/10.jpg'
-    }
   ]; 
-
+  totalRecords= this.products.length
 
   
- 
-    
+  fetchProducts = (page: number, limit: number): Observable<ProductFull[]> => {
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const sliced = this.products.slice(start, end);
 
-
+    return of(sliced);
+  };
 
 }

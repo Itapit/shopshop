@@ -1,0 +1,22 @@
+<p-button
+  *ngIf="quantity === 0 && !isLoading"
+  [disabled]="maxQuantity === 0"
+  label="Add to Cart"
+  icon="pi pi-shopping-cart"
+  (onClick)="addToCart()"
+/>
+
+<p-progressSpinner *ngIf="isLoading" styleClass="small-spinner"></p-progressSpinner>
+
+<p-inputNumber
+  *ngIf="quantity > 0 && !isLoading"
+  [(ngModel)]="quantity"
+  [min]="0"
+  [max]="maxQuantity"
+  [showButtons]="true"
+  buttonLayout="horizontal"
+  (onInput)="onQuantityChange($event.value)"
+  incrementButtonIcon="pi pi-plus"
+  [decrementButtonIcon]="quantity === 1 ? 'pi pi-trash' : 'pi pi-minus'"
+  inputStyleClass="text-center w-4rem"
+/>

@@ -1,1 +1,5 @@
-<app-product-list [mode]="'view'" [products]="products"></app-product-list>
+<app-product-list
+  [mode]="productListMode"
+  [fetchFunction]="fetchProducts"
+  [totalRecords]="productsResponse?.totalCount || 0"
+/>
