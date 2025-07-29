@@ -30,6 +30,7 @@ export class UsersRepository implements IUsersRepository {
   
   private toUserFull(doc: UserDocument): UserFull {
     return {
+      _id: doc._id.toString(),
       username: doc.username,
       email: doc.email,
       password: doc.password,

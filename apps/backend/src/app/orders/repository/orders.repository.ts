@@ -1,13 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
-import { OrderDocument } from "./orders.schema";
+import { OrderDocument, OrderSchema } from "./orders.schema";
 import { OrderDto } from "@common/DTOs/orders/order.dto";
 import { mapOrderToDto } from "../order.mapper";
 import { OrderBase } from "@common/Interfaces/order.interface";
+import { InjectModel } from "@nestjs/mongoose";
 
 @Injectable()
 export class OrdersRepository {
-  constructor(private readonly orderModel: Model<OrderDocument>) {}
+  constructor(@InjectModel('Order') private readonly orderModel: Model<OrderDocument>) {}
 
     async getPaginatedOrders(
       page: number,
@@ -38,7 +39,22 @@ export class OrdersRepository {
     async createOrder(data: OrderBase): Promise<OrderDocument> {
         const order = new this.orderModel(data);
         return order.save();
+    } 
+
+    
+    async calculateTotalProfit(): Promise<number> {
+      const result = await this.orderModel.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalProfit: { $sum: "$total_price" }
+          }
+        }
+      ]);
+
+      return result[0]?.totalProfit || 0;
     }
+
 
 
 

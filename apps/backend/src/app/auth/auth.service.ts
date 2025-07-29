@@ -22,6 +22,7 @@ export class AuthService {
     console.log('userPassword' , (await this.usersRepo.findUserByEmail(dto.email)).password)
   
     const payload: JwtPayload = {
+      sub: user._id,
       username: user.username,
       email: user.email,
       role: user.role
