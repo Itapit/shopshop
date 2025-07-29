@@ -6,6 +6,7 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-repository.interface';
 import { SignInRequestDto, SignInResponseDTO } from '@common/DTOs';
 import { createHash, randomBytes } from 'crypto';
+import { Role } from '@common/Enums';
 
 @Injectable()
 export class AuthService {    
@@ -19,13 +20,12 @@ export class AuthService {
     
     await this.passwordCheck(dto, user); 
 
-    console.log('userPassword' , (await this.usersRepo.findUserByEmail(dto.email)).password)
-  
+    
     const payload: JwtPayload = {
       sub: user._id,
       username: user.username,
       email: user.email,
-      role: user.role
+      role: user.role 
     }
     const authResponse: SignInResponseDTO = new SignInResponseDTO();
     authResponse.access_token = await this.jwtService.signAsync(payload);
