@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
 import { ProductBase } from "@common/Interfaces";
 import { productListOptionsEnum } from "../products/product-list/product-list-options-enum";
+import { ProductDto } from "@common/DTOs";
+import { Observable, of } from "rxjs";
 
 @Component({
   selector: "app-user",
@@ -108,12 +110,15 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/10.jpg'
     }
   ]; 
-
+  totalRecords= this.products.length
 
   
- 
-    
+  fetchProducts = (page: number, limit: number): Observable<ProductDto[]> => {
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const sliced = this.products.slice(start, end);
 
-
+    return of(sliced);
+  };
 
 }
