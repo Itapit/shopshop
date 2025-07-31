@@ -1,6 +1,5 @@
-import { OrderBase } from "../base";
-import { OrderFull } from "../base/orderFull.interface";
+import { OrderFull } from "../base/Order-Full.interface";
 
-export interface CreateOrderResponse {
+export interface CreateOrderResponse{
     order:OrderFull
 }

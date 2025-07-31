@@ -1,9 +1,7 @@
-import { OrderBase } from "@common/Interfaces/order.interface";
-import { ProductItem } from "@common/Interfaces/product-item.interface";
+import { OrderBase, ProductItem } from "@common/Interfaces";
 
 export class OrderDto implements OrderBase {
-    customer_id!: string;
+    customerID: string;
     items!: ProductItem[];
-    total_price!: number;
-
+    totalPrice: number;
 }

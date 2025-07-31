@@ -1,23 +1,17 @@
-import { IsArray, ValidateNested, IsString, IsInt, Min } from 'class-validator';
+import { IsArray, ValidateNested, IsString, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
-import {CreateOrderRequest, } from "@common/Interfaces"
-
-class OrderItemDto {
-  
-  
-  @IsString()
-  product_id!: string;
-
-  @IsInt()
-  @Min(1)
-  quantity!: number;
-}
+import { CreateOrderRequest } from "@common/Interfaces"
+import { ProductItemDto } from '../../../products/DTOs';
 
 export class CreateOrderRequestDto implements CreateOrderRequest  {
-  customer_id: string;
-  total_price: number;
+  @IsString()
+  customerID: string;
+
+  @IsNumber()
+  totalPrice: number;
+  
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => OrderItemDto)
-  items!: OrderItemDto[];
+  @Type(() => ProductItemDto)
+  items!: ProductItemDto[];
 }

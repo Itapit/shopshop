@@ -1,15 +1,10 @@
 import { Body, Controller, Post, UseGuards, Req, Get, Param, Query } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderRequestDto } from '@common/DTOs/orders/create-order-request.dto';
-import { CreateOrderResponseDto } from '@common/DTOs/orders/Create-order-response.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Request } from 'express';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '@common/Enums';
-import { OrderDto } from '@common/DTOs/orders/order.dto';
-import { GetOrdersListRequestDto } from '@common/DTOs/orders/get-orders-list-request.dto';
-import { GetOrdersListResponseDTO } from '@common/DTOs/orders/get-orders-list-response.dto';
+import { CreateOrderRequestDto, CreateOrderResponseDto, GetOrdersListRequestDto, GetOrdersListResponseDTO, OrderDto } from './DTOs';
 
 @Controller('orders')
 export class OrdersController {
@@ -45,7 +40,7 @@ export class OrdersController {
     
     
     const userId = req.user.sub; 
-    dto.customer_id = userId;
+    dto.customerId = userId;
 
     return this.ordersService.getOrdersByUser(dto);
   }
@@ -59,7 +54,6 @@ export class OrdersController {
     return this.ordersService.getOrderById(id);
   } 
 
- 
 }
 
 

@@ -1,3 +1,3 @@
-export * from './base/product.dto'
+export * from './base'
 export * from './request'
 export * from './response'

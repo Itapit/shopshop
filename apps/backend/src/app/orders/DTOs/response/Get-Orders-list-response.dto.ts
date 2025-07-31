@@ -1,6 +1,4 @@
 import { GetOrdersListResponse, OrderFull } from "@common/Interfaces";
-import { OrderDto } from "../base";
-
 
 export class GetOrdersListResponseDTO implements GetOrdersListResponse{
   orders: OrderFull[];
