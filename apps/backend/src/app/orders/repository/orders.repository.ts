@@ -37,9 +37,10 @@ export class OrdersRepository {
     return doc ? doc : null;
   } 
 
-  async createOrder(data: OrderBase): Promise<OrderDocument> {
+  async createOrder(data: OrderBase): Promise<OrderBase> {
     const order = new this.orderModel(data);
-    return order.save();
+    const save  = await order.save()
+    return mapOrderToDto(save);
   } 
 
   

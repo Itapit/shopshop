@@ -1,7 +1,8 @@
-import { GetOrdersListResponse, OrderFull } from "@common/Interfaces";
+import { GetOrdersListResponse, OrderBase, OrderFull } from "@common/Interfaces";
+import { OrderDto } from "../base";
 
 export class GetOrdersListResponseDTO implements GetOrdersListResponse{
-  orders: OrderFull[];
+  orders: OrderBase[];
   page!: number;
   limit!: number;
   totalCount!: number;

@@ -2,6 +2,7 @@ import { OrderDto } from "../base";
 
 
 export class PaginationResultDto {
+    customerID: string
     items: OrderDto[];
     totalCount: number;
     

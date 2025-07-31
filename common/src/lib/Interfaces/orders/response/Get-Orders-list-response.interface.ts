@@ -1,7 +1,7 @@
-import { OrderFull } from "../base";
+import { OrderBase, OrderFull } from "../base";
 
 export interface GetOrdersListResponse{
-    orders: OrderFull[];
+    orders: OrderBase[];
     page: number;
     limit: number;
     totalCount: number;
