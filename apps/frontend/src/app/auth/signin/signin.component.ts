@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { SignInRequestDto } from '@common/DTOs'
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenService } from '../services/token.service';
 import { Role } from 'common/src/lib/Enums/role.enum';
+import { SignInRequest } from '@common/Interfaces';
 
 @Component({
   selector: 'app-signin',
@@ -39,7 +39,7 @@ export class SigninComponent {
       return;
     }
     console.log("sign in: ", this.email, this.password);
-    const dto: SignInRequestDto = {
+    const dto: SignInRequest = {
       email : this.email ?? '',
       password : this.password ?? '',
     };

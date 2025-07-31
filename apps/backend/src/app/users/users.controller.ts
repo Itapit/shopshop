@@ -3,8 +3,9 @@ import { UsersService } from './users.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { CreateUserRequestDto, CreateUserResponseDto } from '@common/DTOs';
 import { Role } from '@common/Enums';
+import { CreateUserRequestDto } from './DTOs/request/create-user-request.dto';
+import { CreateUserResponseDto } from './DTOs/response/create-user-response.dto';
 
 @Controller('users')
 export class UsersController {

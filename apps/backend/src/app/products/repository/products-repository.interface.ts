@@ -1,5 +1,5 @@
-import { ProductDto } from "@common/DTOs";
 import { ProductBase } from "@common/Interfaces";
+import { ProductDto } from "../DTOs/base/product.dto";
 
 export const PRODUCTS_REPOSITORY = Symbol('PRODUCTS_REPOSITORY');
 

@@ -6,8 +6,8 @@ import { ProductSchema, ProductDocument } from './product.schema';
 import { IProductsRepository } from './products-repository.interface';
 import { ProductSortBy } from '@common/Enums';
 import { ProductBase } from '@common/Interfaces';
-import { ProductDto } from '@common/DTOs';
 import { mapToProductDto } from '../product.mapper';
+import { ProductDto } from '../DTOs/base/product.dto';
 
 
 @Injectable()
