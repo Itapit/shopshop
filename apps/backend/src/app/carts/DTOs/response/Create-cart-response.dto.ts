@@ -1,4 +1,4 @@
-import { ProductItem } from "@common/Interfaces/product-item.interface";
+import { ProductItem } from "@common/Interfaces";
 import { CartDto } from "../base/cart.dto";
 import {CreateCartResponse} from "@common/Interfaces/carts/response/Create-cart-response.interface"
 

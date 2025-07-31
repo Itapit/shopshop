@@ -1,10 +1,10 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { CartsRepository } from "./repository/carts.repository";
 import { AuthGuard } from "../auth/guards/auth.guard";
-import { GetCartResponseDto } from "@common/DTOs/carts/Get-cart-by-ID-response";
+import { GetCartResponseDto } from "../carts/DTOs/response/Get-cart-by-ID-response";
 import { CartsService } from "./cart.service";
-import { EditItemInCartResponseDto } from "@common/DTOs/carts/Edit-item-to-cart-response.dto";
-import { cartItem } from "@common/Interfaces";
+import { EditItemInCartResponseDto } from "../carts/DTOs/response/Edit-item-to-cart-response.dto";
+import { cartItem } from "@common/Interfaces/carts";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Role } from "@common/Enums";
 import { Roles } from "../auth/roles.decorator";

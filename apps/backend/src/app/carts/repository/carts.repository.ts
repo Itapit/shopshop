@@ -3,10 +3,10 @@ import { Model } from "mongoose";
 import { CartDocument } from "./carts.schema";
 import { InjectModel } from "@nestjs/mongoose";
 import { mapCartToDto } from "../cart.mapper";
-import { CartDto } from "@common/DTOs/carts/cart.dto";
+import { CartDto } from "../DTOs/base/cart.dto";
 import { map } from "rxjs";
-import { CartBase } from "@common/Interfaces/cart.interface";
-import { ProductItem } from "@common/Interfaces/product-item.interface";
+import { CartBase } from "@common/Interfaces/carts/base";
+import { ProductItem } from "@common/Interfaces/products/base";
 
 @Injectable()
 export class CartsRepository{

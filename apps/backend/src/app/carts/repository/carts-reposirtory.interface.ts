@@ -1,6 +1,6 @@
-import { CartDto } from '@common/DTOs/carts/cart.dto';
-import { CartBase } from '@common/Interfaces/cart.interface';
-import { ProductItem } from '@common/Interfaces/product-item.interface';
+import { CartDto } from '../DTOs/base/cart.dto';
+import {CartBase} from '@common/Interfaces/carts'
+import { ProductItem } from '@common/Interfaces';
 
 export const CARTS_REPOSITORY = Symbol('CARTS_REPOSITORY');
 
