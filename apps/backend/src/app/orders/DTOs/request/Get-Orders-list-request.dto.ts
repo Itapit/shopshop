@@ -1,16 +1,17 @@
 import { OrdersSortBy } from "@common/Enums/orders-sort-by";
+import { GetOrdersListRequest } from "@common/Interfaces";
 import { OrderBase } from "@common/Interfaces/order.interface";
 import { ProductItem } from "@common/Interfaces/product-item.interface";
 import { Type } from "class-transformer";
 import { IsEnum, IsInt, IsOptional, Max, Min } from "class-validator";
 
-export class GetOrdersListRequestDto  {
+export class GetOrdersListRequestDto implements GetOrdersListRequest  {
         customer_id!: string;
-        @IsOptional()
+        
         @Type(() => Number)
         @IsInt()
         @Min(1)
-        page?: number = 1;
+        page: number = 1;
     
         @IsOptional()
         @IsEnum(OrdersSortBy)

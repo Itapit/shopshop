@@ -1,3 +1,5 @@
+import { CreateOrderResponse, OrderFull } from "@common/Interfaces";
+
 export class OrderItemResponseDto {
   product_id!: string;
   quantity!: number;
@@ -7,7 +9,7 @@ export class OrderItemResponseDto {
   }
 }
 
-export class CreateOrderResponseDto {
+export class CreateOrderResponseDto implements CreateOrderResponse {
   id!: string;
   customer_id!: string;
   total_price!: number;
@@ -21,4 +23,5 @@ export class CreateOrderResponseDto {
     
     this.items = partial.items?.map(item => new OrderItemResponseDto(item)) || [];
   }
+  order: OrderFull;
 }
