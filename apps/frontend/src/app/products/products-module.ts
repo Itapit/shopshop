@@ -9,6 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from "primeng/paginator";
 import { AddToCartButtonComponent } from './add-to-cart-button/add-to-cart-button.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [ProductsComponent , ProductCardComponent , ProductListComponent, AddToCartButtonComponent],   
@@ -18,8 +20,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CommonModule,
     ButtonModule,
     PaginatorModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ToastModule
 ],
   exports: [ProductsComponent, ProductListComponent ],
+  providers: [MessageService],
 })
 export class ProductsModule {}
