@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsOptional, Max, Min } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from "class-validator";
 import { Type } from 'class-transformer';
 import { ProductSortBy } from "@common/Enums";
 import { GetProductsListRequest } from "@common/Interfaces";
@@ -20,4 +20,8 @@ export class GetProductsListRequestDTO implements Partial<GetProductsListRequest
     @Min(1)
     @Max(100)
     limit?: number = 10;
+
+    @IsOptional()
+    @IsString()
+    keyword?: string;
 }

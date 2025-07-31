@@ -5,6 +5,9 @@ import { IsEnum, IsString, MinLength } from "class-validator";
 
 export class UserFullDto extends UserBaseDto implements UserFull {
     @IsString()
+    userID: string;
+
+    @IsString()
     @MinLength(6)
     password!: string;
 

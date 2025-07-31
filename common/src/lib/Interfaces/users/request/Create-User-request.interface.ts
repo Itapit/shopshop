@@ -1,3 +1,7 @@
-import { UserFull } from "../base";
+import { Role } from "@common/Enums";
+import { UserBase, UserFull } from "../base";
 
-export interface CreateUserRequest extends UserFull {}
+export interface CreateUserRequest extends UserBase {
+    password:string;
+    role?:Role;
+}

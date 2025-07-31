@@ -6,5 +6,5 @@ export class ProductDto implements ProductFull{
     price!: number;
     quantity!:number;    
     imageUrl!: string;
-    _id!: string;
+    productID!: string;
 }

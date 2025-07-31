@@ -58,7 +58,7 @@ export class ProductsService {
         const { products, totalCount } = await this.productsRepo.findByNameContains(keyword, page, limit, sortBy);
 
         const response = new GetProductsListResponseDTO();
-        response.data = products;
+        response.products = products;
         response.page = page;
         response.limit = limit;
         response.totalCount = totalCount;

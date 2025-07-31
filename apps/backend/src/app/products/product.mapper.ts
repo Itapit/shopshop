@@ -8,6 +8,6 @@ export function mapToProductDto(product: ProductDocument): ProductDto {
   dto.price = product.price;
   dto.quantity = product.quantity;
   dto.imageUrl = product.imageUrl;
-  dto._id = product._id.toString();
+  dto.productID = product._id.toString();
   return dto;
 }
