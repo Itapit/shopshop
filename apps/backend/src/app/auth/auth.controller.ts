@@ -1,7 +1,8 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { SignInRequestDto, SignInResponseDTO } from '@common/DTOs';
+import { SignInRequestDto } from '../users/DTOs/request/sign-In-request.dto';
+import { SignInResponseDTO } from '../users/DTOs/response/sign-In-response.dto';
 
 
 @Controller('auth')

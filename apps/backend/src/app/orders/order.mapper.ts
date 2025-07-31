@@ -1,12 +1,13 @@
-import { OrderBase } from "@common/Interfaces/order.interface";
-import {OrderDto} from "@common/DTOs/orders/order.dto";
+import { OrderBase } from "@common/Interfaces";
+import { OrderDto } from "./DTOs";
+
 export function mapOrderToDto(order: OrderBase): OrderDto {
     const orderDto = new OrderDto();
-    orderDto.customer_id = order.customer_id;
+    orderDto.customerID = order.customerID;
     orderDto.items = order.items.map(item => ({
         product_id: item.product_id,
         quantity: item.quantity
     }));
-    orderDto.total_price = order.total_price;
+    orderDto.totalPrice = order.totalPrice;
     return orderDto;
 }

@@ -3,9 +3,9 @@ import { ProductsService } from './products.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from '@common/DTOs';
 import { Role } from '@common/Enums';
 import { isValidObjectId } from 'mongoose';
+import { CreateProductRequestDto, CreateProductResponseDto, GetProductByIdResponseDto, GetProductsListRequestDTO, GetProductsListResponseDTO, UpdateProductRequestDto, UpdateProductResponseDto } from './DTOs';
 
 @Controller('products')
 export class ProductsController {
@@ -47,7 +47,7 @@ export class ProductsController {
 
     @UseGuards(AuthGuard, RolesGuard)
     @Roles(Role.Admin)
-    @Put(':id')
+    @Put(':id') //TODO figure out why the product json returns without the update
     async editProductById(@Param('id') id:string ,@Body() dto: UpdateProductRequestDto) : Promise<UpdateProductResponseDto> {
         if (!isValidObjectId(id)) {
             throw new BadRequestException(`Invalid ObjectId: ${id}`);

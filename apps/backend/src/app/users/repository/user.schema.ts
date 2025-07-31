@@ -7,7 +7,6 @@ export type UserDocument = UserSchema & Document;
 
 @Schema({ collection: 'users', timestamps: true })
 export class UserSchema implements UserFull {
-  _id: string;
   @Prop({ required: true })
   username: string;
 

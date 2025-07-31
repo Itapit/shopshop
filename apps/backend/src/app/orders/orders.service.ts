@@ -1,13 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { ProductsRepository } from "../products/repository/products.repository";
-import { CreateOrderRequestDto } from "@common/DTOs/orders/create-order-request.dto";
-import { CreateOrderResponseDto } from "@common/DTOs/orders/Create-order-response.dto";
 import { OrdersRepository } from "./repository/orders.repository";
-import { OrderDto } from "@common/DTOs/orders/order.dto";
-import { GetOrdersListRequestDto } from "@common/DTOs/orders/get-orders-list-request.dto";
-import { GetOrdersListResponseDTO } from "@common/DTOs/orders/get-orders-list-response.dto";
 import { mapOrderToDto } from "./order.mapper";
-import { PaginationResultDto } from "@common/DTOs/orders/pagination-result.dto";
+import { CreateOrderRequestDto, CreateOrderResponseDto, GetOrdersListRequestDto, GetOrdersListResponseDTO, OrderDto } from "./DTOs";
 @Injectable()
 export class OrdersService {
         constructor(
@@ -32,19 +27,19 @@ export class OrdersService {
 
             
             totalPrice += product.price * item.quantity;
-            await this.productRepo.updateById(product._id, {
+            await this.productRepo.updateById(product.productID, {
             quantity: product.quantity - item.quantity,
             });
         }
 
         
         const createdOrder = await this.ordersRepo.createOrder({
-            customer_id: customerId,
+            customerID: customerId,
             items: dto.items,
-            total_price: totalPrice,
+            totalPrice: totalPrice,
         });
 
-        return new CreateOrderResponseDto(createdOrder);
+        return new CreateOrderResponseDto(createdOrder); //TODO create a constructor in the class
     } 
 
     async totalProfit(): Promise<number> {
@@ -64,14 +59,14 @@ export class OrdersService {
         const { page = 1, limit = 10, sortBy } = dto;
         
         //const { orders, totalCount } = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
-        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
+        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customerId, page, limit , sortBy);
 
         if (!paginatedDto.items || paginatedDto.items.length === 0) {
             throw new NotFoundException('No orders found for this customer');
         }
 
         const response = new GetOrdersListResponseDTO();
-        response.data = paginatedDto.items;
+        response.orders = paginatedDto.items; //TODO i have now idea what going on here
         response.page = page;
         response.limit = limit;
         response.totalCount = paginatedDto.totalCount;
@@ -79,13 +74,4 @@ export class OrdersService {
 
         return response;
     }
-
-
-
-
-
-
-        
-
-    
 }

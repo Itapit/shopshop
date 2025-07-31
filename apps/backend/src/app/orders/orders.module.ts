@@ -3,7 +3,7 @@ import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { OrdersRepository } from './repository/orders.repository';
 import { MongooseModule } from '@nestjs/mongoose';
-import { OrderSchema, OrderDocument, OrderSchemaFactory } from './repository/orders.schema';
+import { OrderSchemaFactory } from './repository/orders.schema';
 import { ProductsModule } from '../products/products.module'; 
 import { UsersModule } from '../users/users.module';           
 

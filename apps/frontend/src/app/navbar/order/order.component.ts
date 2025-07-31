@@ -8,12 +8,10 @@ import { SharedService } from "../../shared/shared.service";
   styleUrls: ["./order.component.css"],
 })
 export class OrderComponent {
+  constructor(private sharedService: SharedService) {}
     
-    constructor(private sharedService: SharedService) {}
-    
-    clickOrder() {
-       
-        this.sharedService.triggerOrder();
-    }
+  clickOrder() {
+    this.sharedService.triggerOrder();
+  }
 
 }
