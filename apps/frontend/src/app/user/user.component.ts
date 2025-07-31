@@ -39,7 +39,7 @@ export class UserComponent {
 
     products: ProductFull[]  = [  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
     {// כרגע זה רק דוגמא
-      _id:"2",
+      productID:"2",
       name: 'Bamba',
       price: 4.99,
       description: 'Classic peanut snack.',
@@ -47,7 +47,7 @@ export class UserComponent {
       imageUrl: 'assets/images/bamba.png'
     },
     {
-      _id:"2",
+      productID:"2",
       name: 'Chocolate Bar',
       price: 6.5,
       description: 'High-quality milk chocolate.',
@@ -55,7 +55,7 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/2.jpg'
     },
     {
-      _id:"a",
+      productID:"a",
       name: 'Coca-Cola Can',
       price: 3.5,
       description: 'Refreshing fizzy drink.',
@@ -63,7 +63,7 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/3.jpg'
     },
     {
-      _id:"1",
+      productID:"1",
       name: 'Potato Chips',
       price: 5.0,
       description: 'Crunchy salted chips.',
@@ -71,7 +71,7 @@ export class UserComponent {
       imageUrl: 'https://images.weserv.nl/?url=images.snack/4.jpg'
     },
     {
-      _id:"d0",
+      productID:"d0",
       name: 'Energy Drink',
       price: 8.0,
       description: 'Boost your energy anytime.',
