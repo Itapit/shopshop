@@ -27,7 +27,7 @@ export class OrdersService {
 
             
             totalPrice += product.price * item.quantity;
-            await this.productRepo.updateById(product._id, {
+            await this.productRepo.updateById(product.productID, {
             quantity: product.quantity - item.quantity,
             });
         }
@@ -59,7 +59,7 @@ export class OrdersService {
         const { page = 1, limit = 10, sortBy } = dto;
         
         //const { orders, totalCount } = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
-        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
+        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customerId, page, limit , sortBy);
 
         if (!paginatedDto.items || paginatedDto.items.length === 0) {
             throw new NotFoundException('No orders found for this customer');
