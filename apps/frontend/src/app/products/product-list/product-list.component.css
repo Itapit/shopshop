@@ -35,10 +35,3 @@
    /* או כל רוחב שמתאים לך */
 }
 
-.fixed-bottom {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
-}

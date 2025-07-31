@@ -30,6 +30,7 @@ export class UsersRepository implements IUsersRepository {
   
   private toUserFull(doc: UserDocument): UserFull {
     return {
+      _id: doc._id.toString(),
       username: doc.username,
       email: doc.email,
       password: doc.password,
@@ -37,10 +38,21 @@ export class UsersRepository implements IUsersRepository {
     };
   }
 
+ async updatePassword(doc: UserDocument, newPassword: string): Promise<UserBase | null> {
+  const result = await this.userModel.updateOne(
+    { email: doc.email},
+    { $set: { password: newPassword } }
+  ).exec();
+  
+
+  const updatedDoc = await this.userModel.findById(doc._id).exec();
+  return updatedDoc ? this.toUserBase(updatedDoc) : null;
+}
+
   private toUserBase(doc: UserDocument): UserBase {
     return {
       username: doc.username,
       email: doc.email,
     };
-  }
+  } 
 }

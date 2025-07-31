@@ -17,6 +17,6 @@ import { PRODUCTS_REPOSITORY } from './repository/products-repository.interface'
       useClass: ProductsRepository,
     }
   ],
-  exports: [PRODUCTS_REPOSITORY]
+  exports: [ProductsRepository]
 })
 export class ProductsModule {}

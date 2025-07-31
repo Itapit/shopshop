@@ -1,5 +1,5 @@
+import { ProductDto } from "@common/DTOs";
 import { ProductBase } from "@common/Interfaces";
-import { ProductDto } from "../DTOs/base/product.dto";
 
 export const PRODUCTS_REPOSITORY = Symbol('PRODUCTS_REPOSITORY');
 
@@ -17,4 +17,11 @@ export interface IProductsRepository {
   create(product: ProductBase): Promise<ProductDto>;
   deleteById(id: string): Promise<boolean>;
   updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null>;
+  
+  findByNameContains(
+    keyword: string,
+    page: number,
+    limit: number,
+    sortBy: string
+  ): Promise<{ products: ProductDto[]; totalCount: number }>;
 }

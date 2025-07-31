@@ -1,6 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { ProductBase } from "@common/Interfaces";
-import { productListOptionsEnum } from "../product-list/product-list-options-enum";
 
 @Component({
   selector: "app-product-card",
@@ -9,8 +8,7 @@ import { productListOptionsEnum } from "../product-list/product-list-options-enu
   styleUrls: ["./product-card.component.css"],
 })
 export class ProductCardComponent{
-  @Input() mode!: productListOptionsEnum;
-  @Input() product!: ProductBase;
-
-  productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
+    @Input() mode!: 'view' | 'cart';
+    @Input() product!: ProductBase;
+    
 }

@@ -7,4 +7,4 @@ import { Component } from "@angular/core";
     styleUrls: ["./add-item.component.css"],
 
 })
-export class AddItemComponent{}
+export class AddItemCompoent{}

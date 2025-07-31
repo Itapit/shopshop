@@ -6,8 +6,8 @@ import { ProductSchema, ProductDocument } from './product.schema';
 import { IProductsRepository } from './products-repository.interface';
 import { ProductSortBy } from '@common/Enums';
 import { ProductBase } from '@common/Interfaces';
+import { ProductDto } from '@common/DTOs';
 import { mapToProductDto } from '../product.mapper';
-import { ProductDto } from '../DTOs/base/product.dto';
 
 
 @Injectable()
@@ -57,5 +57,27 @@ export class ProductsRepository implements IProductsRepository {
     async updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null> {
         const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { new: false }).exec();
         return updatedDoc ? mapToProductDto(updatedDoc) : null
+    } 
+
+    async findByNameContains(
+        keyword: string,
+        page: number,
+        limit: number,
+        sortBy: string = ProductSortBy.CREATED_AT
+    ): Promise<{ products: ProductDto[]; totalCount: number }> {
+        const skip = (page - 1) * limit;
+        
+        const sort: Record<string, 1 | -1> = {
+            [sortBy]: 1,
+        };
+
+        const [docs, totalCount] = await Promise.all([
+            this.productModel.find({ name: { $regex: keyword } }).skip(skip).limit(limit).sort(sort).exec(),
+            this.productModel.countDocuments().exec(),
+        ]);
+
+        const products = docs.map(mapToProductDto);
+
+        return { products, totalCount };
     }
 }

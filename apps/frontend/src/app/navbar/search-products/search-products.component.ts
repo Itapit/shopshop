@@ -1,3 +1,5 @@
+import { trigger } from '@angular/animations';
+import { SharedService } from './../../shared/shared.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,8 +10,9 @@ import { Component } from '@angular/core';
 })
 export class SearchProductsComponent {
   value: string | undefined;
+  constructor(private sharedService: SharedService) {}
 
   onSearch() {
-    console.log('Search:', this.value);
+    this.sharedService.triggerSearch();
   }
 }

@@ -1,4 +1,4 @@
-import { ProductDto } from "./DTOs/base/product.dto";
+import { ProductDto } from "@common/DTOs";
 import { ProductDocument } from "./repository/product.schema";
 
 export function mapToProductDto(product: ProductDocument): ProductDto {
