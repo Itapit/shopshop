@@ -5,6 +5,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '@common/Enums';
 import { CreateOrderRequestDto, CreateOrderResponseDto, GetOrdersListRequestDto, GetOrdersListResponseDTO, OrderDto } from './DTOs';
+import { CreateOrderRequest, GetOrdersListRequest } from '@common/Interfaces';
 
 @Controller('orders')
 export class OrdersController {
@@ -14,11 +15,11 @@ export class OrdersController {
   @Roles(Role.Client)
   @Post()
   async createOrder(
-    @Body() dto: CreateOrderRequestDto,
+    @Body() dto: CreateOrderRequest,
     @Req() req: any
   ): Promise<CreateOrderResponseDto> {
-    const customerId = req.user.sub; 
-    return this.ordersService.saveOrder(dto, customerId);
+    const customer_id = req.user.userID; 
+    return this.ordersService.saveOrder(dto, customer_id);
   } 
 
 
@@ -33,15 +34,11 @@ export class OrdersController {
   @UseGuards(AuthGuard)
   @Get('myorders')
   async getOrdersByUser(
-    @Query() dto: GetOrdersListRequestDto,
+    @Query() dto: GetOrdersListRequest,
     @Req() req: any 
-  ): Promise<GetOrdersListResponseDTO> {
-
-    
-    
-    const userId = req.user.sub; 
-    dto.customerId = userId;
-
+  ): Promise<GetOrdersListResponseDTO> { 
+    const userId = req.user.userID; 
+    dto.customer_id = userId;
     return this.ordersService.getOrdersByUser(dto);
   }
 

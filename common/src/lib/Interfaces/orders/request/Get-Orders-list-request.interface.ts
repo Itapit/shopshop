@@ -1,8 +1,8 @@
 import { OrdersSortBy } from "@common/Enums/orders-sort-by"
 
 export interface GetOrdersListRequest{
-    customerId: string,
+    customer_id: string,
     page:number,
-    sortBy?: OrdersSortBy
+    sort_by?: OrdersSortBy
     limit?:number
 }

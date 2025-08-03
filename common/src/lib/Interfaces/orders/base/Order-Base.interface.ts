@@ -1,7 +1,7 @@
 import { ProductItem } from "../../products/base/Product-Item.interface";
 
 export interface OrderBase{
-   customerID: string;
+   customer_id: string;
    items: ProductItem[];
-   totalPrice: number;
+   total_price: number;
 }

@@ -1,13 +1,29 @@
-import { CreateOrderResponse, OrderBase, OrderFull } from "@common/Interfaces";
+import { CreateOrderResponse } from "@common/Interfaces";
+import { OrderDto } from "../base";
+import { ProductItem } from "@common/Interfaces";
+
+export class OrderItemResponseDto {
+  product_id!: string;
+  quantity!: number;
+  
+
+  constructor(item: ProductItem) {
+    Object.assign(this, item);
+  }
+}
 
 export class CreateOrderResponseDto implements CreateOrderResponse {
-  order: OrderFull; 
+  order_id: string;
+  customer_id!: string;
+  total_price!: number;
+  items!: OrderItemResponseDto[];
 
-  constructor(dto: OrderBase){
-    this.order.customerID = dto.customerID
-    this.order.items = dto.items
-    this.order.totalPrice = dto.totalPrice
+  constructor(order: OrderDto) {
+    this.customer_id = order.customer_id!;
+    this.total_price = order.total_price!;
+    this.items = (order.items || []).map(
+      (item) => new OrderItemResponseDto(item)
+    );
   }
-
-
+  created_at: string;
 }

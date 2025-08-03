@@ -3,15 +3,27 @@ import { ProductsRepository } from "../products/repository/products.repository";
 import { OrdersRepository } from "./repository/orders.repository";
 import { mapOrderToDto } from "./order.mapper";
 import { CreateOrderRequestDto, CreateOrderResponseDto, GetOrdersListRequestDto, GetOrdersListResponseDTO, OrderDto } from "./DTOs";
+import { CreateOrderRequest, GetOrdersListRequest } from "@common/Interfaces";
+import { plainToInstance } from "class-transformer";
+import { validate } from "class-validator";
 @Injectable()
 export class OrdersService {
-        constructor(
-            private readonly ordersRepo: OrdersRepository,
-            private readonly productRepo: ProductsRepository
-        ) {} 
+    constructor(
+        private readonly ordersRepo: OrdersRepository,
+        private readonly productRepo: ProductsRepository
+    ) {} 
 
 
-        async saveOrder(dto: CreateOrderRequestDto, customerId: string): Promise<CreateOrderResponseDto> {
+    async saveOrder(dto: CreateOrderRequest, customerId: string): Promise<CreateOrderResponseDto> {
+        const checker = plainToInstance(CreateOrderRequestDto, dto);
+        
+          
+        const errors = await validate(checker)
+        if (errors.length > 0) {
+             throw new BadRequestException(errors);
+         }
+
+
         let totalPrice = 0;
 
         for (const item of dto.items) {
@@ -34,9 +46,9 @@ export class OrdersService {
 
         
         const createdOrder = await this.ordersRepo.createOrder({
-            customerID: customerId,
+            customer_id: customerId,
             items: dto.items,
-            totalPrice: totalPrice,
+            total_price: totalPrice,
         });
 
         return new CreateOrderResponseDto(createdOrder); //TODO create a constructor in the class
@@ -55,18 +67,23 @@ export class OrdersService {
         return mapOrderToDto(order);
     } 
 
-    async getOrdersByUser(dto: GetOrdersListRequestDto): Promise<GetOrdersListResponseDTO> {
-        const { page = 1, limit = 10, sortBy } = dto;
+    async getOrdersByUser(dto: GetOrdersListRequest): Promise<GetOrdersListResponseDTO> {
+        const checker = plainToInstance(GetOrdersListRequestDto, dto);
+        const errors = await validate(checker);
+        if (errors.length > 0) {
+            throw new BadRequestException(errors);
+        }
+        const { page = 1, limit = 10, sort_by } = dto;
         
         //const { orders, totalCount } = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sortBy);
-        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customerId, page, limit , sortBy);
+        const paginatedDto  = await this.ordersRepo.findByCustomerIdPaginated(dto.customer_id, page, limit , sort_by);
 
         if (!paginatedDto.items || paginatedDto.items.length === 0) {
             throw new NotFoundException('No orders found for this customer');
         }
 
         const response = new GetOrdersListResponseDTO();
-        response.orders = paginatedDto.items; //TODO i have now idea what going on here
+        response.orders = paginatedDto.items; 
         response.page = page;
         response.limit = limit;
         response.totalCount = paginatedDto.totalCount;

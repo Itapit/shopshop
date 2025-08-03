@@ -1,7 +1,7 @@
 import { OrderBase, ProductItem } from "@common/Interfaces";
 
 export class OrderDto implements OrderBase {
-    customerID: string;
+    customer_id: string;
     items!: ProductItem[];
-    totalPrice: number;
+    total_price: number;
 }
