@@ -5,7 +5,7 @@ import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from "class-validator";
 
 export class GetOrdersListRequestDto implements GetOrdersListRequest  {
     @IsString()
-    customerId!: string;
+    customer_id!: string;
         
     @Type(() => Number)
     @IsInt()
@@ -14,7 +14,7 @@ export class GetOrdersListRequestDto implements GetOrdersListRequest  {
     
     @IsOptional()
     @IsEnum(OrdersSortBy)
-    sortBy?: OrdersSortBy;
+    sort_by?: OrdersSortBy;
     
     @Type(() => Number)
     @IsInt()

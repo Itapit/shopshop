@@ -6,12 +6,12 @@ export type OrderDocument = OrderSchema & Document;
 @Schema({ collection: 'orders', timestamps: true })
 export class OrderSchema implements OrderBase {
     @Prop({ required: true })
-    customerID: string;
+    customer_id: string;
 
     @Prop({ type: [{ product_id: String, quantity: Number }], required: true })
     items: ProductItem[];
 
     @Prop({ required: true })
-    totalPrice: number;
+    total_price: number;
 } 
 export const OrderSchemaFactory = SchemaFactory.createForClass(OrderSchema);

@@ -4,12 +4,6 @@ import { CreateOrderRequest } from "@common/Interfaces"
 import { ProductItemDto } from '../../../products/DTOs';
 
 export class CreateOrderRequestDto implements CreateOrderRequest  {
-  @IsString()
-  customerID: string;
-
-  @IsNumber()
-  totalPrice: number;
-  
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ProductItemDto)
