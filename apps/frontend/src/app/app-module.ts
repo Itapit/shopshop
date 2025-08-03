@@ -7,11 +7,11 @@ import { NavbarModule } from "./navbar/navbar-module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { ProductsModule } from './products/products-module';
-import { UserModule } from './user/user-module';
+import { CartModule } from './cart/cart-module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, RouterModule.forRoot(appRoutes), NavbarModule, BrowserAnimationsModule, ProductsModule, UserModule],
+  imports: [BrowserModule, RouterModule.forRoot(appRoutes), NavbarModule, BrowserAnimationsModule, ProductsModule, CartModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [AppComponent],
 })

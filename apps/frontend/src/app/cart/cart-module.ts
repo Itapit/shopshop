@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { ProductsModule } from "../products/products-module";
-import { UserComponent } from "./user.component";
+import { CartComponent } from "./cart.component";
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
     imports: [ProductsModule , ButtonModule , PaginatorModule],
-    declarations: [UserComponent],
+    declarations: [CartComponent],
     exports: [],
 })
-export class UserModule {
+export class CartModule {
  
 }

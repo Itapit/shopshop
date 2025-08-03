@@ -5,12 +5,12 @@ import { productListOptionsEnum } from "../products/product-list/product-list-op
 import { Observable, of } from "rxjs";
 
 @Component({
-  selector: "app-user",
+  selector: "app-cart",
   standalone: false,
-  templateUrl: "./user.component.html",
-  styleUrls: ["./user.component.css"],
+  templateUrl: "./cart.component.html",
+  styleUrls: ["./cart.component.css"],
 })
-export class UserComponent {
+export class CartComponent {
   
   productListOptionsEnum = productListOptionsEnum;
     
