@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class SharedService {
   private orderClickSubject = new Subject<void>();
-  private searchClickSubject = new Subject<void>();
+  private searchClickSubject = new Subject<string>();
 
   searchClicked$ = this.searchClickSubject.asObservable();
   orderClicked$ = this.orderClickSubject.asObservable();
@@ -15,7 +15,7 @@ export class SharedService {
     this.orderClickSubject.next();
   } 
 
-  triggerSearch() {
-    this.searchClickSubject.next();
+  triggerSearch(value:string) {
+    this.searchClickSubject.next(value);
   }
 }

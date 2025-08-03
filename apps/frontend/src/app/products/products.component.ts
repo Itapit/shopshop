@@ -5,6 +5,7 @@ import { map, Observable, tap } from "rxjs";
 import { TokenService } from "../auth/services/token.service";
 import { Role } from "@common/Enums"
 import { GetProductsListRequest, GetProductsListResponse, ProductFull } from "@common/Interfaces";
+import { SharedService } from "../shared/shared.service";
 @Component({
     selector: "app-products",
     standalone: false,
@@ -12,24 +13,27 @@ import { GetProductsListRequest, GetProductsListResponse, ProductFull } from "@c
     styleUrls: ["./products.component.css"],
 })
 export class ProductsComponent implements OnInit{
-  constructor(private productService: ProductsHttpService, private tokenService: TokenService) {}
+  constructor(private productService: ProductsHttpService, private tokenService: TokenService , private sharedService : SharedService) {}
   productsResponse?: GetProductsListResponse;
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
   productListMode= productListOptionsEnum.PublicView
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    
     if(this.tokenService.getRole() == Role.Client) {
       this.productListMode = productListOptionsEnum.CustomerView
     }
   }
 
-  fetchProducts = (page: number, limit: number): Observable<ProductFull[]> => {
-    const query: GetProductsListRequest= { page, limit };
+  fetchProducts = (page: number, limit: number, keyword:string): Observable<ProductFull[]> => {
+    const query: GetProductsListRequest= { page, limit , keyword};
     
     return this.productService.getProducts(query).pipe(
       tap((res) => this.productsResponse = res),
       map((res) => res.products)
     );
-  };
+  }; 
+
+  
 }
