@@ -1,119 +1,83 @@
-.cart-card {
-  width: 100%;
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
-}
 
-.cart-row {
-  display: flex;
-  flex-direction: row-reverse; /* עברית - מימין לשמאל */
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.product-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.cart-name-desc {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  min-width: 180px;
-}
-
-.product-name {
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.product-description {
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.cart-price,
-.cart-quantity {
-  min-width: 80px;
-  text-align: right;
-  font-size: 0.95rem;
-}
-
-.cart-remove {
-  min-width: 80px;
-}
-
-/* עיצוב כללי לכרטיס במצב view */
-.view-card {
-  width: 240px;
-  height: 330px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* משתלט על כל הכרטיס של PrimeNG */
-.view-card ::ng-deep .p-card {
+:host {
+  display: block;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-/* כותרת התמונה */
-.view-card ::ng-deep .p-card .p-card-header {
-  height: 140px;
+.p-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* תמונת המוצר */
-.view-card .product-image {
-  width: auto;
+.card-content {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+}
+
+
+.image-wrapper {
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-wrapper img {
+  max-height: 100%;
+  max-width: 100%;
   object-fit: contain;
 }
 
-/* גוף הכרטיס */
-.view-card ::ng-deep .p-card .p-card-body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.product-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.25rem 0;
+  line-height: 1.3;
+  height: 1.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* טקסטים */
-.product-description,
+.product-description {
+  font-size: 0.9rem;
+  color: #666;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  overflow: hidden;
+  white-space: normal;
+
+  line-height: 1.3rem;
+  height: calc(1.3rem * 2);
+}
+
+
+
+
+
+.product-price {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #222;
+}
+
 .product-quantity {
-  margin: 0;
-  text-align: right;
-  font-size: 0.95rem;
-  color: #555;
+  font-size: 0.85rem;
+  color: #444;
+  margin-top: 0.25rem;
 }
 
-
-
-.products-list-view {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
+.actions {
+  padding-top: 0.5rem;
 }
 
-.view-card {
-  flex: 1 1 200px;
-  display: flex;
-}
-
-::ng-deep p-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+.flex-spacer {
+  flex-grow: 1;
 }

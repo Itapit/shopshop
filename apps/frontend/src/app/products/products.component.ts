@@ -20,7 +20,10 @@ export class ProductsComponent implements OnInit{
 
   ngOnInit(): void {
     if(this.tokenService.getRole() == Role.Client) {
-      this.productListMode = productListOptionsEnum.CustomerView
+      this.productListMode = productListOptionsEnum.CustomerView;
+    }
+    if(this.tokenService.getRole() == Role.Admin) {
+      this.productListMode = productListOptionsEnum.AdminView;
     }
   }
 

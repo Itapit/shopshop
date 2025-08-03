@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { FocusTrapModule } from 'primeng/focustrap';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 @NgModule({
   declarations: [SigninComponent],
@@ -15,7 +17,9 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     InputTextModule,
     PasswordModule,
-    ButtonModule
+    ButtonModule,
+    FocusTrapModule,
+    AutoFocusModule
     ]
 })
 export class AuthModule { }

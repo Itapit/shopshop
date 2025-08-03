@@ -1,5 +1,5 @@
 <form #form="ngForm" (ngSubmit)="onSignin(form)">
-  <div class="signin-card">
+  <div pFocusTrap class="signin-card">
     <h2 class="signin-title">{{ title }}</h2>
 
     <!-- Email Field -->
@@ -17,6 +17,8 @@
         email
         [(ngModel)]="email"
         [placeholder]="emailPlaceholder"
+        pAutoFocus
+        [autofocus]="true"
         class="full-width"
         #emailRef="ngModel"
       />
