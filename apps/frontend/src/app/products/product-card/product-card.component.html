@@ -33,7 +33,7 @@
 
     <div *ngIf="mode == 'adminView'" class="=flex-spacer"></div>
     <div class="actions" *ngIf="mode == 'adminView'">
-      <app-edit-product-button></app-edit-product-button>
+      <app-edit-product-button [product]="product"></app-edit-product-button>
     </div>
 
   </div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProductBase } from '@common/Interfaces';
+import { ProductBase, ProductFull } from '@common/Interfaces';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
   styleUrls:["./add-to-cart-button.component.css"],
 })
 export class AddToCartButtonComponent {
-  @Input() product!:ProductBase;
+  @Input() product!:ProductFull;
   @Input() initialQuantity = 0;
   @Output() quantityChange = new EventEmitter<number>();
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { ProductBase } from "@common/Interfaces";
+import { ProductFull } from "@common/Interfaces";
 import { productListOptionsEnum } from "../product-list/product-list-options-enum";
 
 @Component({
@@ -8,12 +8,9 @@ import { productListOptionsEnum } from "../product-list/product-list-options-enu
   templateUrl: "./product-card.component.html",
   styleUrls: ["./product-card.component.css"],
 })
-export class ProductCardComponent implements OnInit{
+export class ProductCardComponent {
   @Input() mode!: productListOptionsEnum;
-  @Input() product!: ProductBase;
+  @Input() product!: ProductFull;
 
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
-  ngOnInit(): void {
-    console.log(this.mode)
-  }
 }
