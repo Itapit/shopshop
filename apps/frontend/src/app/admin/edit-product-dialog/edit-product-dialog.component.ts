@@ -33,7 +33,7 @@ export class EditProductDialogComponent {
   }
 
   submit() {
-    console.log(this.config.data.product);
+    console.log(this.form.value)
     if (this.form.invalid) return;
 
     this.isSubmitting = true;

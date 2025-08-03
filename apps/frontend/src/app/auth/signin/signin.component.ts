@@ -40,7 +40,6 @@ export class SigninComponent {
       form.control.markAllAsTouched();
       return;
     }
-    console.log("sign in: ", this.email, this.password);
     const dto: SignInRequest = {
       email : this.email ?? '',
       password : this.password ?? '',

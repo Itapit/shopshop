@@ -16,7 +16,6 @@ export class EditProductButtonComponent {
   constructor(private dialogService: DialogService) {};
 
   openDialog() {
-    console.log(this.product);
     this.dialogService.open(EditProductDialogComponent, {
       data: { product: this.product},
       header: "Edit Product",
