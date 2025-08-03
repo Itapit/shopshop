@@ -12,9 +12,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
+import { EditProductButtonComponent } from './edit-product-button/edit-product-button.component';
 
 @NgModule({
-  declarations: [ProductsComponent , ProductCardComponent , ProductListComponent, AddToCartButtonComponent],   
+  declarations: [ProductsComponent , ProductCardComponent , ProductListComponent, AddToCartButtonComponent, EditProductButtonComponent],   
   imports: [
     ProductsRoutingModule,
     CardModule,
