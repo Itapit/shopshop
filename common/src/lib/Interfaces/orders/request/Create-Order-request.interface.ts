@@ -1,3 +1,6 @@
+import { ProductItem } from "@common/Interfaces/products";
 import { OrderBase } from "../base";
 
-export interface CreateOrderRequest extends OrderBase{}
+export interface CreateOrderRequest {
+    items: ProductItem[];
+}

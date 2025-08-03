@@ -32,9 +32,9 @@ export class OrdersRepository {
     return dto;
   } 
 
-  async findById(id: string): Promise<OrderDocument | null> {
+  async findById(id: string): Promise<OrderBase | null> {
     const doc = await this.orderModel.findById(id).exec();
-    return doc ? doc : null;
+    return doc ? mapOrderToDto(doc) : null;
   } 
 
   async createOrder(data: OrderBase): Promise<OrderBase> {

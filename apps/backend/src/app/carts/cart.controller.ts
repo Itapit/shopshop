@@ -26,7 +26,7 @@ export class CartController {
     @Roles(Role.Client)
     @Put('item')
     async editCartItem(@Body() cartItem: cartItem): Promise<EditItemInCartResponseDto> {
-        console.log('Received cartItem:', cartItem);
+
         if (!cartItem.customer_id || !cartItem.item?.product_id) {
         throw new BadRequestException('Missing customer or product ID');
         }
