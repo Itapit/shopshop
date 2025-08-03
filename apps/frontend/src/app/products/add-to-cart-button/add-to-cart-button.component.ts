@@ -36,11 +36,15 @@ export class AddToCartButtonComponent {
       this.isLoading = false;
     }, 400);
   }
+
   onQuantityChange(newQty: number | string) {
     const parsed = typeof newQty === "string" ? parseInt(newQty) : newQty;
-    const newQuantity = parsed > 0 ? parsed : 0;
-
-    if (newQuantity === 0 && this.previousQuantity > 0) {
+    let newQuantity = parsed > 0 ? parsed : 0;
+    
+    if (newQuantity > this.product.quantity) {
+      newQuantity = this.product.quantity;
+    }
+    if (newQuantity === 0) {
       this.msgService.add({
         severity: "info",
         summary: "Removed from cart",

@@ -11,6 +11,7 @@ import { AddToCartButtonComponent } from './add-to-cart-button/add-to-cart-butto
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [ProductsComponent , ProductCardComponent , ProductListComponent, AddToCartButtonComponent],   
@@ -21,7 +22,8 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     PaginatorModule,
     ProgressSpinnerModule,
-    ToastModule
+    ToastModule,
+    TooltipModule
 ],
   exports: [ProductsComponent, ProductListComponent ],
   providers: [MessageService],

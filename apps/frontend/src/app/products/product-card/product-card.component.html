@@ -1,21 +1,36 @@
 <div *ngIf="mode === 'customerView' || mode === 'publicView'" class="view-card">
-<p-card header="{{ product.name }}" subheader="₪{{ product.price }}">
-  <ng-template pTemplate="header">
-    <img
-      [src]="product.imageUrl"
-      alt="{{ product.name }}"
-      class="product-image"
-    />
-  </ng-template>
+<p-card class="product-card">
+  <div class="card-content">
 
-  <p class="product-description">{{ product.description }}</p>
-  <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
-  <div *ngIf="mode === 'customerView'">
-    <app-add-to-cart-button
-      [product]="product"
-    ></app-add-to-cart-button>
+    <div class="image-wrapper">
+      <img [src]="product.imageUrl" alt="{{ product.name }}" />
+    </div>
+
+    <div class="product-name">
+      {{ product.name }}
+    </div>
+
+    <div class="product-description" [pTooltip]="product.description">
+      {{ product.description }}
+    </div>
+
+    <div class="product-price">
+      Price: ₪{{ product.price.toFixed(2) }}
+    </div>
+
+    <div class="product-quantity">
+      In Stock: {{ product.quantity }}
+    </div>
+
+
+    <div *ngif="mode == 'customerView'" class="flex-spacer"> </div>
+    <div class="actions" *ngIf="mode == 'customerView'">
+      <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+    </div>
+
   </div>
 </p-card>
+
 </div> 
 
 <div *ngIf="mode === 'cartView'" class="cart-card">
