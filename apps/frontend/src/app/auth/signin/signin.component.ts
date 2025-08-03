@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { TokenService } from '../services/token.service';
 import { Role } from 'common/src/lib/Enums/role.enum';
 import { SignInRequest } from '@common/Interfaces';
+import { SharedService } from '../../shared/shared.service';
+import { AuthSession } from '../auth-session.interface';
 
 @Component({
   selector: 'app-signin',
@@ -13,7 +15,7 @@ import { SignInRequest } from '@common/Interfaces';
   styleUrl: './signin.component.css'
 })
 export class SigninComponent {
-  constructor(private readonly authService: AuthService , private router: Router , private tokenService: TokenService) {}
+  constructor(private readonly authService: AuthService , private router: Router , private tokenService: TokenService, private sharedService: SharedService) {}
 
   title = 'Sign In';
   buttonLabel = 'Sign In';
@@ -45,12 +47,15 @@ export class SigninComponent {
     };
     this.authService.signIn(dto).subscribe({  //TODO add a loading screen for the back wait
       next: (res) => {
-        console.log('Signed in!', res);
         if (res.access_token && res.role) {
-          this.tokenService.saveToken(res.access_token);
-          this.tokenService.saveRole(res.role);
+          const session: AuthSession = {
+            token: res.access_token,
+            role: res.role as Role
+          };
+          this.tokenService.saveSession(session);
+          this.sharedService.setUserData(session);
         }
-        if(this.tokenService.getRole() === Role.Client)
+        if(this.tokenService.getRole() === Role.Client || this.tokenService.getRole() === Role.Admin)
           this.router.navigate(['/']);
       },
       error: (err) => {
