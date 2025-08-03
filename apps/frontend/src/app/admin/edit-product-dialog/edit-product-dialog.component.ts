@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductFull } from '@common/Interfaces';
+import { ProductFull, UpdateProductRequest } from '@common/Interfaces';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AdminProductsService } from '../services/admin-products.service';
 
 @Component({
   selector: 'app-edit-product-dialog',
@@ -18,7 +19,8 @@ export class EditProductDialogComponent {
     private fb: FormBuilder,
     private ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private msgService: MessageService
+    private msgService: MessageService,
+    private adminService: AdminProductsService
   ) {
     const product: ProductFull = this.config.data.product;
 
@@ -38,16 +40,26 @@ export class EditProductDialogComponent {
 
     this.isSubmitting = true;
 
-    // this.adminService.updateProduct(this.form.value).subscribe({
-    //   next: () => {
-    //     this.msgService.add({ severity: 'success', summary: 'Product updated' });
-    //     this.ref.close(true);
-    //   },
-    //   error: (err) => {
-    //     this.msgService.add({ severity: 'error', summary: 'Update failed', detail: err.message });
-    //     this.isSubmitting = false;
-    //   }
-    // });
+    const id:string = this.form.value.id;
+
+    const payload: UpdateProductRequest = {
+      name: this.form.value.name,
+      description: this.form.value.description,
+      price: this.form.value.price,
+      quantity: this.form.value.quantity,
+      imageUrl: this.form.value.imageUrl
+    };
+
+    this.adminService.updateProduct(id, payload).subscribe({
+      next: () => {
+        this.msgService.add({ severity: 'success', summary: 'Product updated' });
+        this.ref.close(true);
+      },
+      error: (err) => {
+        this.msgService.add({ severity: 'error', summary: 'Update failed', detail: err.message });
+        this.isSubmitting = false;
+      }
+    });
   }
 
   cancel() {
