@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { WebsiteLogoComponent } from './website-logo/website-logo.component';
 import { OrderComponent } from './order/order.component';
-import { AddItemComponent } from './add-item/add-item.component';
+import { SignUpLinkComponent } from './sign-up-link/sign-up-link.component';
+import { StatsLinkComponent } from './stats-link/stats-link.component';
 
 @NgModule({
-  declarations: [SignInLinkComponent, NavbarComponent, SearchProductsComponent, WebsiteLogoComponent , OrderComponent , AddItemComponent],
+  declarations: [SignInLinkComponent, NavbarComponent, SearchProductsComponent, WebsiteLogoComponent , OrderComponent, SignUpLinkComponent, StatsLinkComponent],
   imports: [CommonModule, NavbarRoutingModule, ButtonModule, FormsModule, InputTextModule],
   exports: [NavbarComponent]
 })

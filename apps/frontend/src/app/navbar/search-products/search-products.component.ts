@@ -1,4 +1,3 @@
-import { trigger } from '@angular/animations';
 import { SharedService } from './../../shared/shared.service';
 import { Component } from '@angular/core';
 

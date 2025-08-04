@@ -1,6 +1,32 @@
-<form #form="ngForm" (ngSubmit)="onSignin(form)">
-  <div class="signin-card">
-    <h2 class="signin-title">{{ title }}</h2>
+<form #form="ngForm" (ngSubmit)="onCreateUser(form)">
+  <div pFocusTrap class="create-user-card">
+    <h2 class="create-user-title">{{ title }}</h2>
+
+
+    <!-- Username Field -->
+    <div class="field">
+      <label for="Username" class="label-with-icon">
+        <i class="pi pi-id-card"></i>
+        {{ usernameLabel }}
+      </label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        pInputText
+        required
+        [(ngModel)]="username"
+        [placeholder]="usernamePlaceHolder"
+        pAutoFocus
+        [autofocus]="true"
+        class="full-width"
+        #usernameRef="ngModel"
+      />
+      <div *ngIf="usernameRef.invalid && usernameRef.touched" class="error-message">
+        <small *ngIf="usernameRef.errors?.['required']">{{ usernameRequiredMSG }}</small>
+        <small *ngIf="usernameRef.errors?.['email']">{{ usernameInvalidMsg }}</small>
+      </div>
+    </div>
 
     <!-- Email Field -->
     <div class="field">
@@ -17,6 +43,8 @@
         email
         [(ngModel)]="email"
         [placeholder]="emailPlaceholder"
+        pAutoFocus
+        [autofocus]="true"
         class="full-width"
         #emailRef="ngModel"
       />
@@ -52,7 +80,7 @@
 
     <!-- Submit Button -->
     <p-button
-      class="signin-button"
+      class="create-user-button"
       [label]="buttonLabel"
       icon="pi pi-sign-in"
       type="submit"

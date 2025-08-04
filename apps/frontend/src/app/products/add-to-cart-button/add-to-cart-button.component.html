@@ -1,6 +1,8 @@
+<p-toast></p-toast>
+
 <p-button
   *ngIf="quantity === 0 && !isLoading"
-  [disabled]="maxQuantity === 0"
+  [disabled]="product.quantity === 0"
   label="Add to Cart"
   icon="pi pi-shopping-cart"
   (onClick)="addToCart()"
@@ -12,7 +14,7 @@
   *ngIf="quantity > 0 && !isLoading"
   [(ngModel)]="quantity"
   [min]="0"
-  [max]="maxQuantity"
+  [max]="product.quantity"
   [showButtons]="true"
   buttonLayout="horizontal"
   (onInput)="onQuantityChange($event.value)"

@@ -1,17 +1,41 @@
-<div *ngIf="mode === 'customerView' || mode === 'publicView'" class="view-card">
-<p-card header="{{ product.name }}" subheader="₪{{ product.price }}">
-  <ng-template pTemplate="header">
-    <img
-      [src]="product.imageUrl"
-      alt="{{ product.name }}"
-      class="product-image"
-    />
-  </ng-template>
+<div *ngIf="mode === 'customerView' || mode === 'publicView' || mode ==='adminView'" class="view-card">
+<p-card class="product-card">
+  <div class="card-content">
 
-  <p class="product-description">{{ product.description }}</p>
-  <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
-  <div *ngIf="mode === 'customerView'">
-    <app-add-to-cart-button [maxQuantity]="product.quantity"  [product_id]="product.productID"></app-add-to-cart-button>
+    <div class="image-wrapper">
+      <img [src]="product.imageUrl" alt="{{ product.name }}" />
+    </div>
+
+    <div class="product-name">
+      {{ product.name }}
+    </div>
+
+    <div class="product-description" [pTooltip]="product.description">
+      {{ product.description }}
+    </div>
+
+    <div class="product-price">
+      Price: ₪{{ product.price.toFixed(2) }}
+    </div>
+
+    <div class="product-quantity" *ngIf="product.quantity != 0"> 
+      In Stock: {{ product.quantity }}
+    </div>
+    <div class="product-quantity" *ngIf="product.quantity == 0"> 
+      Out of stock
+    </div>
+
+
+    <div *ngIf="mode === 'customerView'" class="flex-spacer"></div>
+    <div class="actions" *ngIf="mode === 'customerView'">
+      <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+    </div>
+
+    <div *ngIf="mode == 'adminView'" class="=flex-spacer"></div>
+    <div class="actions" *ngIf="mode == 'adminView'">
+      <app-edit-product-button [product]="product" (productUpdated)="loadProduct()"></app-edit-product-button>
+    </div>
+
   </div>
 </p-card>
 </div> 

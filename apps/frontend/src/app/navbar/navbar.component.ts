@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenService } from '../auth/services/token.service';
+import { Role } from '@common/Enums';
+import { Subscription } from 'rxjs';
+import { SharedService } from '../shared/shared.service';
+import { AuthSession } from '../auth/auth-session.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -8,40 +12,27 @@ import { filter } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent implements OnInit {
-  showSignInLink: boolean = true;
-  showOrderButton: boolean = true;
-  showAddItemButton: boolean = true;
+export class NavbarComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router) {}
+  constructor(private sharedService: SharedService, private router:Router) {}
+
+  showSignInLink: boolean = true;
+  showOrderButton: boolean = false;
+  showSignUpLink: boolean = false;
+  showStatsLink: boolean = false;
+
+  private userSub!: Subscription;
 
   ngOnInit(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      const url = event.urlAfterRedirects;
-
-      switch (this.router.url) {
-          case '/user':
-            this.showAddItemButton = true;
-            this.showOrderButton = true;
-            this.showSignInLink = false;
-            break;
-
-          case '/':
-            this.showAddItemButton = false;
-            this.showOrderButton = false;
-            this.showSignInLink = true;
-            break;
-
-          default:
-            this.showAddItemButton = false;
-            this.showOrderButton = false;
-            this.showSignInLink = false;
-            break;
-    }
-      
+    this.userSub = this.sharedService.userData$.subscribe((session: AuthSession | null) => {
+      this.showOrderButton = session?.role === Role.Client;
+      this.showSignInLink = !session;
+      this.showSignUpLink = session?.role === Role.Admin;
+      this.showStatsLink = session?.role === Role.Admin;
     });
   }
 
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
 }
