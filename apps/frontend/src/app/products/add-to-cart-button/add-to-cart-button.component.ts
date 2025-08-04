@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
-import { ProductBase, ProductFull } from '@common/Interfaces';
-import { MessageService } from 'primeng/api';import { SharedService } from '../../shared/shared.service';
+import { ProductFull } from '@common/Interfaces';
+import { MessageService } from 'primeng/api';
+import { SharedService } from '../../shared/shared.service';
 import { CartService } from '../../cart/services/cart.service';
-import { ProductCardComponent } from '../product-card/product-card.component';
 import { ProductItem } from '@common/Interfaces';
 
 
@@ -15,20 +15,14 @@ import { ProductItem } from '@common/Interfaces';
 export class AddToCartButtonComponent {
   @Input() product!:ProductFull;
   @Input() initialQuantity = 0;
-    @Input() product_id!:string;
-  @Output() quantityChange = new EventEmitter<number>();
 
-  constructor(private msgService: MessageService) {}
-
-
-    constructor(  private cartService : CartService){}
+  constructor(private msgService: MessageService, private cartService: CartService) {}
 
   isLoading = false;
   quantity = 0;
   private previousQuantity = 0;
   
   ngOnInit() {
-      
     this.quantity = this.initialQuantity;
     this.previousQuantity = this.initialQuantity;
   }
@@ -41,9 +35,8 @@ export class AddToCartButtonComponent {
     this.isLoading = true;
   
     setTimeout(() => {
-        const item : ProductItem = {productID: this.product_id , quantity: this.quantity};
-        this.cartService.updateCartItemQuantity(item);
-      this.quantityChange.emit(1);
+      const item : ProductItem = {productID: this.product.productID , quantity: this.quantity};
+      this.cartService.updateCartItemQuantity(item);
       this.isLoading = false;
     }, 400);
   }
@@ -77,14 +70,10 @@ export class AddToCartButtonComponent {
 
     this.quantity = newQuantity;
     this.previousQuantity = newQuantity;
-    this.quantityChange.emit(this.quantity);
+    const item : ProductItem = {productID: this.product.productID , quantity: this.quantity};
+      
+    this.cartService.updateCartItemQuantity(item);
         
-        const item : ProductItem = {productID: this.product_id , quantity: this.quantity};
-        
-        this.cartService.updateCartItemQuantity(item);
-        
-
   }
-    
 }
 

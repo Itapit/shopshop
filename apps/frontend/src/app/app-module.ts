@@ -19,7 +19,7 @@ import { AuthInterceptor } from './auth/services/auth.interceptor';
     RouterModule.forRoot(appRoutes),
     NavbarModule,
     ProductsModule,
-    UserModule
+    CartModule
   ],
   providers: [
     {

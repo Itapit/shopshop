@@ -16,7 +16,7 @@ export const appRoutes: Route[] = [
     loadChildren: () => import('./admin/admin-module').then((m) => m.AdminModule)
   },
   {
-    path: 'user',
-    component: UserComponent
+    path: 'cart',
+    loadChildren: () => import('./cart/cart-module').then((m) => m.CartModule)
   }
 ];
