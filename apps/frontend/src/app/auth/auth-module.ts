@@ -9,9 +9,10 @@ import { ButtonModule } from 'primeng/button';
 import { FocusTrapModule } from 'primeng/focustrap';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
-  declarations: [SigninComponent, CreateUserComponent],
+  declarations: [SigninComponent, CreateUserComponent, UnauthorizedComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
