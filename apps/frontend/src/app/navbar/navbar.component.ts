@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   showSignInLink: boolean = true;
   showOrderButton: boolean = false;
+  showSignUpLink: boolean = false;
 
   private userSub!: Subscription;
 
@@ -25,6 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.userSub = this.sharedService.userData$.subscribe((session: AuthSession | null) => {
       this.showOrderButton = session?.role === Role.Client;
       this.showSignInLink = !session;
+      this.showSignUpLink = session?.role === Role.Admin;
     });
   }
 

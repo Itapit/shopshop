@@ -7,5 +7,5 @@ import { Component, signal } from '@angular/core';
   styleUrl: './sign-up-link.component.css'
 })
 export class SignUpLinkComponent {
-  buttonText = signal('Sign up')
+  buttonText = signal('Create User');
 }
