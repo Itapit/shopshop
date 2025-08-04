@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { ProductBase } from "@common/Interfaces";
+import {  ProductFull } from "@common/Interfaces";
 import { productListOptionsEnum } from "../product-list/product-list-options-enum";
 
 @Component({
@@ -10,7 +10,7 @@ import { productListOptionsEnum } from "../product-list/product-list-options-enu
 })
 export class ProductCardComponent{
   @Input() mode!: productListOptionsEnum;
-  @Input() product!: ProductBase;
+  @Input() product!: ProductFull;
 
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 }

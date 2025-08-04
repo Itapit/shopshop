@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit {
   
   
   ngOnInit() {
-    this.sharedService.searchClicked$.subscribe((value) => {
+      this.sharedService.searchClicked$.subscribe((value) => {
       this.handleSearch(value);
     })
     this.loadProducts();

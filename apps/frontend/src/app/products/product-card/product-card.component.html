@@ -11,7 +11,7 @@
   <p class="product-description">{{ product.description }}</p>
   <p class="product-quantity">Quantity left: {{ product.quantity }}</p>
   <div *ngIf="mode === 'customerView'">
-    <app-add-to-cart-button [maxQuantity]="product.quantity"></app-add-to-cart-button>
+    <app-add-to-cart-button [maxQuantity]="product.quantity"  [product_id]="product.productID"></app-add-to-cart-button>
   </div>
 </p-card>
 </div> 
