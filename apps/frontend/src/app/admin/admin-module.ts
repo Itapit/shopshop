@@ -20,7 +20,7 @@ import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
     ReactiveFormsModule,
     InputNumberModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
   ],
   exports: [
     EditProductDialogComponent
