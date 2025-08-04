@@ -28,10 +28,10 @@ export class CartController {
     @Put('item')
     async editCartItem(@Req() req: any , @Body() product: ProductItem): Promise<EditItemInCartResponseDto> {
         const cartItem: cartItem = {customer_id: req.user.userID , item: product }
-        if (!cartItem.customer_id || !cartItem.item?.product_id) {
+        if (!cartItem.customer_id || !cartItem.item?.productID) {
         throw new BadRequestException('Missing customer or product ID');
         }
-        console.log("in the backend")
+        
         return this.cartService.updateCartItemQuantity(cartItem);
     } 
     @UseGuards(AuthGuard)

@@ -12,20 +12,12 @@ import { CartService } from "./services/cart.service";
   styleUrls: ["./cart.component.css"],
 })
 export class CartComponent {
-  
+  products: ProductFull[]  = []
   productListOptionsEnum = productListOptionsEnum;
     
     constructor(private sharedService: SharedService , private cartService: CartService) {}
     totalPrice: number = 0;
-    first: number = 0;
-    rows: number = 4;
-    productsCart: ProductBase[]  = []; // נטו בשביל לעשות PAGANTION
-    onPageChange(event: any, rows?: number) {
-        this.first = event.first;
-        this.rows = event.rows;
-        this.productsCart = this.products.slice(this.first, this.first + this.rows);
-        
-    } 
+    
 
     ngOnInit() {
       this.sharedService.orderClicked$.subscribe(() => {
@@ -35,8 +27,8 @@ export class CartComponent {
 
        this.cartService.getCart().subscribe({
             next: (res) => {
-            console.log("success", res); 
-            this.productsCart = res.items;
+            console.log("success", res.items); 
+            this.products = res.items;
             },
             error: (err) => {
             console.error("failed", err);
@@ -51,8 +43,8 @@ export class CartComponent {
     }
     
 
-    products: ProductFull[]  = []  // צריכים להגיע מהפופאפ של היוזר ולהתווסף לפה
-  
+     
+     
     totalRecords= this.products.length
 
   
@@ -60,7 +52,7 @@ export class CartComponent {
       const start = (page - 1) * limit;
       const end = start + limit;
       const sliced = this.products.slice(start, end);
-
+      console.log(this.products);
       return of(sliced);
     }; 
 

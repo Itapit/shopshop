@@ -13,6 +13,6 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'cart',
-    component: CartComponent
+    loadChildren: () => import('./cart/cart-module').then((m) => m.CartModule)
   }
 ];

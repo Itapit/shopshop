@@ -1,4 +1,4 @@
 export interface ProductItem {
-    product_id:string
+    productID:string
     quantity:number
 }

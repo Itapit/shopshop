@@ -4,7 +4,7 @@ import {EditItemInCartRequest} from "@common/Interfaces/carts/request/Edit-item-
 
 class CartItemDto  {
   @IsString()
-  product_id!: string;
+  productID!: string;
 
   @IsInt()
   @Min(1)

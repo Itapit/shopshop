@@ -33,7 +33,7 @@ export class AddToCartButtonComponent {
     
       setTimeout(() => {
         this.quantity = 1;
-        const item : ProductItem = {product_id: this.product_id , quantity: this.quantity};
+        const item : ProductItem = {productID: this.product_id , quantity: this.quantity};
         this.cartService.updateCartItemQuantity(item);
         this.quantityChange.emit(1);
         this.isLoading = false;
@@ -43,9 +43,9 @@ export class AddToCartButtonComponent {
         const parsed = typeof newQty === 'string' ? parseInt(newQty) : newQty;
         this.quantity = parsed > 0 ? parsed : 0;
         this.quantityChange.emit(this.quantity);
-        console.log(this.quantity);
-        console.log(this.product_id);
-        const item : ProductItem = {product_id: this.product_id , quantity: this.quantity};
+        
+        const item : ProductItem = {productID: this.product_id , quantity: this.quantity};
+        
         this.cartService.updateCartItemQuantity(item);
         
 

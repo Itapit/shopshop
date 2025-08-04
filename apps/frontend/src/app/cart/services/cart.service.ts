@@ -17,7 +17,7 @@ export class CartService{
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-        console.log("in the service");
+        
 
         this.http.put(`${this.baseUrl}/item`, item, { headers }).subscribe({
             next: (res) => {

@@ -37,7 +37,7 @@ export class CartsRepository{
     async removeItemFromCart(customerId: string, productId: string): Promise<CartDto | null> {
         const cart = await this.cartModel.findOneAndUpdate(
             { customer_id: customerId },
-            { $pull: { items: { product_id: productId } } },
+            { $pull: { items: { productID: productId } } },
             { new: true }
         ).exec();
         return cart ? mapCartToDto(cart) : null;
@@ -45,7 +45,7 @@ export class CartsRepository{
 
     async updateItemQuantity(customerId: string, productId: string, quantity: number): Promise<CartDto | null> {
         const cart = await this.cartModel.findOneAndUpdate(
-            { customer_id: customerId, "items.product_id": productId },
+            { customer_id: customerId, "items.productID": productId },
             { $set: { "items.$.quantity": quantity } },
             { new: true }
         ).exec();
@@ -56,8 +56,8 @@ export class CartsRepository{
 
     async getSpecificItemFromCart(customerId: string, productId: string): Promise<boolean> {
         const cart = await this.cartModel.findOne(
-            { customer_id: customerId, "items.product_id": productId },
-            { items: { $elemMatch: { product_id: productId } } }
+            { customer_id: customerId, "items.productID": productId },
+            { items: { $elemMatch: { productID: productId } } }
         ).exec(); 
         return cart ? true : false;
     }

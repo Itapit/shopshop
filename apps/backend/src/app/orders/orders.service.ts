@@ -27,10 +27,10 @@ export class OrdersService {
         let totalPrice = 0;
 
         for (const item of dto.items) {
-            const product = await this.productRepo.findById(item.product_id);
+            const product = await this.productRepo.findById(item.productID);
 
             if (!product) {
-                throw new NotFoundException(`Product with ID ${item.product_id} not found`);
+                throw new NotFoundException(`Product with ID ${item.productID} not found`);
             }
 
             if (product.quantity < item.quantity) {
