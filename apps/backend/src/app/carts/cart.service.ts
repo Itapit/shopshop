@@ -9,6 +9,8 @@ import {ClearCartResponseDto} from "../carts/DTOs/response/Clear-cart-response.d
 import { cartItem } from "@common/Interfaces/carts";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
+import { ProductFull } from "@common/Interfaces";
+import { ProductDto } from "../products/DTOs";
 
 @Injectable()
 export class CartsService {
@@ -22,6 +24,22 @@ export class CartsService {
         if (!cart) {
             return null;
         } 
+        const fullItems = await Promise.all(
+            cart.items.map(async (cartItem) => {const product = await this.productsRepo.findById(cartItem.product_id)
+                return {
+                    product_id: product.productID,
+                    name: product.name,
+                    description: product.description,
+                    price: product.price,
+                    quantity: cartItem.quantity,
+                    imageUrl: product.imageUrl
+                    
+                };
+            })
+        ) 
+
+        cart.items = fullItems;
+        
         return new GetCartResponseDto(cart);
     } 
 
