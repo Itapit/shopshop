@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showSignInLink: boolean = true;
   showOrderButton: boolean = false;
   showSignUpLink: boolean = false;
+  showStatsLink: boolean = false;
 
   private userSub!: Subscription;
 
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.showOrderButton = session?.role === Role.Client;
       this.showSignInLink = !session;
       this.showSignUpLink = session?.role === Role.Admin;
+      this.showStatsLink = session?.role === Role.Admin;
     });
   }
 

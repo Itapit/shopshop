@@ -12,6 +12,10 @@ export const appRoutes: Route[] = [
     loadChildren: () => import('./products/products-module').then((m) => m.ProductsModule)
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin-module').then((m) => m.AdminModule)
+  },
+  {
     path: 'user',
     component: UserComponent
   }

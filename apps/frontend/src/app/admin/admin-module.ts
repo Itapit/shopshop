@@ -9,9 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
+import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 
 @NgModule({
-  declarations: [AdminComponent, EditProductDialogComponent],
+  declarations: [AdminComponent, EditProductDialogComponent, OrdersStatsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
