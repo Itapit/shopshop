@@ -1,4 +1,5 @@
 <app-product-list 
+    *ngIf="products.length > 0"
     [mode]="productListOptionsEnum.CartView"
     [fetchFunction]="fetchProducts"
     [totalRecords]="totalRecords"

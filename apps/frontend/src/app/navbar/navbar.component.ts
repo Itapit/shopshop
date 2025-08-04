@@ -20,12 +20,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showOrderButton: boolean = false;
   showSignUpLink: boolean = false;
   showStatsLink: boolean = false;
+  showCartLink: boolean = false;
 
   private userSub!: Subscription;
 
   ngOnInit(): void {
     this.userSub = this.sharedService.userData$.subscribe((session: AuthSession | null) => {
-      this.showOrderButton = session?.role === Role.Client;
+      this.showCartLink = session?.role === Role.Client;
       this.showSignInLink = !session;
       this.showSignUpLink = session?.role === Role.Admin;
       this.showStatsLink = session?.role === Role.Admin;

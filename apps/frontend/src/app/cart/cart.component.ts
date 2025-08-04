@@ -12,16 +12,16 @@ import { CartService } from "./services/cart.service";
   styleUrls: ["./cart.component.css"],
 })
 export class CartComponent {
-  products: ProductFull[]  = []
-  productListOptionsEnum = productListOptionsEnum;
+    products: ProductFull[]  = []
+    productListOptionsEnum = productListOptionsEnum;
+    
     
     constructor(private sharedService: SharedService , private cartService: CartService) {}
     totalPrice: number = 0;
-    
+    totalRecords: number = 0;
 
     ngOnInit() {
       this.sharedService.orderClicked$.subscribe(() => {
-       
         this.handleOrder();
       }); 
 
@@ -29,6 +29,7 @@ export class CartComponent {
             next: (res) => {
             console.log("success", res.items); 
             this.products = res.items;
+            this.totalRecords= this.products.length
             },
             error: (err) => {
             console.error("failed", err);
@@ -45,7 +46,7 @@ export class CartComponent {
 
      
      
-    totalRecords= this.products.length
+    
 
   
     fetchProducts = (page: number, limit: number): Observable<ProductFull[]> => {
