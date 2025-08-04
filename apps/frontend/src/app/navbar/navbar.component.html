@@ -8,11 +8,17 @@
   </div>
 
   <div class="actions">
-  <div *ngIf="showOrderButton" class="order">
+  <div *ngIf="showOrderButton">
     <app-order></app-order>
   </div>
-  <div *ngIf="showSignInLink" class="sign-in">
+  <div *ngIf="showSignInLink">
     <app-sign-in-link></app-sign-in-link>
+  </div>
+  <div *ngIf="showSignUpLink">
+    <app-sign-up-link></app-sign-up-link>
+  </div>
+  <div *ngIf="showStatsLink">
+    <app-stats-link></app-stats-link>
   </div>
 </div>
   
