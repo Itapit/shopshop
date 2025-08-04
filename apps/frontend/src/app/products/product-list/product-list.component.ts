@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { productListOptionsEnum } from "./product-list-options-enum";
 import { Observable } from "rxjs";
 import { PaginatorState } from "primeng/paginator";
@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit {
   @Input() mode!: productListOptionsEnum ; // 'view' or 'cart'
   @Input() fetchFunction!: (page: number, limit: number , keyword:string ) => Observable<ProductFull[]>;
   @Input() totalRecords!: number;
+  @Output() removeClicked = new EventEmitter<string>();
   keyword:string = ''
   constructor(private sharedService: SharedService){}
   productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
@@ -37,6 +38,7 @@ export class ProductListComponent implements OnInit {
   loadProducts(event?: PaginatorState) {
     const page = (event?.page ?? 0) + 1;
     const limit = event?.rows ?? this.limit;
+    
 
     this.page = page;
     this.limit = limit;

@@ -13,20 +13,13 @@ export class CartService{
 
     constructor(private http: HttpClient){} 
 
-    updateCartItemQuantity(item: ProductItem): void {
+    updateCartItemQuantity(item: ProductItem): Observable<any> {
         const token = localStorage.getItem('token');
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
         
 
-        this.http.put(`${this.baseUrl}/item`, item, { headers }).subscribe({
-            next: (res) => {
-            console.log("success", res);
-            },
-            error: (err) => {
-            console.error("failed", err);
-            }
-        });
+        return this.http.put(`${this.baseUrl}/item`, item, { headers })
     } 
 
     getCart(): Observable<any> {

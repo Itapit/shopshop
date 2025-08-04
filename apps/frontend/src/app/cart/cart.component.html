@@ -3,6 +3,7 @@
     [mode]="productListOptionsEnum.CartView"
     [fetchFunction]="fetchProducts"
     [totalRecords]="totalRecords"
+    (removeClicked) = "onRemoveClicked($event)"
 />
 <div class="cart-summary">
   <p class="total-price">Total price: ₪{{ totalPrice }}</p>

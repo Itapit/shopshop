@@ -89,6 +89,28 @@ export class CartsService {
     async clearCart(customerId: string): Promise<boolean> {
       const deleted = await this.cartsRepository.deleteCart(customerId);
       return deleted;
-   }
+   } 
+
+   async getCartTotalPrice(customerId: string): Promise<number> {
+      const cart = await this.cartsRepository.findByCustomerId(customerId);
+
+      if (!cart || !cart.items || cart.items.length === 0) {
+        return 0;
+      }
+
+      let total = 0;
+
+      for (const item of cart.items) {
+        const product = await this.productsRepo.findById(item.productID);
+
+        if (product && product.price) {
+            total += product.price * item.quantity;
+        }
+      }
+
+      return total;
+    }
+
+
 }
 

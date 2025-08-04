@@ -36,7 +36,15 @@ export class AddToCartButtonComponent {
   
     setTimeout(() => {
       const item : ProductItem = {productID: this.product.productID , quantity: this.quantity};
-      this.cartService.updateCartItemQuantity(item);
+      this.cartService.updateCartItemQuantity(item).subscribe({
+            next: (res) => {
+            console.log("success", res);
+            },
+            error: (err) => {
+            console.error("failed", err);
+            }
+        });
+        
       this.isLoading = false;
     }, 400);
   }
@@ -72,7 +80,14 @@ export class AddToCartButtonComponent {
     this.previousQuantity = newQuantity;
     const item : ProductItem = {productID: this.product.productID , quantity: this.quantity};
       
-    this.cartService.updateCartItemQuantity(item);
+    this.cartService.updateCartItemQuantity(item).subscribe({
+            next: (res) => {
+            console.log("success", res);
+            },
+            error: (err) => {
+            console.error("failed", err);
+            }
+        });
         
   }
 }

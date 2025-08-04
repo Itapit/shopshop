@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
-import { ProductBase, ProductFull } from "@common/Interfaces";
+import { ProductBase, ProductFull, ProductItem } from "@common/Interfaces";
 import { productListOptionsEnum } from "../products/product-list/product-list-options-enum";
 import { Observable, of } from "rxjs";
 import { CartService } from "./services/cart.service";
@@ -41,7 +41,24 @@ export class CartComponent {
     
     handleOrder() {
       console.log("Order has been placed!");
-    }
+    }  
+    
+    onRemoveClicked(productID : string){
+      console.log("trying to remove")
+      const item : ProductItem = {productID: productID , quantity:0}
+      this.cartService.updateCartItemQuantity(item).subscribe({
+       next: () => {
+         this.products = this.products.filter(p => p.productID !== productID);
+         this.totalRecords = this.products.length; 
+         
+      },
+       error: (err) => {
+         console.error("Remove failed", err);
+      }
+      })
+
+    } 
+    
     
 
      
@@ -56,6 +73,8 @@ export class CartComponent {
       console.log(this.products);
       return of(sliced);
     }; 
+
+    
 
     
 

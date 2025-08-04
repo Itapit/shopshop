@@ -39,7 +39,14 @@ export class CartController {
     async clearCart( @Param('id') id: string): Promise<boolean> {
         return this.cartService.clearCart(id);
         
-    } 
+    }  
+    @Get('total')
+    @UseGuards(AuthGuard)
+    async getCartTotal(@Req() req: any): Promise<{ total: number }> {
+        ;
+        const total = await this.cartService.getCartTotalPrice(req.user.userID);
+        return { total };
+    }
 
     
 }
