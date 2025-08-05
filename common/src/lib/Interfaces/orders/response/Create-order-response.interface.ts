@@ -1,5 +1,3 @@
-import { OrderFull } from "../base/Order-Full.interface";
+import { OrderFull } from '../base/Order-Full.interface';
 
-export interface CreateOrderResponse extends OrderFull{
-    
-}
+export interface CreateOrderResponse extends OrderFull {}

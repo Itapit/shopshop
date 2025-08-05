@@ -12,16 +12,16 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
-  declarations: [SigninComponent, CreateUserComponent, UnauthorizedComponent],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    FormsModule,
-    InputTextModule,
-    PasswordModule,
-    ButtonModule,
-    FocusTrapModule,
-    AutoFocusModule
-    ]
+    declarations: [SigninComponent, CreateUserComponent, UnauthorizedComponent],
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        FormsModule,
+        InputTextModule,
+        PasswordModule,
+        ButtonModule,
+        FocusTrapModule,
+        AutoFocusModule,
+    ],
 })
-export class AuthModule { }
+export class AuthModule {}

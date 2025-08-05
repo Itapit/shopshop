@@ -1,5 +1,5 @@
-import { UserBase } from "@common/Interfaces";
-import { IsEmail, IsString } from "class-validator";
+import { UserBase } from '@common/Interfaces';
+import { IsEmail, IsString } from 'class-validator';
 
 export class UserBaseDto implements UserBase {
     @IsString()

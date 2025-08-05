@@ -1,24 +1,27 @@
 <p-toast position="bottom-right"></p-toast>
 
 <p-button
-  *ngIf="quantity === 0 && !isLoading"
-  [disabled]="product.quantity === 0"
-  label="Add to Cart"
-  icon="pi pi-shopping-cart"
-  (onClick)="addToCart()"
+    *ngIf="quantity === 0 && !isLoading"
+    [disabled]="product.quantity === 0"
+    label="Add to Cart"
+    icon="pi pi-shopping-cart"
+    (onClick)="addToCart()"
 />
 
-<p-progressSpinner *ngIf="isLoading" styleClass="small-spinner"></p-progressSpinner>
+<p-progressSpinner
+    *ngIf="isLoading"
+    styleClass="small-spinner"
+></p-progressSpinner>
 
 <p-inputNumber
-  *ngIf="quantity > 0 && !isLoading"
-  [(ngModel)]="quantity"
-  [min]="0"
-  [max]="product.quantity"
-  [showButtons]="true"
-  buttonLayout="horizontal"
-  (onInput)="onQuantityChange($event.value)"
-  incrementButtonIcon="pi pi-plus"
-  [decrementButtonIcon]="quantity === 1 ? 'pi pi-trash' : 'pi pi-minus'"
-  inputStyleClass="text-center w-4rem"
+    *ngIf="quantity > 0 && !isLoading"
+    [(ngModel)]="quantity"
+    [min]="0"
+    [max]="product.quantity"
+    [showButtons]="true"
+    buttonLayout="horizontal"
+    (onInput)="onQuantityChange($event.value)"
+    incrementButtonIcon="pi pi-plus"
+    [decrementButtonIcon]="quantity === 1 ? 'pi pi-trash' : 'pi pi-minus'"
+    inputStyleClass="text-center w-4rem"
 />

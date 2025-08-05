@@ -1,4 +1,4 @@
 export enum OrdersSortBy {
-  CREATED_AT = 'createdAt',
-  TOTAL_PRICE = 'totalPrice',
+    CREATED_AT = 'createdAt',
+    TOTAL_PRICE = 'totalPrice',
 }

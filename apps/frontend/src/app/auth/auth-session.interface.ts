@@ -1,4 +1,4 @@
-import { Role } from "@common/Enums";
+import { Role } from '@common/Enums';
 
 export interface AuthSession {
     token: string;

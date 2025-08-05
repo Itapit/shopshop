@@ -9,12 +9,15 @@ import { RolesGuard } from './guards/roles.guard';
 
 @Module({
     imports: [
-    UsersModule,
-    JwtModule.register({ global: true, secret: jwtConstants.secret, signOptions: { expiresIn: '300000s' },}),
-    
-  ],
-  controllers: [AuthController],
-  providers: [AuthService, AuthGuard, RolesGuard],
-  exports: [AuthGuard, RolesGuard]
+        UsersModule,
+        JwtModule.register({
+            global: true,
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '300000s' },
+        }),
+    ],
+    controllers: [AuthController],
+    providers: [AuthService, AuthGuard, RolesGuard],
+    exports: [AuthGuard, RolesGuard],
 })
 export class AuthModule {}

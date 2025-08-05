@@ -1,7 +1,7 @@
-import { ProductItem } from "../../products/base/Product-Item.interface";
+import { ProductItem } from '../../products/base/Product-Item.interface';
 
-export interface OrderBase{
-   customer_id: string;
-   items: ProductItem[];
-   total_price: number;
+export interface OrderBase {
+    customer_id: string;
+    items: ProductItem[];
+    total_price: number;
 }

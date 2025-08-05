@@ -10,14 +10,16 @@ import { OrdersModule } from './orders/orders.module';
 import { CartModule } from './carts/cart.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), 
-            MongooseModule.forRoot(process.env.MONGO_URI),
-            UsersModule,
-            AuthModule,
-            ProductsModule,
-            OrdersModule,
-            CartModule],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot(),
+        MongooseModule.forRoot(process.env.MONGO_URI),
+        UsersModule,
+        AuthModule,
+        ProductsModule,
+        OrdersModule,
+        CartModule,
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {}

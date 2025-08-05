@@ -1,8 +1,8 @@
-import { Role } from "@common/Enums";
+import { Role } from '@common/Enums';
 
 export interface JwtPayload {
-    userID: string; 
+    userID: string;
     username: string;
     email: string;
-    role: Role
+    role: Role;
 }

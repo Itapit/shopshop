@@ -1,42 +1,51 @@
-import { Component, OnInit } from "@angular/core";
-import { productListOptionsEnum } from "./product-list/product-list-options-enum";
-import { ProductsHttpService } from "./services/products-http.service";
-import { map, Observable, tap } from "rxjs";
-import { TokenService } from "../auth/services/token.service";
-import { Role } from "@common/Enums"
-import { GetProductsListRequest, GetProductsListResponse, ProductFull } from "@common/Interfaces";
-import { SharedService } from "../shared/shared.service";
+import { Component, OnInit } from '@angular/core';
+import { productListOptionsEnum } from './product-list/product-list-options-enum';
+import { ProductsHttpService } from './services/products-http.service';
+import { map, Observable, tap } from 'rxjs';
+import { TokenService } from '../auth/services/token.service';
+import { Role } from '@common/Enums';
+import {
+    GetProductsListRequest,
+    GetProductsListResponse,
+    ProductFull,
+} from '@common/Interfaces';
+import { SharedService } from '../shared/shared.service';
 @Component({
-    selector: "app-products",
+    selector: 'app-products',
     standalone: false,
-    templateUrl: "./products.component.html",
-    styleUrls: ["./products.component.css"],
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent implements OnInit{
-  constructor(private productService: ProductsHttpService, private tokenService: TokenService , private sharedService : SharedService) {}
-  productsResponse?: GetProductsListResponse;
-  productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
+export class ProductsComponent implements OnInit {
+    constructor(
+        private productService: ProductsHttpService,
+        private tokenService: TokenService,
+        private sharedService: SharedService
+    ) {}
+    productsResponse?: GetProductsListResponse;
+    productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
-  productListMode= productListOptionsEnum.PublicView
+    productListMode = productListOptionsEnum.PublicView;
 
-  ngOnInit(): void { 
-    
-    if(this.tokenService.getRole() == Role.Client) {
-      this.productListMode = productListOptionsEnum.CustomerView;
+    ngOnInit(): void {
+        if (this.tokenService.getRole() == Role.Client) {
+            this.productListMode = productListOptionsEnum.CustomerView;
+        }
+        if (this.tokenService.getRole() == Role.Admin) {
+            this.productListMode = productListOptionsEnum.AdminView;
+        }
     }
-    if(this.tokenService.getRole() == Role.Admin) {
-      this.productListMode = productListOptionsEnum.AdminView;
-    }
-  }
 
-  fetchProducts = (page: number, limit: number, keyword:string): Observable<ProductFull[]> => {
-    const query: GetProductsListRequest= { page, limit , keyword};
-    
-    return this.productService.getProducts(query).pipe(
-      tap((res) => this.productsResponse = res),
-      map((res) => res.products)
-    );
-  }; 
+    fetchProducts = (
+        page: number,
+        limit: number,
+        keyword: string
+    ): Observable<ProductFull[]> => {
+        const query: GetProductsListRequest = { page, limit, keyword };
 
-  
+        return this.productService.getProducts(query).pipe(
+            tap((res) => (this.productsResponse = res)),
+            map((res) => res.products)
+        );
+    };
 }

@@ -1,28 +1,27 @@
 <nav class="navbar">
-  <div class="logo">
-    <app-website-logo></app-website-logo>
-  </div>
+    <div class="logo">
+        <app-website-logo></app-website-logo>
+    </div>
 
-  <div *ngIf="showSearch" class="search">
-    <app-search-products></app-search-products>
-  </div>
+    <div *ngIf="showSearch" class="search">
+        <app-search-products></app-search-products>
+    </div>
 
-  <div class="actions">
-  <div *ngIf="showCartLink">
-    <app-cart-link></app-cart-link>
-  </div>
-  <div *ngIf="showSignInLink">
-    <app-sign-in-link></app-sign-in-link>
-  </div>
-  <div *ngIf="showSignUpLink">
-    <app-sign-up-link></app-sign-up-link>
-  </div>
-  <div *ngIf="showStatsLink">
-    <app-stats-link></app-stats-link>
-  </div>
-  <div *ngIf="showOrderLink">
-    <app-order-link></app-order-link>
-  </div>
-</div>
-  
+    <div class="actions">
+        <div *ngIf="showCartLink">
+            <app-cart-link></app-cart-link>
+        </div>
+        <div *ngIf="showSignInLink">
+            <app-sign-in-link></app-sign-in-link>
+        </div>
+        <div *ngIf="showSignUpLink">
+            <app-sign-up-link></app-sign-up-link>
+        </div>
+        <div *ngIf="showStatsLink">
+            <app-stats-link></app-stats-link>
+        </div>
+        <div *ngIf="showOrderLink">
+            <app-order-link></app-order-link>
+        </div>
+    </div>
 </nav>

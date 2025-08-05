@@ -9,10 +9,12 @@ import { ProductBase } from '@common/Interfaces';
 import { mapToProductDto } from '../product.mapper';
 import { ProductDto } from '../DTOs/base/product.dto';
 
-
 @Injectable()
 export class ProductsRepository implements IProductsRepository {
-    constructor(@InjectModel(ProductSchema.name) private readonly productModel: Model<ProductDocument>) {}
+    constructor(
+        @InjectModel(ProductSchema.name)
+        private readonly productModel: Model<ProductDocument>
+    ) {}
 
     async getPaginatedProducts(
         page: number,
@@ -20,7 +22,7 @@ export class ProductsRepository implements IProductsRepository {
         sortBy: string = ProductSortBy.CREATED_AT
     ): Promise<{ products: ProductDto[]; totalCount: number }> {
         const skip = (page - 1) * limit;
-        
+
         const sort: Record<string, 1 | -1> = {
             [sortBy]: 1,
         };
@@ -37,7 +39,7 @@ export class ProductsRepository implements IProductsRepository {
 
     async findById(id: string): Promise<ProductDto | null> {
         const doc = await this.productModel.findById(id).exec();
-        if (!doc){ 
+        if (!doc) {
             throw new NotFoundException(`Product with id ${id} not found`);
         }
         return doc ? mapToProductDto(doc) : null;
@@ -48,16 +50,21 @@ export class ProductsRepository implements IProductsRepository {
         const saved = await created.save();
         return mapToProductDto(saved);
     }
-    
+
     async deleteById(id: string): Promise<boolean> {
-        const result = await this.productModel.deleteOne({ _id:id }).exec();
+        const result = await this.productModel.deleteOne({ _id: id }).exec();
         return result.deletedCount > 0;
     }
 
-    async updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null> {
-        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { new: false }).exec();
-        return updatedDoc ? mapToProductDto(updatedDoc) : null
-    } 
+    async updateById(
+        id: string,
+        update: Partial<ProductBase>
+    ): Promise<ProductDto | null> {
+        const updatedDoc = await this.productModel
+            .findByIdAndUpdate(id, update, { new: false })
+            .exec();
+        return updatedDoc ? mapToProductDto(updatedDoc) : null;
+    }
 
     async findByNameContains(
         keyword: string,
@@ -66,13 +73,18 @@ export class ProductsRepository implements IProductsRepository {
         sortBy: string = ProductSortBy.CREATED_AT
     ): Promise<{ products: ProductDto[]; totalCount: number }> {
         const skip = (page - 1) * limit;
-        
+
         const sort: Record<string, 1 | -1> = {
             [sortBy]: 1,
         };
 
         const [docs, totalCount] = await Promise.all([
-            this.productModel.find({ name: { $regex: keyword } }).skip(skip).limit(limit).sort(sort).exec(),
+            this.productModel
+                .find({ name: { $regex: keyword } })
+                .skip(skip)
+                .limit(limit)
+                .sort(sort)
+                .exec(),
             this.productModel.countDocuments().exec(),
         ]);
 

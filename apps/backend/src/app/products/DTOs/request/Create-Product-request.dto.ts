@@ -1,5 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
-import { CreateProductRequest } from "@common/Interfaces";
+import {
+    IsNotEmpty,
+    IsNumber,
+    IsString,
+    Min,
+} from 'class-validator';
+import { CreateProductRequest } from '@common/Interfaces';
 
 export class CreateProductRequestDto implements CreateProductRequest {
     @IsString()

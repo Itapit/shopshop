@@ -1,61 +1,61 @@
 .main-layout {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  padding: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 20px;
 }
 
 .side-panel {
-  width: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 10px;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
 }
 
 .products-list {
-  flex: 1;
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    flex: 1;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .products-list-view {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  padding: 20px;
-  padding-bottom: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    padding: 20px;
+    padding-bottom: 100px;
 }
 
 .products-list-view app-product-card {
-  width: 240px;
-  height: 400px;
+    width: 240px;
+    height: 400px;
 }
 
 .fixed-bottom {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
-  background-color: white;
-  z-index: 10;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    background-color: white;
+    z-index: 10;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
 }
 
 @media (max-width: 600px) {
-  .products-list-view {
-    justify-content: center;
-  }
+    .products-list-view {
+        justify-content: center;
+    }
 
-  .products-list-view app-product-card {
-    width: 90%;
-    max-width: 300px;
-    height: 400px;
-  }
+    .products-list-view app-product-card {
+        width: 90%;
+        max-width: 300px;
+        height: 400px;
+    }
 }

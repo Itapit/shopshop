@@ -1,8 +1,8 @@
-import { ProductSortBy } from "@common/Enums";
+import { ProductSortBy } from '@common/Enums';
 
 export interface GetProductsListRequest {
-    page:number,
-    sortBy?: ProductSortBy
-    limit?:number
-    keyword?:string
+    page: number;
+    sortBy?: ProductSortBy;
+    limit?: number;
+    keyword?: string;
 }

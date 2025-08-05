@@ -5,14 +5,17 @@ import { Role } from '@common/Enums';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {
-  constructor(private tokenService: TokenService, private router: Router) {}
+    constructor(
+        private tokenService: TokenService,
+        private router: Router
+    ) {}
 
-  canActivate(): boolean {
-    const role = this.tokenService.getRole();
-    if (role === Role.Admin) {
-      return true;
+    canActivate(): boolean {
+        const role = this.tokenService.getRole();
+        if (role === Role.Admin) {
+            return true;
+        }
+        this.router.navigate(['/auth/unauthorized']);
+        return false;
     }
-    this.router.navigate(['/auth/unauthorized']);
-    return false;
-  }
 }

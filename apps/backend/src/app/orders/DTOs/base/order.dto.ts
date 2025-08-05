@@ -1,4 +1,4 @@
-import { OrderBase, ProductItem } from "@common/Interfaces";
+import { OrderBase, ProductItem } from '@common/Interfaces';
 
 export class OrderDto implements OrderBase {
     customer_id: string;

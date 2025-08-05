@@ -1,5 +1,5 @@
-import { ProductFull } from "../base/product-full.interface";
+import { ProductFull } from '../base/product-full.interface';
 
 export interface GetProductByIdResponse {
-    product:ProductFull
+    product: ProductFull;
 }

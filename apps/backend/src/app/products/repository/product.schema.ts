@@ -1,11 +1,11 @@
-import { ProductBase } from "@common/Interfaces";
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { ProductBase } from '@common/Interfaces';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export type ProductDocument = ProductSchema & Document;
 
-@Schema({ collection: 'products',timestamps: true })
-export class ProductSchema implements ProductBase{
+@Schema({ collection: 'products', timestamps: true })
+export class ProductSchema implements ProductBase {
     @Prop({ required: true })
     name: string;
 

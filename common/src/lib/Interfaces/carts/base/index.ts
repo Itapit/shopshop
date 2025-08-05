@@ -1,2 +1,2 @@
-export * from "./cart-Item.interface"
-export * from "./cart.interface"
+export * from './cart-Item.interface';
+export * from './cart.interface';
