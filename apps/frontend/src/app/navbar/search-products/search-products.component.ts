@@ -8,10 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './search-products.component.css'
 })
 export class SearchProductsComponent {
-  value: string | undefined;
+  value: string = '' ;
   constructor(private sharedService: SharedService) {}
-
+  
   onSearch() {
-    this.sharedService.triggerSearch();
+    
+    this.sharedService.triggerSearch(this.value);
   }
 }

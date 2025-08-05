@@ -7,7 +7,7 @@ import { NavbarModule } from './navbar/navbar-module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductsModule } from './products/products-module';
-import { UserModule } from './user/user-module';
+import { CartModule } from './cart/cart-module';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { AuthInterceptor } from './auth/services/auth.interceptor';
     RouterModule.forRoot(appRoutes),
     NavbarModule,
     ProductsModule,
-    UserModule
+    CartModule
   ],
   providers: [
     {

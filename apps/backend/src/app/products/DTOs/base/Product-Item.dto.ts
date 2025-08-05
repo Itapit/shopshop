@@ -3,7 +3,7 @@ import { IsInt, IsString, Min } from "class-validator";
 
 export class ProductItemDto implements ProductItem{
   @IsString()
-  product_id!: string;
+  productID!: string;
 
   @IsInt()
   @Min(1)

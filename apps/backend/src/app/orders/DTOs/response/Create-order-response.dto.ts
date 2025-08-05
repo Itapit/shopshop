@@ -3,7 +3,7 @@ import { OrderDto } from "../base";
 import { ProductItem } from "@common/Interfaces";
 
 export class OrderItemResponseDto {
-  product_id!: string;
+  productID!: string;
   quantity!: number;
   
 

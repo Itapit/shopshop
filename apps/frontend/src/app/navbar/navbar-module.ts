@@ -11,9 +11,10 @@ import { WebsiteLogoComponent } from './website-logo/website-logo.component';
 import { OrderComponent } from './order/order.component';
 import { SignUpLinkComponent } from './sign-up-link/sign-up-link.component';
 import { StatsLinkComponent } from './stats-link/stats-link.component';
+import { CartLinkComponent } from './cart-link/cart-link.component';
 
 @NgModule({
-  declarations: [SignInLinkComponent, NavbarComponent, SearchProductsComponent, WebsiteLogoComponent , OrderComponent, SignUpLinkComponent, StatsLinkComponent],
+  declarations: [SignInLinkComponent, NavbarComponent, SearchProductsComponent, WebsiteLogoComponent , OrderComponent, SignUpLinkComponent, StatsLinkComponent, CartLinkComponent],
   imports: [CommonModule, NavbarRoutingModule, ButtonModule, FormsModule, InputTextModule],
   exports: [NavbarComponent]
 })

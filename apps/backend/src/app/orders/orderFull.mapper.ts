@@ -6,7 +6,7 @@ export function mapOrderFullToDto(order:OrderFull):OrderFullDto{
    dto.order_id = order.order_id;
    dto.customer_id = order.customer_id;
    dto.items = order.items.map(item => ({
-        product_id: item.product_id,
+        productID: item.productID,
         quantity: item.quantity
     }));
     dto.total_price = order.total_price;

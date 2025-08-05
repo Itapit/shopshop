@@ -5,7 +5,7 @@ export function mapOrderToDto(order: OrderBase): OrderDto {
     const orderDto = new OrderDto();
     orderDto.customer_id = order.customer_id;
     orderDto.items = order.items.map(item => ({
-        product_id: item.product_id,
+        productID: item.productID,
         quantity: item.quantity
     }));
     orderDto.total_price = order.total_price;

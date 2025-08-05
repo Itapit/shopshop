@@ -11,7 +11,7 @@ export class CartSchema implements CartBase {
     @Prop({ required: true })
     customer_id: string;
 
-    @Prop({ type: [{ product_id: String, quantity: Number }], required: true })
+    @Prop({ type: [{ productID: String, quantity: Number }], required: true })
     items: ProductItem[];
   
 } 

@@ -1,6 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProductBase, ProductFull } from '@common/Interfaces';
+import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
+import { ProductFull } from '@common/Interfaces';
 import { MessageService } from 'primeng/api';
+import { SharedService } from '../../shared/shared.service';
+import { CartService } from '../../cart/services/cart.service';
+import { ProductItem } from '@common/Interfaces';
+
 
 @Component({
   selector: 'app-add-to-cart-button',
@@ -11,9 +15,8 @@ import { MessageService } from 'primeng/api';
 export class AddToCartButtonComponent {
   @Input() product!:ProductFull;
   @Input() initialQuantity = 0;
-  @Output() quantityChange = new EventEmitter<number>();
 
-  constructor(private msgService: MessageService) {}
+  constructor(private msgService: MessageService, private cartService: CartService) {}
 
   isLoading = false;
   quantity = 0;
@@ -32,7 +35,16 @@ export class AddToCartButtonComponent {
     this.isLoading = true;
   
     setTimeout(() => {
-      this.quantityChange.emit(1);
+      const item : ProductItem = {productID: this.product.productID , quantity: this.quantity};
+      this.cartService.updateCartItemQuantity(item).subscribe({
+            next: (res) => {
+            console.log("success", res);
+            },
+            error: (err) => {
+            console.error("failed", err);
+            }
+        });
+        
       this.isLoading = false;
     }, 400);
   }
@@ -66,7 +78,17 @@ export class AddToCartButtonComponent {
 
     this.quantity = newQuantity;
     this.previousQuantity = newQuantity;
-    this.quantityChange.emit(this.quantity);
+    const item : ProductItem = {productID: this.product.productID , quantity: this.quantity};
+      
+    this.cartService.updateCartItemQuantity(item).subscribe({
+            next: (res) => {
+            console.log("success", res);
+            },
+            error: (err) => {
+            console.error("failed", err);
+            }
+        });
+        
   }
 }
 

@@ -56,6 +56,6 @@
     <div class="cart-price">₪{{ product.price }}</div>
     <div class="cart-quantity">Quantity: {{ product.quantity }}</div>
 
-    <p-button label="Remove" class="cart-remove"></p-button>
+    <p-button label="Remove" class="cart-remove" (click) = "removeItemFromCart()"></p-button>
   </div>
 </div>

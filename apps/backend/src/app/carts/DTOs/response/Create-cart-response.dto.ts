@@ -3,7 +3,7 @@ import { CartDto } from "../base/cart.dto";
 import {CreateCartResponse} from "@common/Interfaces/carts/response/Create-cart-response.interface"
 
 export class CartItemResponseDto  {
-  product_id!: string;
+  productID!: string;
   quantity!: number;
 
   constructor(item: ProductItem) {
