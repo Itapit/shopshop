@@ -5,9 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { CartRoutingModule } from "./cart-routing-module";
 import { CommonModule } from "@angular/common";
+import { ToastModule } from "primeng/toast";
 
 @NgModule({
-    imports: [ProductsModule , ButtonModule , PaginatorModule, CartRoutingModule, CommonModule],
+    imports: [ProductsModule, ButtonModule, PaginatorModule, CartRoutingModule, CommonModule, ToastModule],
     declarations: [CartComponent],
     exports: [],
 })

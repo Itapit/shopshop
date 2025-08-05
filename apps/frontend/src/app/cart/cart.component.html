@@ -1,4 +1,11 @@
-<div class="cart-products-wrapper">
+<p-toast position="bottom-right"></p-toast>
+<div class="cart-products-wrapper"> 
+  <div *ngIf="products.length === 0" class="empty-cart-message">
+  
+  <h3>Your cart is empty</h3>
+  <p>Looks like you haven’t added anything to your cart yet.</p>
+  
+</div>
   <app-product-list 
     #productList
     *ngIf="products.length > 0"

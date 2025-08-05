@@ -7,6 +7,7 @@ import { CartService } from "./services/cart.service";
 import { Router } from "@angular/router";
 import { ProductListComponent } from "../products/product-list/product-list.component";
 import { OrderService } from "../order/services/order.service";
+import { MessageService } from "primeng/api";
 
 
 @Component({
@@ -24,7 +25,7 @@ export class CartComponent {
     productListOptionsEnum = productListOptionsEnum;
     
     
-    constructor(private sharedService: SharedService , private cartService: CartService , private router: Router , private orderService:OrderService) {}
+    constructor(private msgService: MessageService, private sharedService: SharedService , private cartService: CartService , private router: Router , private orderService:OrderService) {}
     totalPrice: number = 0;
     totalRecords: number = 0;
 
@@ -72,6 +73,7 @@ export class CartComponent {
       this.orderService.placeOrder(cartItems).subscribe({
         next: (res) => {
             console.log("success order", res); 
+            this.msgService.add({severity:"success", summary:"Order Placed"});
             this.cartService.deleteCart().subscribe({
               next:(res) => {
                 console.log("success delete" , res)
@@ -79,6 +81,8 @@ export class CartComponent {
                 this.totalPrice = 0;
                 this.totalRecords = 0;
                 this.productListComponent?.loadProducts?.();
+                this.msgService.add({severity:"success", summary:"Cart is empty"});
+
               } ,
               error:(err) =>{
                 console.error("failed" , err);
