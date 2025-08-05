@@ -1,6 +1,6 @@
 import { ProductItem } from '@common/Interfaces';
-import { CartDto } from '../base/cart.dto';
 import { CreateCartResponse } from '@common/Interfaces/carts/response/Create-cart-response.interface';
+import { CartDto } from '../base/cart.dto';
 
 export class CartItemResponseDto {
     productID!: string;
@@ -18,7 +18,6 @@ export class CreateCartResponseDto implements CreateCartResponse {
     constructor(cart: CartDto) {
         Object.assign(this, cart);
 
-        this.items =
-            cart.items?.map((item) => new CartItemResponseDto(item)) || [];
+        this.items = cart.items?.map((item) => new CartItemResponseDto(item)) || [];
     }
 }

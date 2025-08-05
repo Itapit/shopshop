@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SigninComponent } from './sign-in/signin.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { AdminGuard } from './guards/admin.guard';
+import { SigninComponent } from './sign-in/signin.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const routes: Routes = [

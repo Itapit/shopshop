@@ -12,8 +12,6 @@ export class AdminStatsService {
     constructor(private http: HttpClient) {}
 
     getTotalProfit(): Observable<{ totalProfit: number }> {
-        return this.http.get<{ totalProfit: number }>(
-            `${this.baseUrl}/total-profit`
-        );
+        return this.http.get<{ totalProfit: number }>(`${this.baseUrl}/total-profit`);
     }
 }

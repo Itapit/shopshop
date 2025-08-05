@@ -1,23 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { OrderDocument, OrderSchema } from './orders.schema';
-import { mapOrderToDto } from '../order.mapper';
-import { InjectModel } from '@nestjs/mongoose';
 import { OrdersSortBy } from '@common/Enums/orders-sort-by';
-import { PaginationResultDto } from '../DTOs';
 import { OrderBase } from '@common/Interfaces';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { PaginationResultDto } from '../DTOs';
+import { mapOrderToDto } from '../order.mapper';
+import { OrderDocument } from './orders.schema';
 
 @Injectable()
 export class OrdersRepository {
-    constructor(
-        @InjectModel('Order') private readonly orderModel: Model<OrderDocument>
-    ) {}
+    constructor(@InjectModel('Order') private readonly orderModel: Model<OrderDocument>) {}
 
-    async getPaginatedOrders(
-        page: number,
-        limit: number,
-        sortBy: string
-    ): Promise<PaginationResultDto> {
+    async getPaginatedOrders(page: number, limit: number, sortBy: string): Promise<PaginationResultDto> {
         const skip = (page - 1) * limit;
 
         const sort: Record<string, 1 | -1> = {
@@ -70,12 +64,7 @@ export class OrdersRepository {
         };
 
         const [docs, totalCount] = await Promise.all([
-            this.orderModel
-                .find({ customer_id: customerId })
-                .skip(skip)
-                .limit(limit)
-                .sort(sort)
-                .exec(),
+            this.orderModel.find({ customer_id: customerId }).skip(skip).limit(limit).sort(sort).exec(),
             this.orderModel.countDocuments({ customer_id: customerId }).exec(),
         ]);
 

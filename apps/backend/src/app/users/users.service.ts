@@ -1,25 +1,14 @@
+import { UserBase } from '@common/Interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import {
-    IUsersRepository,
-    USERS_REPOSITORY,
-} from './repository/users-repository.interface';
-import { UserBase } from '@common/Interfaces';
-import {
-    CreateUserRequestDto,
-    CreateUserResponseDto,
-    UserBaseDto,
-} from './DTOs';
+import { CreateUserRequestDto, CreateUserResponseDto, UserBaseDto } from './DTOs';
+import { IUsersRepository, USERS_REPOSITORY } from './repository/users-repository.interface';
 
 @Injectable()
 export class UsersService {
-    constructor(
-        @Inject(USERS_REPOSITORY) private readonly usersRepo: IUsersRepository
-    ) {}
+    constructor(@Inject(USERS_REPOSITORY) private readonly usersRepo: IUsersRepository) {}
 
-    async createUser(
-        createUserDto: CreateUserRequestDto
-    ): Promise<CreateUserResponseDto> {
+    async createUser(createUserDto: CreateUserRequestDto): Promise<CreateUserResponseDto> {
         const email = createUserDto.email.toLowerCase();
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 

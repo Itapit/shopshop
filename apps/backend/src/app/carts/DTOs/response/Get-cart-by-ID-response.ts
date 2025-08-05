@@ -21,8 +21,6 @@ export class GetCartResponseDto implements GetCartByIDResponse {
 
     constructor(partial: CartDto) {
         this.customer_id = partial.customer_id!;
-        this.items = (partial.items || []).map(
-            (item) => new CartItemResponseDto(item)
-        );
+        this.items = (partial.items || []).map((item) => new CartItemResponseDto(item));
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AuthSession } from '../auth-session.interface';
 import { Role } from '@common/Enums';
+import { AuthSession } from '../auth-session.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {

@@ -1,6 +1,6 @@
+import { EditItemInCartResponse } from '@common/Interfaces/carts/response';
 import { ProductItem } from '@common/Interfaces/products/base';
 import { CartDto } from '../base/cart.dto';
-import { EditItemInCartResponse } from '@common/Interfaces/carts/response';
 
 export class CartItemResponseDto {
     productID!: string;
@@ -17,8 +17,6 @@ export class EditItemInCartResponseDto implements EditItemInCartResponse {
 
     constructor(cart: CartDto) {
         this.customer_id = cart.customer_id!;
-        this.items = (cart.items || []).map(
-            (item) => new CartItemResponseDto(item)
-        );
+        this.items = (cart.items || []).map((item) => new CartItemResponseDto(item));
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminStatsService } from '../services/admin-stats.service';
 import confetti from 'canvas-confetti';
+import { AdminStatsService } from '../services/admin-stats.service';
 
 @Component({
     selector: 'app-orders-stats',

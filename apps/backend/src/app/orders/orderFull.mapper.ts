@@ -1,5 +1,5 @@
-import { OrderFullDto } from './DTOs/base/orderFull.dto';
 import { OrderFull } from '@common/Interfaces';
+import { OrderFullDto } from './DTOs/base/orderFull.dto';
 
 export function mapOrderFullToDto(order: OrderFull): OrderFullDto {
     const dto = new OrderFullDto();

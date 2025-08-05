@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProductFull, ProductItem } from '@common/Interfaces';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProductFull } from '@common/Interfaces';
+import { CartService } from '../../cart/services/cart.service';
 import { productListOptionsEnum } from '../product-list/product-list-options-enum';
 import { ProductsHttpService } from '../services/products-http.service';
-import { CartService } from '../../cart/services/cart.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-product-card',
@@ -26,11 +26,9 @@ export class ProductCardComponent {
     productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
     loadProduct() {
-        this.productService
-            .getProductById(this.product.productID)
-            .subscribe((response) => {
-                this.product = response.product;
-            });
+        this.productService.getProductById(this.product.productID).subscribe((response) => {
+            this.product = response.product;
+        });
     }
 
     removeItemFromCart() {

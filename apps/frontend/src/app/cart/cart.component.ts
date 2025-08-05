@@ -1,13 +1,13 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { SharedService } from '../shared/shared.service';
-import { ProductFull, ProductItem } from '@common/Interfaces';
-import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
-import { Observable, of } from 'rxjs';
-import { CartService } from './services/cart.service';
 import { Router } from '@angular/router';
-import { ProductListComponent } from '../products/product-list/product-list.component';
-import { OrderService } from '../order/services/order.service';
+import { ProductFull, ProductItem } from '@common/Interfaces';
 import { MessageService } from 'primeng/api';
+import { Observable, of } from 'rxjs';
+import { OrderService } from '../order/services/order.service';
+import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
+import { ProductListComponent } from '../products/product-list/product-list.component';
+import { SharedService } from '../shared/shared.service';
+import { CartService } from './services/cart.service';
 
 @Component({
     selector: 'app-cart',
@@ -107,9 +107,7 @@ export class CartComponent {
         const item: ProductItem = { productID: productID, quantity: 0 };
         this.cartService.updateCartItemQuantity(item).subscribe({
             next: () => {
-                this.products = this.products.filter(
-                    (p) => p.productID !== productID
-                );
+                this.products = this.products.filter((p) => p.productID !== productID);
                 this.totalRecords = this.products.length;
                 this.productListComponent.loadProducts();
                 this.cartService.getCartPrice().subscribe({
@@ -128,10 +126,7 @@ export class CartComponent {
         });
     }
 
-    fetchProducts = (
-        page: number,
-        limit: number
-    ): Observable<ProductFull[]> => {
+    fetchProducts = (page: number, limit: number): Observable<ProductFull[]> => {
         const start = (page - 1) * limit;
         const end = start + limit;
         const sliced = this.products.slice(start, end);

@@ -8,10 +8,7 @@
     (onClick)="addToCart()"
 />
 
-<p-progressSpinner
-    *ngIf="isLoading"
-    styleClass="small-spinner"
-></p-progressSpinner>
+<p-progressSpinner *ngIf="isLoading" styleClass="small-spinner"></p-progressSpinner>
 
 <p-inputNumber
     *ngIf="quantity > 0 && !isLoading"

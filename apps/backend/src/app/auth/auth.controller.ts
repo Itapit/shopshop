@@ -1,17 +1,8 @@
-import {
-    Body,
-    Controller,
-    Get,
-    HttpCode,
-    HttpStatus,
-    Post,
-    Req,
-    UseGuards,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthGuard } from './guards/auth.guard';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { SignInRequestDto } from '../users/DTOs/request/sign-In-request.dto';
 import { SignInResponseDTO } from '../users/DTOs/response/sign-In-response.dto';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -19,9 +10,7 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    async signIn(
-        @Body() signInDto: SignInRequestDto
-    ): Promise<SignInResponseDTO> {
+    async signIn(@Body() signInDto: SignInRequestDto): Promise<SignInResponseDTO> {
         return this.authService.signIn(signInDto);
     }
 

@@ -1,7 +1,6 @@
-import { Type } from 'class-transformer';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { CartBase } from '@common/Interfaces/carts';
 import { ProductItem } from '@common/Interfaces/';
+import { CartBase } from '@common/Interfaces/carts';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type CartDocument = CartSchema & Document;
 

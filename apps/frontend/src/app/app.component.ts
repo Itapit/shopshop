@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthSession } from './auth/auth-session.interface';
 import { TokenService } from './auth/services/token.service';
 import { SharedService } from './shared/shared.service';
-import { AuthSession } from './auth/auth-session.interface';
 
 @Component({
     selector: 'app-root',

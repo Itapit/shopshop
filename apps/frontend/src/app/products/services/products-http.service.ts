@@ -1,11 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-    GetProductByIdResponse,
-    GetProductsListRequest,
-    GetProductsListResponse,
-    ProductFull,
-} from '@common/Interfaces';
+import { GetProductByIdResponse, GetProductsListRequest, GetProductsListResponse } from '@common/Interfaces';
 import { environment } from 'apps/frontend/src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -17,9 +12,7 @@ export class ProductsHttpService {
 
     constructor(private readonly http: HttpClient) {}
 
-    getProducts(
-        dto: GetProductsListRequest
-    ): Observable<GetProductsListResponse> {
+    getProducts(dto: GetProductsListRequest): Observable<GetProductsListResponse> {
         return this.http.get<GetProductsListResponse>(`${this.baseUrl}`, {
             params: dto as any,
         });

@@ -4,11 +4,7 @@ import { PaginationResultDto } from '../DTOs';
 export const ORDERS_REPOSITORY = Symbol('ORDERS_REPOSITORY');
 
 export interface IOrdersRepository {
-    getPaginatedOrders(
-        page: number,
-        limit: number,
-        sortBy: string
-    ): Promise<PaginationResultDto>;
+    getPaginatedOrders(page: number, limit: number, sortBy: string): Promise<PaginationResultDto>;
 
     findById(id: string): Promise<OrderBase | null>;
 

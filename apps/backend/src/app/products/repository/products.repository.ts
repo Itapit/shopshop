@@ -2,12 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ProductSchema, ProductDocument } from './product.schema';
-import { IProductsRepository } from './products-repository.interface';
 import { ProductSortBy } from '@common/Enums';
 import { ProductBase } from '@common/Interfaces';
-import { mapToProductDto } from '../product.mapper';
 import { ProductDto } from '../DTOs/base/product.dto';
+import { mapToProductDto } from '../product.mapper';
+import { ProductDocument, ProductSchema } from './product.schema';
+import { IProductsRepository } from './products-repository.interface';
 
 @Injectable()
 export class ProductsRepository implements IProductsRepository {
@@ -56,13 +56,8 @@ export class ProductsRepository implements IProductsRepository {
         return result.deletedCount > 0;
     }
 
-    async updateById(
-        id: string,
-        update: Partial<ProductBase>
-    ): Promise<ProductDto | null> {
-        const updatedDoc = await this.productModel
-            .findByIdAndUpdate(id, update, { new: false })
-            .exec();
+    async updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null> {
+        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { new: false }).exec();
         return updatedDoc ? mapToProductDto(updatedDoc) : null;
     }
 

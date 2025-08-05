@@ -21,16 +21,9 @@
                 class="full-width"
                 #usernameRef="ngModel"
             />
-            <div
-                *ngIf="usernameRef.invalid && usernameRef.touched"
-                class="error-message"
-            >
-                <small *ngIf="usernameRef.errors?.['required']">{{
-                    usernameRequiredMSG
-                }}</small>
-                <small *ngIf="usernameRef.errors?.['email']">{{
-                    usernameInvalidMsg
-                }}</small>
+            <div *ngIf="usernameRef.invalid && usernameRef.touched" class="error-message">
+                <small *ngIf="usernameRef.errors?.['required']">{{ usernameRequiredMSG }}</small>
+                <small *ngIf="usernameRef.errors?.['email']">{{ usernameInvalidMsg }}</small>
             </div>
         </div>
 
@@ -54,16 +47,9 @@
                 class="full-width"
                 #emailRef="ngModel"
             />
-            <div
-                *ngIf="emailRef.invalid && emailRef.touched"
-                class="error-message"
-            >
-                <small *ngIf="emailRef.errors?.['required']">{{
-                    emailRequiredMsg
-                }}</small>
-                <small *ngIf="emailRef.errors?.['email']">{{
-                    emailInvalidMsg
-                }}</small>
+            <div *ngIf="emailRef.invalid && emailRef.touched" class="error-message">
+                <small *ngIf="emailRef.errors?.['required']">{{ emailRequiredMsg }}</small>
+                <small *ngIf="emailRef.errors?.['email']">{{ emailInvalidMsg }}</small>
             </div>
         </div>
 
@@ -85,25 +71,13 @@
                 styleClass="full-width"
                 #passwordRef="ngModel"
             ></p-password>
-            <div
-                *ngIf="passwordRef.invalid && passwordRef.touched"
-                class="error-message"
-            >
-                <small *ngIf="passwordRef.errors?.['required']">{{
-                    passwordRequiredMsg
-                }}</small>
-                <small *ngIf="passwordRef.errors?.['minlength']">{{
-                    passwordMinLengthMsg
-                }}</small>
+            <div *ngIf="passwordRef.invalid && passwordRef.touched" class="error-message">
+                <small *ngIf="passwordRef.errors?.['required']">{{ passwordRequiredMsg }}</small>
+                <small *ngIf="passwordRef.errors?.['minlength']">{{ passwordMinLengthMsg }}</small>
             </div>
         </div>
 
         <!-- Submit Button -->
-        <p-button
-            class="create-user-button"
-            [label]="buttonLabel"
-            icon="pi pi-sign-in"
-            type="submit"
-        ></p-button>
+        <p-button class="create-user-button" [label]="buttonLabel" icon="pi pi-sign-in" type="submit"></p-button>
     </div>
 </form>

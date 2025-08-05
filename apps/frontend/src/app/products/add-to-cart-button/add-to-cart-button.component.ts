@@ -1,9 +1,7 @@
-import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
-import { ProductFull } from '@common/Interfaces';
+import { Component, Input } from '@angular/core';
+import { ProductFull, ProductItem } from '@common/Interfaces';
 import { MessageService } from 'primeng/api';
-import { SharedService } from '../../shared/shared.service';
 import { CartService } from '../../cart/services/cart.service';
-import { ProductItem } from '@common/Interfaces';
 
 @Component({
     selector: 'app-add-to-cart-button',

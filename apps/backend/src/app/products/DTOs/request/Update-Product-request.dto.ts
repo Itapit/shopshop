@@ -1,5 +1,5 @@
-import { IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { UpdateProductRequest } from '@common/Interfaces';
+import { IsNumber, IsOptional, IsString, Min } from 'class-validator';
 
 export class UpdateProductRequestDto implements UpdateProductRequest {
     @IsOptional()

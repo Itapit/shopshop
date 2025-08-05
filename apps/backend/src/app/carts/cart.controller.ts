@@ -1,25 +1,13 @@
-import {
-    BadRequestException,
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Post,
-    Put,
-    Req,
-    UseGuards,
-} from '@nestjs/common';
-import { CartsRepository } from './repository/carts.repository';
+import { Role } from '@common/Enums';
+import { ProductItem } from '@common/Interfaces';
+import { cartItem } from '@common/Interfaces/carts';
+import { BadRequestException, Body, Controller, Delete, Get, Put, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { EditItemInCartResponseDto } from '../carts/DTOs/response/Edit-item-to-cart-response.dto';
 import { GetCartResponseDto } from '../carts/DTOs/response/Get-cart-by-ID-response';
 import { CartsService } from './cart.service';
-import { EditItemInCartResponseDto } from '../carts/DTOs/response/Edit-item-to-cart-response.dto';
-import { cartItem } from '@common/Interfaces/carts';
-import { RolesGuard } from '../auth/guards/roles.guard';
-import { Role } from '@common/Enums';
-import { Roles } from '../auth/roles.decorator';
-import { ProductItem } from '@common/Interfaces';
 
 @Controller('carts')
 export class CartController {
@@ -34,10 +22,7 @@ export class CartController {
     @UseGuards(AuthGuard, RolesGuard)
     @Roles(Role.Client)
     @Put('item')
-    async editCartItem(
-        @Req() req: any,
-        @Body() product: ProductItem
-    ): Promise<EditItemInCartResponseDto> {
+    async editCartItem(@Req() req: any, @Body() product: ProductItem): Promise<EditItemInCartResponseDto> {
         const cartItem: cartItem = {
             customer_id: req.user.userID,
             item: product,

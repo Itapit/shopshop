@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TokenService } from '../services/token.service';
-import { Role } from 'common/src/lib/Enums/role.enum';
 import { SignInRequest } from '@common/Interfaces';
+import { Role } from 'common/src/lib/Enums/role.enum';
 import { SharedService } from '../../shared/shared.service';
 import { AuthSession } from '../auth-session.interface';
+import { AuthService } from '../services/auth.service';
+import { TokenService } from '../services/token.service';
 
 @Component({
     selector: 'app-signin',
@@ -60,10 +60,7 @@ export class SigninComponent {
                     this.tokenService.saveSession(session);
                     this.sharedService.setUserData(session);
                 }
-                if (
-                    this.tokenService.getRole() === Role.Client ||
-                    this.tokenService.getRole() === Role.Admin
-                )
+                if (this.tokenService.getRole() === Role.Client || this.tokenService.getRole() === Role.Admin)
                     this.router.navigate(['/']);
             },
             error: (err) => {

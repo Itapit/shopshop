@@ -1,7 +1,7 @@
-import { UserFull } from '@common/Interfaces';
-import { UserBaseDto } from './user-base.dto';
 import { Role } from '@common/Enums';
+import { UserFull } from '@common/Interfaces';
 import { IsEnum, IsString, MinLength } from 'class-validator';
+import { UserBaseDto } from './user-base.dto';
 
 export class UserFullDto extends UserBaseDto implements UserFull {
     @IsString()

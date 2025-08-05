@@ -29,10 +29,7 @@ export class EditProductDialogComponent {
             name: [product.name, Validators.required],
             description: [product.description, Validators.required],
             price: [product.price, [Validators.required, Validators.min(0)]],
-            quantity: [
-                product.quantity,
-                [Validators.required, Validators.min(0)],
-            ],
+            quantity: [product.quantity, [Validators.required, Validators.min(0)]],
             imageUrl: [product.imageUrl],
         });
     }

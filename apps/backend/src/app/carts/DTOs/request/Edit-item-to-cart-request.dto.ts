@@ -1,6 +1,6 @@
-import { IsArray, ValidateNested, IsString, IsInt, Min } from 'class-validator';
-import { Type } from 'class-transformer';
 import { EditItemInCartRequest } from '@common/Interfaces/carts/request/Edit-item-in-cart-request.interface';
+import { Type } from 'class-transformer';
+import { IsInt, IsString, Min } from 'class-validator';
 
 class CartItemDto {
     @IsString()

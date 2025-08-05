@@ -1,4 +1,4 @@
-import { CreateProductResponse, ProductFull } from '@common/Interfaces';
+import { CreateProductResponse } from '@common/Interfaces';
 import { ProductDto } from '../base/product.dto';
 
 export class CreateProductResponseDto implements CreateProductResponse {

@@ -1,4 +1,4 @@
-import { OrderBase, OrderFull } from '../base';
+import { OrderBase } from '../base';
 
 export interface GetOrdersListResponse {
     orders: OrderBase[];

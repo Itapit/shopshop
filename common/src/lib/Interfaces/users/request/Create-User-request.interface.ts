@@ -1,5 +1,5 @@
 import { Role } from '@common/Enums';
-import { UserBase, UserFull } from '../base';
+import { UserBase } from '../base';
 
 export interface CreateUserRequest extends UserBase {
     password: string;

@@ -8,10 +8,7 @@
                 type="text"
                 pInputText
                 formControlName="name"
-                [class.ng-invalid]="
-                    form.controls['name'].invalid &&
-                    form.controls['name'].touched
-                "
+                [class.ng-invalid]="form.controls['name'].invalid && form.controls['name'].touched"
             />
         </div>
 
@@ -23,10 +20,7 @@
                 type="text"
                 pInputText
                 formControlName="description"
-                [class.ng-invalid]="
-                    form.controls['description'].invalid &&
-                    form.controls['description'].touched
-                "
+                [class.ng-invalid]="form.controls['description'].invalid && form.controls['description'].touched"
             />
         </div>
 
@@ -39,10 +33,7 @@
                 mode="decimal"
                 [min]="0"
                 [showButtons]="true"
-                [class.ng-invalid]="
-                    form.controls['price'].invalid &&
-                    form.controls['price'].touched
-                "
+                [class.ng-invalid]="form.controls['price'].invalid && form.controls['price'].touched"
             ></p-inputNumber>
         </div>
 
@@ -54,10 +45,7 @@
                 formControlName="quantity"
                 [min]="0"
                 [showButtons]="true"
-                [class.ng-invalid]="
-                    form.controls['quantity'].invalid &&
-                    form.controls['quantity'].touched
-                "
+                [class.ng-invalid]="form.controls['quantity'].invalid && form.controls['quantity'].touched"
             ></p-inputNumber>
         </div>
 
@@ -69,10 +57,7 @@
                 type="text"
                 pInputText
                 formControlName="imageUrl"
-                [class.ng-invalid]="
-                    form.controls['imageUrl'].invalid &&
-                    form.controls['imageUrl'].touched
-                "
+                [class.ng-invalid]="form.controls['imageUrl'].invalid && form.controls['imageUrl'].touched"
             />
         </div>
     </div>
@@ -86,12 +71,6 @@
             [disabled]="form.invalid || isSubmitting"
             [loading]="isSubmitting"
         ></button>
-        <button
-            pButton
-            type="button"
-            class="p-button-secondary"
-            label="Cancel"
-            (click)="cancel()"
-        ></button>
+        <button pButton type="button" class="p-button-secondary" label="Cancel" (click)="cancel()"></button>
     </div>
 </form>

@@ -1,23 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { CartDocument } from './carts.schema';
-import { InjectModel } from '@nestjs/mongoose';
-import { mapCartToDto } from '../cart.mapper';
-import { CartDto } from '../DTOs/base/cart.dto';
-import { map } from 'rxjs';
 import { CartBase } from '@common/Interfaces/carts/base';
 import { ProductItem } from '@common/Interfaces/products/base';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { mapCartToDto } from '../cart.mapper';
+import { CartDto } from '../DTOs/base/cart.dto';
+import { CartDocument } from './carts.schema';
 
 @Injectable()
 export class CartsRepository {
-    constructor(
-        @InjectModel('Cart') private readonly cartModel: Model<CartDocument>
-    ) {}
+    constructor(@InjectModel('Cart') private readonly cartModel: Model<CartDocument>) {}
 
     async findByCustomerId(customerId: string): Promise<CartDto | null> {
-        const cart = await this.cartModel
-            .findOne({ customer_id: customerId })
-            .exec();
+        const cart = await this.cartModel.findOne({ customer_id: customerId }).exec();
         if (!cart) return null;
         return mapCartToDto(cart);
     }
@@ -28,24 +23,14 @@ export class CartsRepository {
         return mapCartToDto(save);
     }
 
-    async addItemToCart(
-        customerId: string,
-        item: Partial<ProductItem>
-    ): Promise<CartDto> {
+    async addItemToCart(customerId: string, item: Partial<ProductItem>): Promise<CartDto> {
         const cart = await this.cartModel
-            .findOneAndUpdate(
-                { customer_id: customerId },
-                { $addToSet: { items: item } },
-                { new: true, upsert: true }
-            )
+            .findOneAndUpdate({ customer_id: customerId }, { $addToSet: { items: item } }, { new: true, upsert: true })
             .exec();
         return mapCartToDto(cart);
     }
 
-    async removeItemFromCart(
-        customerId: string,
-        productId: string
-    ): Promise<CartDto | null> {
+    async removeItemFromCart(customerId: string, productId: string): Promise<CartDto | null> {
         const cart = await this.cartModel
             .findOneAndUpdate(
                 { customer_id: customerId },
@@ -56,11 +41,7 @@ export class CartsRepository {
         return cart ? mapCartToDto(cart) : null;
     }
 
-    async updateItemQuantity(
-        customerId: string,
-        productId: string,
-        quantity: number
-    ): Promise<CartDto | null> {
+    async updateItemQuantity(customerId: string, productId: string, quantity: number): Promise<CartDto | null> {
         const cart = await this.cartModel
             .findOneAndUpdate(
                 { customer_id: customerId, 'items.productID': productId },
@@ -71,10 +52,7 @@ export class CartsRepository {
         return cart ? mapCartToDto(cart) : null;
     }
 
-    async getSpecificItemFromCart(
-        customerId: string,
-        productId: string
-    ): Promise<boolean> {
+    async getSpecificItemFromCart(customerId: string, productId: string): Promise<boolean> {
         const cart = await this.cartModel
             .findOne(
                 { customer_id: customerId, 'items.productID': productId },
@@ -85,9 +63,7 @@ export class CartsRepository {
     }
 
     async deleteCart(customerId: string): Promise<boolean> {
-        const result = await this.cartModel
-            .deleteOne({ customer_id: customerId })
-            .exec();
+        const result = await this.cartModel.deleteOne({ customer_id: customerId }).exec();
         return result.deletedCount > 0;
     }
 }

@@ -1,9 +1,9 @@
+import { UserBase, UserFull } from '@common/Interfaces';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDocument, UserSchema } from './user.schema';
 import { IUsersRepository } from './users-repository.interface';
-import { UserBase, UserFull } from '@common/Interfaces';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
@@ -13,9 +13,7 @@ export class UsersRepository implements IUsersRepository {
     ) {}
 
     async findUserByEmail(email: string): Promise<UserFull | null> {
-        const doc = await this.userModel
-            .findOne({ email: email.toLowerCase() })
-            .exec();
+        const doc = await this.userModel.findOne({ email: email.toLowerCase() }).exec();
         return doc ? this.toUserFull(doc) : null;
     }
 
@@ -40,16 +38,8 @@ export class UsersRepository implements IUsersRepository {
         };
     }
 
-    async updatePassword(
-        doc: UserDocument,
-        newPassword: string
-    ): Promise<UserBase | null> {
-        const result = await this.userModel
-            .updateOne(
-                { email: doc.email },
-                { $set: { password: newPassword } }
-            )
-            .exec();
+    async updatePassword(doc: UserDocument, newPassword: string): Promise<UserBase | null> {
+        const result = await this.userModel.updateOne({ email: doc.email }, { $set: { password: newPassword } }).exec();
 
         const updatedDoc = await this.userModel.findById(doc._id).exec();
         return updatedDoc ? this.toUserBase(updatedDoc) : null;

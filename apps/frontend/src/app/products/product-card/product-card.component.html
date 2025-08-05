@@ -1,9 +1,4 @@
-<div
-    *ngIf="
-        mode === 'customerView' || mode === 'publicView' || mode === 'adminView'
-    "
-    class="view-card"
->
+<div *ngIf="mode === 'customerView' || mode === 'publicView' || mode === 'adminView'" class="view-card">
     <p-card class="product-card">
         <div class="card-content">
             <div class="image-wrapper">
@@ -18,30 +13,19 @@
                 {{ product.description }}
             </div>
 
-            <div class="product-price">
-                Price: ₪{{ product.price.toFixed(2) }}
-            </div>
+            <div class="product-price">Price: ₪{{ product.price.toFixed(2) }}</div>
 
-            <div class="product-quantity" *ngIf="product.quantity != 0">
-                In Stock: {{ product.quantity }}
-            </div>
-            <div class="product-quantity" *ngIf="product.quantity == 0">
-                Out of stock
-            </div>
+            <div class="product-quantity" *ngIf="product.quantity != 0">In Stock: {{ product.quantity }}</div>
+            <div class="product-quantity" *ngIf="product.quantity == 0">Out of stock</div>
 
             <div *ngIf="mode === 'customerView'" class="flex-spacer"></div>
             <div class="actions" *ngIf="mode === 'customerView'">
-                <app-add-to-cart-button
-                    [product]="product"
-                ></app-add-to-cart-button>
+                <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
             </div>
 
             <div *ngIf="mode == 'adminView'" class="=flex-spacer"></div>
             <div class="actions" *ngIf="mode == 'adminView'">
-                <app-edit-product-button
-                    [product]="product"
-                    (productUpdated)="loadProduct()"
-                ></app-edit-product-button>
+                <app-edit-product-button [product]="product" (productUpdated)="loadProduct()"></app-edit-product-button>
             </div>
         </div>
     </p-card>
@@ -49,11 +33,7 @@
 
 <div *ngIf="mode === 'cartView'" class="cart-card">
     <div class="cart-row">
-        <img
-            [src]="product.imageUrl"
-            alt="{{ product.name }}"
-            class="product-image"
-        />
+        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
 
         <div class="cart-name-desc">
             <div class="product-name">{{ product.name }}</div>
@@ -63,10 +43,6 @@
         <div class="cart-price">₪{{ product.price }}</div>
         <div class="cart-quantity">Quantity: {{ product.quantity }}</div>
 
-        <p-button
-            label="Remove"
-            class="cart-remove"
-            (click)="removeItemFromCart()"
-        ></p-button>
+        <p-button label="Remove" class="cart-remove" (click)="removeItemFromCart()"></p-button>
     </div>
 </div>

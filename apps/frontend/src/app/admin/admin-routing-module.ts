@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 import { AdminGuard } from '../auth/guards/admin.guard';
+import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 
 const routes: Routes = [
     {

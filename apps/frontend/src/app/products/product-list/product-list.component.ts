@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { productListOptionsEnum } from './product-list-options-enum';
-import { Observable } from 'rxjs';
-import { PaginatorState } from 'primeng/paginator';
 import { ProductFull } from '@common/Interfaces';
+import { PaginatorState } from 'primeng/paginator';
+import { Observable } from 'rxjs';
 import { SharedService } from '../../shared/shared.service';
+import { productListOptionsEnum } from './product-list-options-enum';
 @Component({
     selector: 'app-product-list',
     standalone: false,
@@ -12,11 +12,7 @@ import { SharedService } from '../../shared/shared.service';
 })
 export class ProductListComponent implements OnInit {
     @Input() mode!: productListOptionsEnum; // 'view' or 'cart'
-    @Input() fetchFunction!: (
-        page: number,
-        limit: number,
-        keyword: string
-    ) => Observable<ProductFull[]>;
+    @Input() fetchFunction!: (page: number, limit: number, keyword: string) => Observable<ProductFull[]>;
     @Input() totalRecords!: number;
     @Output() removeClicked = new EventEmitter<string>();
     keyword: string = '';

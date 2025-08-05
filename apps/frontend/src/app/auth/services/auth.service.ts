@@ -1,13 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CreateUserRequest, CreateUserResponse, SignInRequest, SignInResponse } from '@common/Interfaces';
 import { Observable } from 'rxjs';
-import {
-    CreateUserRequest,
-    CreateUserResponse,
-    SignInRequest,
-    SignInResponse,
-} from '@common/Interfaces';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -18,10 +13,7 @@ export class AuthService {
     constructor(private readonly http: HttpClient) {}
 
     signIn(dto: SignInRequest): Observable<SignInResponse> {
-        return this.http.post<SignInResponse>(
-            `${this.baseUrl}/auth/login`,
-            dto
-        );
+        return this.http.post<SignInResponse>(`${this.baseUrl}/auth/login`, dto);
     }
 
     signUp(dto: CreateUserRequest): Observable<CreateUserResponse> {

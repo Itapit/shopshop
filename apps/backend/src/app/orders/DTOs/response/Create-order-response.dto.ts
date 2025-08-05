@@ -1,6 +1,5 @@
-import { CreateOrderResponse } from '@common/Interfaces';
+import { CreateOrderResponse, ProductItem } from '@common/Interfaces';
 import { OrderDto } from '../base';
-import { ProductItem } from '@common/Interfaces';
 
 export class OrderItemResponseDto {
     productID!: string;
@@ -20,9 +19,7 @@ export class CreateOrderResponseDto implements CreateOrderResponse {
     constructor(order: OrderDto) {
         this.customer_id = order.customer_id!;
         this.total_price = order.total_price!;
-        this.items = (order.items || []).map(
-            (item) => new OrderItemResponseDto(item)
-        );
+        this.items = (order.items || []).map((item) => new OrderItemResponseDto(item));
     }
     created_at: string;
 }

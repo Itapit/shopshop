@@ -1,25 +1,16 @@
 import { Module } from '@nestjs/common';
-import { CartSchemaFactory } from './repository/carts.schema';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ProductsModule } from '../products/products.module';
 import { CartController } from './cart.controller';
 import { CartsService } from './cart.service';
-import { CartsRepository } from './repository/carts.repository';
-import { MongooseModule } from '@nestjs/mongoose';
 import { CARTS_REPOSITORY } from './repository/carts-reposirtory.interface';
-import { ProductsModule } from '../products/products.module';
+import { CartsRepository } from './repository/carts.repository';
+import { CartSchemaFactory } from './repository/carts.schema';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([
-            { name: 'Cart', schema: CartSchemaFactory },
-        ]),
-        ProductsModule,
-    ],
+    imports: [MongooseModule.forFeature([{ name: 'Cart', schema: CartSchemaFactory }]), ProductsModule],
     controllers: [CartController],
-    providers: [
-        CartsService,
-        CartsRepository,
-        { provide: CARTS_REPOSITORY, useClass: CartsRepository },
-    ],
+    providers: [CartsService, CartsRepository, { provide: CARTS_REPOSITORY, useClass: CartsRepository }],
     exports: [CartsService],
 })
 export class CartModule {}

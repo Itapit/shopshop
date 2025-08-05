@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { productListOptionsEnum } from './product-list/product-list-options-enum';
-import { ProductsHttpService } from './services/products-http.service';
+import { Role } from '@common/Enums';
+import { GetProductsListRequest, GetProductsListResponse, ProductFull } from '@common/Interfaces';
 import { map, Observable, tap } from 'rxjs';
 import { TokenService } from '../auth/services/token.service';
-import { Role } from '@common/Enums';
-import {
-    GetProductsListRequest,
-    GetProductsListResponse,
-    ProductFull,
-} from '@common/Interfaces';
 import { SharedService } from '../shared/shared.service';
+import { productListOptionsEnum } from './product-list/product-list-options-enum';
+import { ProductsHttpService } from './services/products-http.service';
 @Component({
     selector: 'app-products',
     standalone: false,
@@ -36,11 +32,7 @@ export class ProductsComponent implements OnInit {
         }
     }
 
-    fetchProducts = (
-        page: number,
-        limit: number,
-        keyword: string
-    ): Observable<ProductFull[]> => {
+    fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {
         const query: GetProductsListRequest = { page, limit, keyword };
 
         return this.productService.getProducts(query).pipe(

@@ -1,5 +1,5 @@
-import { CartDto } from '../base/cart.dto';
 import { ClearCartResponse } from '@common/Interfaces/carts/response/Clear-cart-response.interface';
+import { CartDto } from '../base/cart.dto';
 export class ClearCartResponseDto implements ClearCartResponse {
     customer_id!: string;
     items: [] = [];

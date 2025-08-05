@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProductItem } from '@common/Interfaces';
 import { environment } from 'apps/frontend/src/environments/environment';
