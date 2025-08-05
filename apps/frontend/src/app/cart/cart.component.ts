@@ -1,22 +1,28 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
 import { ProductBase, ProductFull, ProductItem } from "@common/Interfaces";
 import { productListOptionsEnum } from "../products/product-list/product-list-options-enum";
 import { Observable, of } from "rxjs";
 import { CartService } from "./services/cart.service";
+import { Router } from "@angular/router";
+import { ProductListComponent } from "../products/product-list/product-list.component";
 
 @Component({
   selector: "app-cart",
   standalone: false,
   templateUrl: "./cart.component.html",
   styleUrls: ["./cart.component.css"],
+  encapsulation: ViewEncapsulation.None
 })
 export class CartComponent {
+    @ViewChild(ProductListComponent)
+    productListComponent!: ProductListComponent;
+
     products: ProductFull[]  = []
     productListOptionsEnum = productListOptionsEnum;
     
     
-    constructor(private sharedService: SharedService , private cartService: CartService) {}
+    constructor(private sharedService: SharedService , private cartService: CartService , private router: Router) {}
     totalPrice: number = 0;
     totalRecords: number = 0;
 
@@ -29,12 +35,23 @@ export class CartComponent {
             next: (res) => {
             console.log("success", res.items); 
             this.products = res.items;
-            this.totalRecords= this.products.length
+            this.totalRecords= this.products.length 
+
             },
             error: (err) => {
             console.error("failed", err);
             }
-        }); 
+        });  
+
+      this.cartService.getCartPrice().subscribe({
+        next: (res) => {
+            console.log("success price", res); 
+            this.totalPrice = res.total
+             },
+        error: (err) => {
+            console.error("failed", err);
+            }
+      });
 
       
     }
@@ -43,19 +60,33 @@ export class CartComponent {
       console.log("Order has been placed!");
     }  
     
+    
     onRemoveClicked(productID : string){
       console.log("trying to remove")
       const item : ProductItem = {productID: productID , quantity:0}
-      this.cartService.updateCartItemQuantity(item).subscribe({
+       this.cartService.updateCartItemQuantity(item).subscribe({
        next: () => {
          this.products = this.products.filter(p => p.productID !== productID);
          this.totalRecords = this.products.length; 
+         this.productListComponent.loadProducts();
+         this.cartService.getCartPrice().subscribe({
+          next: (res) => {
+            console.log("success price", res); 
+            this.totalPrice = res.total
+             },
+          error: (err) => {
+            console.error("failed", err);
+            }
+      });
+         
+         
          
       },
        error: (err) => {
          console.error("Remove failed", err);
       }
-      })
+      }) 
+      
 
     } 
     

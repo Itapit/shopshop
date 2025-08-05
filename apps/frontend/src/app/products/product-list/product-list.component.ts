@@ -33,7 +33,8 @@ export class ProductListComponent implements OnInit {
   async handleSearch(value:string){
      this.keyword = value;
      this.loadProducts()
-  }
+  } 
+  
 
   loadProducts(event?: PaginatorState) {
     const page = (event?.page ?? 0) + 1;

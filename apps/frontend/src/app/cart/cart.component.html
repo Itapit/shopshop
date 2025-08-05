@@ -1,10 +1,14 @@
-<app-product-list 
+<div class="cart-products-wrapper">
+  <app-product-list 
+    #productList
     *ngIf="products.length > 0"
     [mode]="productListOptionsEnum.CartView"
     [fetchFunction]="fetchProducts"
     [totalRecords]="totalRecords"
-    (removeClicked) = "onRemoveClicked($event)"
-/>
+    (removeClicked)="onRemoveClicked($event)"
+  />
+</div>
+
 <div class="cart-summary">
   <p class="total-price">Total price: ₪{{ totalPrice }}</p>
 </div>
