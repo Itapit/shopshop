@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-cart-link',
@@ -8,4 +9,9 @@ import { Component, signal } from '@angular/core';
 })
 export class CartLinkComponent {
     buttonText = signal('Cart');
+    constructor(private sharedService: SharedService){}
+
+    clickCart(){
+      this.sharedService.triggerCart();
+    }
 }

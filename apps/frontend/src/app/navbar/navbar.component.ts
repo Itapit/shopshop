@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   showSignUpLink: boolean = false;
   showStatsLink: boolean = false;
   showCartLink: boolean = false;
+  showSearch: boolean = true
 
   private userSub!: Subscription;
 
@@ -28,10 +29,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.userSub = this.sharedService.userData$.subscribe((session: AuthSession | null) => {
       this.showCartLink = session?.role === Role.Client;
       this.showOrderLink = session?.role === Role.Client;
+      //this.showSearch = session?.role === Role.Admin;
       this.showSignInLink = !session;
       this.showSignUpLink = session?.role === Role.Admin;
       this.showStatsLink = session?.role === Role.Admin;
-    });
+      //this.showSearch = session?.role === Role.Admin;
+    }); 
+
+    this.sharedService.cartClicked$.subscribe(()=> {
+      this.showOrderLink = true;
+      this.showCartLink = false;
+      this.showSearch = false;
+    })
+
+    this.sharedService.logoClicked$.subscribe(()=>{
+      this.showOrderLink = false;
+      this.showCartLink = true;
+      this.showSearch = true;
+    })
+      
+    
   }
 
   ngOnDestroy(): void {

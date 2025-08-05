@@ -11,10 +11,14 @@ export class SharedService {
 
   private orderClickSubject = new Subject<void>();
   private searchClickSubject = new Subject<string>();
+  private cartClickSubject = new Subject<void>();
+  private logoClickSubject  = new Subject<void>();
   
 
   searchClicked$ = this.searchClickSubject.asObservable();
   orderClicked$ = this.orderClickSubject.asObservable();
+  cartClicked$ = this.cartClickSubject.asObservable();
+  logoClicked$ = this.logoClickSubject.asObservable();
   
 
   triggerOrder() {
@@ -24,6 +28,13 @@ export class SharedService {
   triggerSearch(value:string) {
     this.searchClickSubject.next(value);
   } 
+
+  triggerCart(){
+    this.cartClickSubject.next();
+  }
+  triggerLogo(){
+    this.logoClickSubject.next();
+  }
   setUserData(session: AuthSession | null) {
     this.userDataSubject.next(session);
   }
