@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(private sharedService: SharedService, private router:Router) {}
 
   showSignInLink: boolean = true;
-  showOrderButton: boolean = false;
+  showOrderLink: boolean = false;
   showSignUpLink: boolean = false;
   showStatsLink: boolean = false;
   showCartLink: boolean = false;
@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSub = this.sharedService.userData$.subscribe((session: AuthSession | null) => {
       this.showCartLink = session?.role === Role.Client;
+      this.showOrderLink = session?.role === Role.Client;
       this.showSignInLink = !session;
       this.showSignUpLink = session?.role === Role.Admin;
       this.showStatsLink = session?.role === Role.Admin;

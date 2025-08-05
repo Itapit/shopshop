@@ -2,10 +2,12 @@
   <app-product-list 
     #productList
     *ngIf="products.length > 0"
+    [hidden]="products.length === 0"
     [mode]="productListOptionsEnum.CartView"
     [fetchFunction]="fetchProducts"
     [totalRecords]="totalRecords"
     (removeClicked)="onRemoveClicked($event)"
+    (orderClicked)="handleOrder()"
   />
 </div>
 

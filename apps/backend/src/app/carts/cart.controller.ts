@@ -35,9 +35,9 @@ export class CartController {
         return this.cartService.updateCartItemQuantity(cartItem);
     } 
     @UseGuards(AuthGuard)
-    @Delete(':id/clear')
-    async clearCart( @Param('id') id: string): Promise<boolean> {
-        return this.cartService.clearCart(id);
+    @Delete()
+    async clearCart( @Req() req:any): Promise<boolean> {
+        return this.cartService.clearCart(req.user.userID);
         
     }  
     @Get('total')

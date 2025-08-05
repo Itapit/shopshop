@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 export class CartService{
     private readonly baseUrl = `${environment.BACKEND_BASE_URL}/carts`;
 
-    constructor(private http: HttpClient){} 
+    constructor(private http: HttpClient ){} 
 
     updateCartItemQuantity(item: ProductItem): Observable<any> {
         const token = localStorage.getItem('token');
@@ -36,6 +36,16 @@ export class CartService{
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
         return this.http.get(`${this.baseUrl}/total`, { headers });
+    } 
+
+    deleteCart():Observable<any>{
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+        return this.http.delete(`${this.baseUrl}`, { headers });
     }
 
+    
+
+    
 }

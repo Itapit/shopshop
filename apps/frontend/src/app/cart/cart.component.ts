@@ -1,11 +1,13 @@
 import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
-import { ProductBase, ProductFull, ProductItem } from "@common/Interfaces";
+import {  ProductFull, ProductItem } from "@common/Interfaces";
 import { productListOptionsEnum } from "../products/product-list/product-list-options-enum";
 import { Observable, of } from "rxjs";
 import { CartService } from "./services/cart.service";
 import { Router } from "@angular/router";
 import { ProductListComponent } from "../products/product-list/product-list.component";
+import { OrderService } from "../order/services/order.service";
+
 
 @Component({
   selector: "app-cart",
@@ -22,7 +24,7 @@ export class CartComponent {
     productListOptionsEnum = productListOptionsEnum;
     
     
-    constructor(private sharedService: SharedService , private cartService: CartService , private router: Router) {}
+    constructor(private sharedService: SharedService , private cartService: CartService , private router: Router , private orderService:OrderService) {}
     totalPrice: number = 0;
     totalRecords: number = 0;
 
@@ -56,7 +58,45 @@ export class CartComponent {
       
     }
     
+    
     handleOrder() {
+      if (this.products.length === 0) {
+          return;
+      }
+
+      const cartItems: ProductItem[] = this.products.map(product => ({
+        productID: product.productID,
+        quantity: product.quantity
+      })); 
+
+      this.orderService.placeOrder(cartItems).subscribe({
+        next: (res) => {
+            console.log("success order", res); 
+            this.cartService.deleteCart().subscribe({
+              next:(res) => {
+                console.log("success delete" , res)
+                this.products = [];
+                this.totalPrice = 0;
+                this.totalRecords = 0;
+                this.productListComponent?.loadProducts?.();
+              } ,
+              error:(err) =>{
+                console.error("failed" , err);
+              }
+            })
+             },
+        error: (err) => {
+            console.error("failed", err);
+            }
+      });
+
+
+
+
+
+
+
+
       console.log("Order has been placed!");
     }  
     
