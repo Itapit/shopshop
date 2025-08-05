@@ -31,7 +31,7 @@ export class OrdersStatsComponent implements OnInit {
         });
     }
     fireworks() {
-        const duration = 2000;
+        const duration = 200;
         const end = Date.now() + duration;
 
         const interval = setInterval(() => {
