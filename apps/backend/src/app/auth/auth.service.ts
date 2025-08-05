@@ -1,9 +1,9 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 import * as bcrypt from 'bcrypt';
 import { SignInRequestDto } from '../users/DTOs/request/sign-In-request.dto';
-import { SignInResponseDTO } from '../users/DTOs/response/sign-In-response.dto';
 import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-repository.interface';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 
@@ -14,7 +14,7 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async signIn(dto: SignInRequestDto): Promise<SignInResponseDTO> {
+    async signIn(dto: SignInRequestDto, res: Response): Promise<{ message: string }> {
         dto.email = dto.email.toLowerCase();
 
         const user = await this.usersRepo.findUserByEmail(dto.email);
@@ -28,11 +28,16 @@ export class AuthService {
             email: user.email,
             role: user.role,
         };
-        const authResponse: SignInResponseDTO = new SignInResponseDTO();
-        authResponse.access_token = await this.jwtService.signAsync(payload);
-        authResponse.role = user.role;
+        const accessToken = await this.jwtService.signAsync(payload);
 
-        return authResponse;
+        res.cookie('access_token', accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 15 * 60 * 1000,
+        });
+
+        return { message: 'Logged in!' };
     }
 
     async passwordCheck(dto: SignInRequestDto, user: any): Promise<void> {
