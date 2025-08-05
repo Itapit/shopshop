@@ -17,7 +17,6 @@ export class RoleGuard implements CanActivate {
         const expectedRole = route.data['expectedRole'];
         const userRole = this.tokenService.getRole();
         if (userRole === expectedRole) {
-            console.log('good route');
             return true;
         }
 
