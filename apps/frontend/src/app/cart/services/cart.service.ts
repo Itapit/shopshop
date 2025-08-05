@@ -14,35 +14,31 @@ export class CartService{
     constructor(private http: HttpClient ){} 
 
     updateCartItemQuantity(item: ProductItem): Observable<any> {
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        
 
         
 
-        return this.http.put(`${this.baseUrl}/item`, item, { headers })
+        return this.http.put(`${this.baseUrl}/item`, item)
     } 
 
     getCart(): Observable<any> {
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        
 
-        return this.http.get(`${this.baseUrl}`, { headers });
+        return this.http.get(`${this.baseUrl}`);
 
        
     }
 
     getCartPrice(): Observable<any>{
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        
 
-        return this.http.get(`${this.baseUrl}/total`, { headers });
+        return this.http.get(`${this.baseUrl}/total`);
     } 
 
     deleteCart():Observable<any>{
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+        
 
-        return this.http.delete(`${this.baseUrl}`, { headers });
+        return this.http.delete(`${this.baseUrl}`);
     }
 
     

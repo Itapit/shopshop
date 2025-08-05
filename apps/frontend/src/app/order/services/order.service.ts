@@ -14,12 +14,11 @@ export class OrderService{
     constructor(private http: HttpClient){} 
     
     placeOrder(items: ProductItem[]) : Observable<any>{
-      const token = localStorage.getItem('token');
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+      
 
         
 
-      return this.http.post(`${this.baseUrl}`,  {items}, { headers })
+      return this.http.post(`${this.baseUrl}`,  {items})
     }
     
     
