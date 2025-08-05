@@ -4,11 +4,15 @@ import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 import { AdminGuard } from '../auth/guards/admin.guard';
 
 const routes: Routes = [
-  {path: 'stats', component:OrdersStatsComponent, canActivate:[AdminGuard]},
+    {
+        path: 'stats',
+        component: OrdersStatsComponent,
+        canActivate: [AdminGuard],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

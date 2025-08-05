@@ -7,51 +7,53 @@ import { SharedService } from '../shared/shared.service';
 import { AuthSession } from '../auth/auth-session.interface';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: false,
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+    selector: 'app-navbar',
+    standalone: false,
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+    constructor(
+        private sharedService: SharedService,
+        private router: Router
+    ) {}
 
-  constructor(private sharedService: SharedService, private router:Router) {}
+    showSignInLink: boolean = true;
+    showOrderLink: boolean = false;
+    showSignUpLink: boolean = false;
+    showStatsLink: boolean = false;
+    showCartLink: boolean = false;
+    showSearch: boolean = true;
 
-  showSignInLink: boolean = true;
-  showOrderLink: boolean = false;
-  showSignUpLink: boolean = false;
-  showStatsLink: boolean = false;
-  showCartLink: boolean = false;
-  showSearch: boolean = true
+    private userSub!: Subscription;
 
-  private userSub!: Subscription;
+    ngOnInit(): void {
+        this.userSub = this.sharedService.userData$.subscribe(
+            (session: AuthSession | null) => {
+                this.showCartLink = session?.role === Role.Client;
+                this.showOrderLink = session?.role === Role.Client;
+                //this.showSearch = session?.role === Role.Admin;
+                this.showSignInLink = !session;
+                this.showSignUpLink = session?.role === Role.Admin;
+                this.showStatsLink = session?.role === Role.Admin;
+                //this.showSearch = session?.role === Role.Admin;
+            }
+        );
 
-  ngOnInit(): void {
-    this.userSub = this.sharedService.userData$.subscribe((session: AuthSession | null) => {
-      this.showCartLink = session?.role === Role.Client;
-      this.showOrderLink = session?.role === Role.Client;
-      //this.showSearch = session?.role === Role.Admin;
-      this.showSignInLink = !session;
-      this.showSignUpLink = session?.role === Role.Admin;
-      this.showStatsLink = session?.role === Role.Admin;
-      //this.showSearch = session?.role === Role.Admin;
-    }); 
+        this.sharedService.cartClicked$.subscribe(() => {
+            this.showOrderLink = true;
+            this.showCartLink = false;
+            this.showSearch = false;
+        });
 
-    this.sharedService.cartClicked$.subscribe(()=> {
-      this.showOrderLink = true;
-      this.showCartLink = false;
-      this.showSearch = false;
-    })
+        this.sharedService.logoClicked$.subscribe(() => {
+            this.showOrderLink = false;
+            this.showCartLink = true;
+            this.showSearch = true;
+        });
+    }
 
-    this.sharedService.logoClicked$.subscribe(()=>{
-      this.showOrderLink = false;
-      this.showCartLink = true;
-      this.showSearch = true;
-    })
-      
-    
-  }
-
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
-  }
+    ngOnDestroy(): void {
+        this.userSub.unsubscribe();
+    }
 }

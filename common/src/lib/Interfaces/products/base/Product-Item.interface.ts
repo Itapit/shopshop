@@ -1,4 +1,4 @@
 export interface ProductItem {
-    productID:string
-    quantity:number
+    productID: string;
+    quantity: number;
 }

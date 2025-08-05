@@ -1,34 +1,44 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { IUsersRepository, USERS_REPOSITORY } from './repository/users-repository.interface';
+import {
+    IUsersRepository,
+    USERS_REPOSITORY,
+} from './repository/users-repository.interface';
 import { UserBase } from '@common/Interfaces';
-import { CreateUserRequestDto, CreateUserResponseDto, UserBaseDto } from './DTOs';
-
+import {
+    CreateUserRequestDto,
+    CreateUserResponseDto,
+    UserBaseDto,
+} from './DTOs';
 
 @Injectable()
 export class UsersService {
-  constructor( @Inject(USERS_REPOSITORY) private readonly usersRepo: IUsersRepository ) {}
+    constructor(
+        @Inject(USERS_REPOSITORY) private readonly usersRepo: IUsersRepository
+    ) {}
 
-  async createUser(createUserDto: CreateUserRequestDto): Promise<CreateUserResponseDto> {
-    const email = createUserDto.email.toLowerCase();
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    async createUser(
+        createUserDto: CreateUserRequestDto
+    ): Promise<CreateUserResponseDto> {
+        const email = createUserDto.email.toLowerCase();
+        const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
-    const created =  await this.usersRepo.createUser({
-      username: createUserDto.username,
-      email: email,
-      password: hashedPassword,
-      role: createUserDto.role,
-    });
-    const userDto = new UserBaseDto();
-    userDto.username = created.username;
-    userDto.email = created.email;
+        const created = await this.usersRepo.createUser({
+            username: createUserDto.username,
+            email: email,
+            password: hashedPassword,
+            role: createUserDto.role,
+        });
+        const userDto = new UserBaseDto();
+        userDto.username = created.username;
+        userDto.email = created.email;
 
-    const response = new CreateUserResponseDto();
-    response.user = userDto;
-    return response;
-  }
+        const response = new CreateUserResponseDto();
+        response.user = userDto;
+        return response;
+    }
 
-  async getAllUsers(): Promise<UserBase[]> {
-    return this.usersRepo.getAllUsers();
-  } 
+    async getAllUsers(): Promise<UserBase[]> {
+        return this.usersRepo.getAllUsers();
+    }
 }

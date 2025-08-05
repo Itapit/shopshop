@@ -7,23 +7,20 @@ import { UserSchema, UserSchemaFactory } from './repository/user.schema';
 import { USERS_REPOSITORY } from './repository/users-repository.interface';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: UserSchema.name, schema: UserSchemaFactory },
-    ]),
-  ],
-  controllers: [UsersController],
-  providers: [
-    UsersService,
-    UsersRepository,
-    {
-      provide: USERS_REPOSITORY,
-      useClass: UsersRepository,
-    },
-  ],
-  exports: [
-    UsersService,
-    USERS_REPOSITORY,
-  ],
+    imports: [
+        MongooseModule.forFeature([
+            { name: UserSchema.name, schema: UserSchemaFactory },
+        ]),
+    ],
+    controllers: [UsersController],
+    providers: [
+        UsersService,
+        UsersRepository,
+        {
+            provide: USERS_REPOSITORY,
+            useClass: UsersRepository,
+        },
+    ],
+    exports: [UsersService, USERS_REPOSITORY],
 })
 export class UsersModule {}

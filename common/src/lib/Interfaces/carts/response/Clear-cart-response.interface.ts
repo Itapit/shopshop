@@ -1,6 +1,6 @@
-import { CartBase } from "../base";
+import { CartBase } from '../base';
 
-export interface ClearCartResponse extends CartBase{
-    customer_id:string
-    items:[]
+export interface ClearCartResponse extends CartBase {
+    customer_id: string;
+    items: [];
 }

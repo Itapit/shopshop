@@ -1,4 +1,4 @@
-import { ProductFull } from "../base/product-full.interface";
+import { ProductFull } from '../base/product-full.interface';
 
 export interface GetProductsListResponse {
     products: ProductFull[];

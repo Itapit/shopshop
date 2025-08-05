@@ -1,7 +1,6 @@
-import { ProductItem } from "@common/Interfaces/products";
+import { ProductItem } from '@common/Interfaces/products';
 
-export interface cartItem{
+export interface cartItem {
     customer_id: string;
     item: ProductItem;
-
 }

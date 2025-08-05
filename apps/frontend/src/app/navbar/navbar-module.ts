@@ -14,8 +14,23 @@ import { StatsLinkComponent } from './stats-link/stats-link.component';
 import { CartLinkComponent } from './cart-link/cart-link.component';
 
 @NgModule({
-  declarations: [SignInLinkComponent, NavbarComponent, SearchProductsComponent, WebsiteLogoComponent , OrderComponent, SignUpLinkComponent, StatsLinkComponent, CartLinkComponent],
-  imports: [CommonModule, NavbarRoutingModule, ButtonModule, FormsModule, InputTextModule],
-  exports: [NavbarComponent]
+    declarations: [
+        SignInLinkComponent,
+        NavbarComponent,
+        SearchProductsComponent,
+        WebsiteLogoComponent,
+        OrderComponent,
+        SignUpLinkComponent,
+        StatsLinkComponent,
+        CartLinkComponent,
+    ],
+    imports: [
+        CommonModule,
+        NavbarRoutingModule,
+        ButtonModule,
+        FormsModule,
+        InputTextModule,
+    ],
+    exports: [NavbarComponent],
 })
 export class NavbarModule {}

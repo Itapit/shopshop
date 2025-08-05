@@ -1,89 +1,109 @@
 <form #form="ngForm" (ngSubmit)="onCreateUser(form)">
-  <div pFocusTrap class="create-user-card">
-    <h2 class="create-user-title">{{ title }}</h2>
+    <div pFocusTrap class="create-user-card">
+        <h2 class="create-user-title">{{ title }}</h2>
 
+        <!-- Username Field -->
+        <div class="field">
+            <label for="Username" class="label-with-icon">
+                <i class="pi pi-id-card"></i>
+                {{ usernameLabel }}
+            </label>
+            <input
+                id="username"
+                name="username"
+                type="text"
+                pInputText
+                required
+                [(ngModel)]="username"
+                [placeholder]="usernamePlaceHolder"
+                pAutoFocus
+                [autofocus]="true"
+                class="full-width"
+                #usernameRef="ngModel"
+            />
+            <div
+                *ngIf="usernameRef.invalid && usernameRef.touched"
+                class="error-message"
+            >
+                <small *ngIf="usernameRef.errors?.['required']">{{
+                    usernameRequiredMSG
+                }}</small>
+                <small *ngIf="usernameRef.errors?.['email']">{{
+                    usernameInvalidMsg
+                }}</small>
+            </div>
+        </div>
 
-    <!-- Username Field -->
-    <div class="field">
-      <label for="Username" class="label-with-icon">
-        <i class="pi pi-id-card"></i>
-        {{ usernameLabel }}
-      </label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        pInputText
-        required
-        [(ngModel)]="username"
-        [placeholder]="usernamePlaceHolder"
-        pAutoFocus
-        [autofocus]="true"
-        class="full-width"
-        #usernameRef="ngModel"
-      />
-      <div *ngIf="usernameRef.invalid && usernameRef.touched" class="error-message">
-        <small *ngIf="usernameRef.errors?.['required']">{{ usernameRequiredMSG }}</small>
-        <small *ngIf="usernameRef.errors?.['email']">{{ usernameInvalidMsg }}</small>
-      </div>
+        <!-- Email Field -->
+        <div class="field">
+            <label for="email" class="label-with-icon">
+                <i class="pi pi-envelope"></i>
+                {{ emailLabel }}
+            </label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                pInputText
+                required
+                email
+                [(ngModel)]="email"
+                [placeholder]="emailPlaceholder"
+                pAutoFocus
+                [autofocus]="true"
+                class="full-width"
+                #emailRef="ngModel"
+            />
+            <div
+                *ngIf="emailRef.invalid && emailRef.touched"
+                class="error-message"
+            >
+                <small *ngIf="emailRef.errors?.['required']">{{
+                    emailRequiredMsg
+                }}</small>
+                <small *ngIf="emailRef.errors?.['email']">{{
+                    emailInvalidMsg
+                }}</small>
+            </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="field">
+            <label for="password" class="label-with-icon">
+                <i class="pi pi-lock"></i>
+                {{ passwordLabel }}
+            </label>
+            <p-password
+                inputId="password"
+                name="password"
+                required
+                [minlength]="passwordMinLength"
+                [(ngModel)]="password"
+                [placeholder]="passwordPlaceholder"
+                [feedback]="false"
+                [toggleMask]="true"
+                styleClass="full-width"
+                #passwordRef="ngModel"
+            ></p-password>
+            <div
+                *ngIf="passwordRef.invalid && passwordRef.touched"
+                class="error-message"
+            >
+                <small *ngIf="passwordRef.errors?.['required']">{{
+                    passwordRequiredMsg
+                }}</small>
+                <small *ngIf="passwordRef.errors?.['minlength']">{{
+                    passwordMinLengthMsg
+                }}</small>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <p-button
+            class="create-user-button"
+            [label]="buttonLabel"
+            icon="pi pi-sign-in"
+            type="submit"
+        ></p-button>
     </div>
-
-    <!-- Email Field -->
-    <div class="field">
-      <label for="email" class="label-with-icon">
-        <i class="pi pi-envelope"></i>
-        {{ emailLabel }}
-      </label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        pInputText
-        required
-        email
-        [(ngModel)]="email"
-        [placeholder]="emailPlaceholder"
-        pAutoFocus
-        [autofocus]="true"
-        class="full-width"
-        #emailRef="ngModel"
-      />
-      <div *ngIf="emailRef.invalid && emailRef.touched" class="error-message">
-        <small *ngIf="emailRef.errors?.['required']">{{ emailRequiredMsg }}</small>
-        <small *ngIf="emailRef.errors?.['email']">{{ emailInvalidMsg }}</small>
-      </div>
-    </div>
-
-    <!-- Password Field -->
-    <div class="field">
-      <label for="password" class="label-with-icon">
-        <i class="pi pi-lock"></i>
-        {{ passwordLabel }}
-      </label>
-      <p-password
-        inputId="password"
-        name="password"
-        required
-        [minlength]="passwordMinLength"
-        [(ngModel)]="password"
-        [placeholder]="passwordPlaceholder"
-        [feedback]="false"
-        [toggleMask]="true"
-        styleClass="full-width"
-        #passwordRef="ngModel"
-      ></p-password>
-      <div *ngIf="passwordRef.invalid && passwordRef.touched" class="error-message">
-        <small *ngIf="passwordRef.errors?.['required']">{{ passwordRequiredMsg }}</small>
-        <small *ngIf="passwordRef.errors?.['minlength']">{{ passwordMinLengthMsg}}</small>
-      </div>
-    </div>
-
-    <!-- Submit Button -->
-    <p-button
-      class="create-user-button"
-      [label]="buttonLabel"
-      icon="pi pi-sign-in"
-      type="submit"
-    ></p-button>
-  </div>
 </form>

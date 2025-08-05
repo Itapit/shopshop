@@ -1,3 +1,3 @@
-import { ProductBase } from "../base/product-base.interface";
+import { ProductBase } from '../base/product-base.interface';
 
-export interface UpdateProductRequest extends Partial<ProductBase>{}
+export interface UpdateProductRequest extends Partial<ProductBase> {}

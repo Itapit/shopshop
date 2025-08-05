@@ -1,3 +1,3 @@
-import { CartBase } from "../base";
+import { CartBase } from '../base';
 
-export interface EditItemInCartResponse extends CartBase{}
+export interface EditItemInCartResponse extends CartBase {}

@@ -12,18 +12,20 @@ import { ButtonModule } from 'primeng/button';
 import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 
 @NgModule({
-  declarations: [AdminComponent, EditProductDialogComponent, OrdersStatsComponent],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    DynamicDialogModule,
-    ReactiveFormsModule,
-    InputNumberModule,
-    InputTextModule,
-    ButtonModule,
-  ],
-  exports: [
-    EditProductDialogComponent
-  ]
+    declarations: [
+        AdminComponent,
+        EditProductDialogComponent,
+        OrdersStatsComponent,
+    ],
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        DynamicDialogModule,
+        ReactiveFormsModule,
+        InputNumberModule,
+        InputTextModule,
+        ButtonModule,
+    ],
+    exports: [EditProductDialogComponent],
 })
-export class AdminModule { }
+export class AdminModule {}

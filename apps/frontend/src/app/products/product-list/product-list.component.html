@@ -1,20 +1,25 @@
-<div *ngIf="mode==='cartView'" class="main-layout">
+<div *ngIf="mode === 'cartView'" class="main-layout">
     <div class="products-list">
-    <app-product-card
-      *ngFor="let product of products"
-      [product]="product"
-      [mode]=productListOptionsEnum.CartView 
-      (removeClicked)="removeClicked.emit($event)"
-    ></app-product-card>
-  </div>
-</div> 
+        <app-product-card
+            *ngFor="let product of products"
+            [product]="product"
+            [mode]="productListOptionsEnum.CartView"
+            (removeClicked)="removeClicked.emit($event)"
+        ></app-product-card>
+    </div>
+</div>
 
-<div *ngIf="mode === 'publicView' || mode === 'customerView' || mode === 'adminView'" class="products-list-view">
-  <app-product-card
-    *ngFor="let product of products"
-    [product]="product"
-    [mode] = mode
-  ></app-product-card>
+<div
+    *ngIf="
+        mode === 'publicView' || mode === 'customerView' || mode === 'adminView'
+    "
+    class="products-list-view"
+>
+    <app-product-card
+        *ngFor="let product of products"
+        [product]="product"
+        [mode]="mode"
+    ></app-product-card>
 </div>
 
 <!-- the -1 with the page is because the primeng start from 0 -->
@@ -23,7 +28,7 @@
     [rows]="limit"
     [totalRecords]="totalRecords"
     (onPageChange)="loadProducts($event)"
-    [first]="(page -1 )* limit"  
+    [first]="(page - 1) * limit"
     styleClass="mt-4"
 />
 

@@ -1,5 +1,5 @@
-import { OrderBase, ProductItem } from "@common/Interfaces";
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { OrderBase, ProductItem } from '@common/Interfaces';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type OrderDocument = OrderSchema & Document;
 
@@ -13,5 +13,5 @@ export class OrderSchema implements OrderBase {
 
     @Prop({ required: true })
     total_price: number;
-} 
+}
 export const OrderSchemaFactory = SchemaFactory.createForClass(OrderSchema);

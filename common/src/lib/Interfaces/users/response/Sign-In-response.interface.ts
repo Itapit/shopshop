@@ -1,6 +1,6 @@
-import { Role } from "@common/Enums";
+import { Role } from '@common/Enums';
 
 export interface SignInResponse {
-    access_token:string;
+    access_token: string;
     role: Role;
 }

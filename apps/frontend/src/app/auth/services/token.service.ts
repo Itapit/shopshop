@@ -1,34 +1,34 @@
-import { Injectable } from "@angular/core";
-import { AuthSession } from "../auth-session.interface";
-import { Role } from "@common/Enums";
+import { Injectable } from '@angular/core';
+import { AuthSession } from '../auth-session.interface';
+import { Role } from '@common/Enums';
 
-@Injectable({providedIn: 'root'})
-export class TokenService{
-  private sessionKey = 'authSession';
+@Injectable({ providedIn: 'root' })
+export class TokenService {
+    private sessionKey = 'authSession';
 
-  saveSession(session: AuthSession): void {
-    localStorage.setItem(this.sessionKey, JSON.stringify(session));
-  }
-
-  getSession(): AuthSession | null {
-    const raw = localStorage.getItem(this.sessionKey);
-    if (!raw) return null;
-    try {
-      return JSON.parse(raw) as AuthSession;
-    } catch {
-      return null;
+    saveSession(session: AuthSession): void {
+        localStorage.setItem(this.sessionKey, JSON.stringify(session));
     }
-  }
 
-  removeSession(): void {
-    localStorage.removeItem(this.sessionKey);
-  }
+    getSession(): AuthSession | null {
+        const raw = localStorage.getItem(this.sessionKey);
+        if (!raw) return null;
+        try {
+            return JSON.parse(raw) as AuthSession;
+        } catch {
+            return null;
+        }
+    }
 
-  getToken(): string {
-    return this.getSession()?.token || '';
-  }
+    removeSession(): void {
+        localStorage.removeItem(this.sessionKey);
+    }
 
-  getRole(): Role | '' {
-    return this.getSession()?.role || '';
-  }
+    getToken(): string {
+        return this.getSession()?.token || '';
+    }
+
+    getRole(): Role | '' {
+        return this.getSession()?.role || '';
+    }
 }

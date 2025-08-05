@@ -6,14 +6,18 @@ import { AdminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'signin', pathMatch: 'full'},
-  { path: 'signin', component: SigninComponent },
-  { path: 'signup', component: CreateUserComponent, canActivate:[AdminGuard]},
-  { path: 'unauthorized', component:UnauthorizedComponent}
+    { path: '', redirectTo: 'signin', pathMatch: 'full' },
+    { path: 'signin', component: SigninComponent },
+    {
+        path: 'signup',
+        component: CreateUserComponent,
+        canActivate: [AdminGuard],
+    },
+    { path: 'unauthorized', component: UnauthorizedComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}
