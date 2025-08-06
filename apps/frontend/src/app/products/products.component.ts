@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Role } from '@common/Enums';
 import { GetProductsListRequest, GetProductsListResponse, ProductFull } from '@common/Interfaces';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
+import { AuthSession } from '../auth/auth-session.interface';
 import { SessionService } from '../auth/services/Session.service';
 import { productListOptionsEnum } from './product-list/product-list-options-enum';
 import { ProductsHttpService } from './services/products-http.service';
@@ -21,13 +22,17 @@ export class ProductsComponent implements OnInit {
 
     productListMode = productListOptionsEnum.PublicView;
 
+    private userSub!: Subscription;
+
     ngOnInit(): void {
-        if (this.sessionService.getRole() == Role.Client) {
-            this.productListMode = productListOptionsEnum.CustomerView;
-        }
-        if (this.sessionService.getRole() == Role.Admin) {
-            this.productListMode = productListOptionsEnum.AdminView;
-        }
+        this.userSub = this.sessionService.sessionObservable$.subscribe((session: AuthSession | null) => {
+            if (session?.role === Role.Client) {
+                this.productListMode = productListOptionsEnum.CustomerView;
+            }
+            if (session?.role === Role.Admin) {
+                this.productListMode = productListOptionsEnum.AdminView;
+            }
+        });
     }
 
     fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {

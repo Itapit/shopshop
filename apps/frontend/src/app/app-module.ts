@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { WithCredentialsInterceptor } from './auth/guards/with-credential.interceptor';
+import { WithCredentialsInterceptor } from './auth/interceptors/with-credential.interceptor';
 import { CartModule } from './cart/cart-module';
 import { NavbarModule } from './navbar/navbar-module';
 import { ProductsModule } from './products/products-module';
