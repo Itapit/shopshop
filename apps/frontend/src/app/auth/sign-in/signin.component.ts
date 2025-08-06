@@ -69,5 +69,7 @@ export class SigninComponent {
                 console.error(`failed to get session data after sign in`, err);
             },
         });
-    }
+    } 
+
+    
 }

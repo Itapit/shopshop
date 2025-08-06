@@ -11,6 +11,7 @@ export class UiStateService {
     private logoClickSubject = new Subject<void>();
     private statsClickSubject = new Subject<void>();
     private signupClickSubject = new Subject<void>();
+    private logoutClickSubject = new Subject<void>();
 
     searchClicked$ = this.searchClickSubject.asObservable();
     orderClicked$ = this.orderClickSubject.asObservable();
@@ -18,6 +19,7 @@ export class UiStateService {
     logoClicked$ = this.logoClickSubject.asObservable();
     statsClicked$ = this.statsClickSubject.asObservable();
     signupClicked$ = this.signupClickSubject.asObservable();
+    logoutClicked$ = this.logoutClickSubject.asObservable()
 
     triggerOrder() {
         this.orderClickSubject.next();
@@ -40,5 +42,10 @@ export class UiStateService {
 
     triggerSignUp() {
         this.signupClickSubject.next();
+    }
+
+    triggerLogout(){
+        console.log("in service")
+        this.logoutClickSubject.next();
     }
 }
