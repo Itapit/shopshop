@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { AuthInterceptor } from './auth/services/auth.interceptor';
+import { WithCredentialsInterceptor } from './auth/interceptors/with-credential.interceptor';
 import { CartModule } from './cart/cart-module';
 import { NavbarModule } from './navbar/navbar-module';
 import { ProductsModule } from './products/products-module';
@@ -24,7 +24,7 @@ import { ProductsModule } from './products/products-module';
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
+            useClass: WithCredentialsInterceptor,
             multi: true,
         },
     ],

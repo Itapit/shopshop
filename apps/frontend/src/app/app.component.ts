@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthSession } from './auth/auth-session.interface';
-import { TokenService } from './auth/services/token.service';
-import { SharedService } from './shared/shared.service';
+import { SessionService } from './auth/services/Session.service';
 
 @Component({
     selector: 'app-root',
@@ -10,14 +8,10 @@ import { SharedService } from './shared/shared.service';
     styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
+    constructor(private sessionService: SessionService) {}
     protected title = 'frontend';
 
-    constructor(
-        private tokenService: TokenService,
-        private sharedService: SharedService
-    ) {}
     ngOnInit(): void {
-        const session: AuthSession | null = this.tokenService.getSession();
-        this.sharedService.setUserData(session);
+        this.sessionService.setSessionFromProfile();
     }
 }

@@ -1,6 +1,6 @@
 import { Role } from '@common/Enums';
 
-export interface AuthSession {
+export interface GetProfileResponse {
     userID: string;
     username: string;
     email: string;

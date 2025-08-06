@@ -10,20 +10,18 @@ export class AuthGuard implements CanActivate {
 
     canActivate(context: ExecutionContext): boolean {
         const request = context.switchToHttp().getRequest<RequestWithUser>();
-        const authHeader = request.headers.authorization;
+        const token = request.cookies?.access_token;
 
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            throw new UnauthorizedException('Missing or invalid Authorization header');
+        if (!token) {
+            throw new UnauthorizedException('Missing access token cookie');
         }
 
-        const token = authHeader.split(' ')[1];
-
         try {
-            const decoded = this.jwtService.verify<JwtPayload>(token);
-            request.user = decoded;
+            const payload = this.jwtService.verify<JwtPayload>(token);
+            request.user = payload;
             return true;
         } catch {
-            throw new UnauthorizedException('Invalid or expired token');
+            throw new UnauthorizedException('Invalid or expired access token');
         }
     }
 }

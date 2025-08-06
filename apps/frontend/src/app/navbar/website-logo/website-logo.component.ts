@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SharedService } from '../../shared/shared.service';
+import { UiStateService } from '../../shared/ui-state.service';
 
 @Component({
     selector: 'app-website-logo',
@@ -8,9 +8,9 @@ import { SharedService } from '../../shared/shared.service';
     styleUrl: './website-logo.component.css',
 })
 export class WebsiteLogoComponent {
-    constructor(private sharedService: SharedService) {}
+    constructor(private uiStateService: UiStateService) {}
 
     logoClick() {
-        this.sharedService.triggerLogo();
+        this.uiStateService.triggerLogo();
     }
 }

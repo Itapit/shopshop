@@ -1,1 +1,8 @@
-<p-button icon="pi pi-user" [label]="buttonText()" styleClass="p-button-text" routerLink="/auth/signup"></p-button>
+<p-button
+    icon="pi pi-user"
+    [label]="buttonText()"
+    styleClass="p-button-text"
+    routerLink="/auth/signup"
+    (onClick)="signupClicked()"
+>
+</p-button>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SharedService } from '../../shared/shared.service';
+import { UiStateService } from '../../shared/ui-state.service';
 
 @Component({
     selector: 'app-order-link',
@@ -8,9 +8,9 @@ import { SharedService } from '../../shared/shared.service';
     styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
-    constructor(private sharedService: SharedService) {}
+    constructor(private uiStateService: UiStateService) {}
 
     clickOrder() {
-        this.sharedService.triggerOrder();
+        this.uiStateService.triggerOrder();
     }
 }

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Role } from '@common/Enums';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { AdminGuard } from './guards/admin.guard';
+import { RoleGuard } from './guards/role.guard';
 import { SigninComponent } from './sign-in/signin.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
@@ -11,7 +12,8 @@ const routes: Routes = [
     {
         path: 'signup',
         component: CreateUserComponent,
-        canActivate: [AdminGuard],
+        canActivate: [RoleGuard],
+        data: { expectedRole: Role.Admin },
     },
     { path: 'unauthorized', component: UnauthorizedComponent },
 ];
