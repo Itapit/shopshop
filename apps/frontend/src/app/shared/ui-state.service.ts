@@ -45,7 +45,6 @@ export class UiStateService {
     }
 
     triggerLogout(){
-        console.log("in service")
         this.logoutClickSubject.next();
     }
 }

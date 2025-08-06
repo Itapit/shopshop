@@ -61,4 +61,15 @@ export class AuthService {
         dto.role = payload.role;
         return dto;
     }
+
+    logout(res: Response): any {
+        res.clearCookie('access_token', {
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: true,
+            path: '/',
+        });
+
+        return { message: 'Logout successful' };
+    }
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { UiStateService } from '../../shared/ui-state.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-logout-listener',
@@ -8,18 +10,29 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrls: ['./log-out.component.css'],
 })
 export class LogoutListenerComponent {
-    constructor(private uiStateService: UiStateService) {}
+    constructor(
+        private uiStateService: UiStateService,
+        private authService: AuthService,
+        private router: Router
+    ) {}
 
-    ngOnInit(){
-        console.log("soionfvf")
-        this.uiStateService.logoutClicked$.subscribe(
-            ()=> {handleLogOut()}
-        )
+    ngOnInit() {
+        
+        this.uiStateService.logoutClicked$.subscribe(() => {
+            this.handleLogOut();
+        });
     }
-
-    
+    handleLogOut(): void {
+        
+        this.authService.logout().subscribe({
+            next: (res) => {
+                console.log('Logout successful', res);
+                this.router.navigate(['/']);
+                window.location.reload();
+            },
+            error: (err) => {
+                console.error('Logout failed', err);
+            },
+        });
+    }
 }
-function handleLogOut(): void {
-    console.log("trying log out");
-}
-

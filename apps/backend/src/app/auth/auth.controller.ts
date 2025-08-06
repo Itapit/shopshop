@@ -25,4 +25,8 @@ export class AuthController {
     getProfile(@Req() req: RequestWithUser): Promise<GetProfileResponseDto> {
         return this.authService.GetUserDataFromJWT(req.user);
     }
+    @Post('logout')
+    logout(@Res({ passthrough: true }) res: Response): any {
+        return this.authService.logout(res);
+    }
 }

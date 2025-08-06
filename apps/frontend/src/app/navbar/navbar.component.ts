@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     showStatsLink: boolean = false;
     showCartLink: boolean = false;
     showSearch: boolean = true;
-    showLogoutLink: boolean = true;
+    showLogoutLink: boolean = false;
 
     private userSub!: Subscription;
 
@@ -33,16 +33,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.userSub = this.sessionService.sessionObservable$.subscribe((session: AuthSession | null) => {
             if (session?.role) {
                 this.currentRole = session.role;
+                this.showLogoutLink = true;
                 
             }
             if (this.currentRole === Role.Client) {
                 this.showCartLink = true;
-                this.showLogoutLink = true;
+                
             }
             if (this.currentRole === Role.Admin) {
                 this.showSignUpLink = true;
                 this.showStatsLink = true;
-                this.showLogoutLink = true;
+               
             }
             this.showSignInLink = !session;
         });

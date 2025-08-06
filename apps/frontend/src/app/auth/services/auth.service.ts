@@ -28,5 +28,9 @@ export class AuthService {
 
     getSession(): Observable<GetProfileResponse> {
         return this.http.get<GetProfileResponse>(`${this.baseUrl}/auth/profile`);
+    } 
+
+    logout():Observable<any>{
+      return this.http.post(`${this.baseUrl}/auth/logout`, { withCredentials: true })
     }
 }
