@@ -3,8 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 
 import * as bcrypt from 'bcrypt';
-import { SignInRequestDto } from '../users/DTOs/request/sign-In-request.dto';
 import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-repository.interface';
+import { SignInResponseDTO } from './DTOs';
+import { SignInRequestDto } from './DTOs/request/sign-In-request.dto';
+import { GetProfileResponseDto } from './DTOs/response/Get-Profile-response.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
@@ -14,7 +16,7 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async signIn(dto: SignInRequestDto, res: Response): Promise<{ message: string }> {
+    async signIn(dto: SignInRequestDto, res: Response): Promise<SignInResponseDTO> {
         dto.email = dto.email.toLowerCase();
 
         const user = await this.usersRepo.findUserByEmail(dto.email);
@@ -36,8 +38,9 @@ export class AuthService {
             sameSite: 'strict',
             maxAge: 15 * 60 * 1000,
         });
-
-        return { message: 'Logged in!' };
+        const responseDto = new SignInResponseDTO();
+        responseDto.message = 'Signed in successfully';
+        return responseDto;
     }
 
     async passwordCheck(dto: SignInRequestDto, user: any): Promise<void> {
@@ -48,5 +51,14 @@ export class AuthService {
         const salt = await bcrypt.genSalt(10);
         const newHashPassword = await bcrypt.hash(dto.password, salt);
         await this.usersRepo.updatePassword(user, newHashPassword);
+    }
+
+    async GetUserDataFromJWT(payload: JwtPayload): Promise<GetProfileResponseDto> {
+        const dto = new GetProfileResponseDto();
+        dto.userID = payload.userID;
+        dto.email = payload.email;
+        dto.username = payload.username;
+        dto.role = payload.role;
+        return dto;
     }
 }
