@@ -9,6 +9,10 @@ import { WithCredentialsInterceptor } from './auth/interceptors/with-credential.
 import { CartModule } from './cart/cart-module';
 import { NavbarModule } from './navbar/navbar-module';
 import { ProductsModule } from './products/products-module';
+import { AuthModule } from './auth/auth-module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from "primeng/toast";
+
 
 @NgModule({
     declarations: [AppComponent],
@@ -20,6 +24,9 @@ import { ProductsModule } from './products/products-module';
         NavbarModule,
         ProductsModule,
         CartModule,
+        AuthModule,
+        ToastModule,
+        ConfirmDialogModule
     ],
     providers: [
         {
