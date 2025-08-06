@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SharedService } from '../../shared/shared.service';
+import { SharedService } from '../../shared/ui-state.service';
 
 @Component({
     selector: 'app-website-logo',

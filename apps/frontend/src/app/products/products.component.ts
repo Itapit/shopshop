@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Role } from '@common/Enums';
 import { GetProductsListRequest, GetProductsListResponse, ProductFull } from '@common/Interfaces';
 import { map, Observable, tap } from 'rxjs';
-import { TokenService } from '../auth/services/token.service';
-import { SharedService } from '../shared/shared.service';
+import { TokenService } from '../auth/services/Session.service';
+import { SharedService } from '../shared/ui-state.service';
 import { productListOptionsEnum } from './product-list/product-list-options-enum';
 import { ProductsHttpService } from './services/products-http.service';
 @Component({

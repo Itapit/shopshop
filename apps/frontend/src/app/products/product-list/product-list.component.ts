@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductFull } from '@common/Interfaces';
 import { PaginatorState } from 'primeng/paginator';
 import { Observable } from 'rxjs';
-import { SharedService } from '../../shared/shared.service';
+import { SharedService } from '../../shared/ui-state.service';
 import { productListOptionsEnum } from './product-list-options-enum';
 @Component({
     selector: 'app-product-list',

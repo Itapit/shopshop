@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Role } from '@common/Enums';
-import { TokenService } from '../services/token.service';
+import { SessionService } from '../services/Session.service';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {
     constructor(
-        private tokenService: TokenService,
+        private sessionService: SessionService,
         private router: Router
     ) {}
 
     canActivate(): boolean {
-        const role = this.tokenService.getRole();
+        const role = this.sessionService.getRole();
         if (role === Role.Admin) {
             return true;
         }

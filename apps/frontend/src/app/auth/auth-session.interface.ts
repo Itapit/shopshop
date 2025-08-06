@@ -1,6 +1,8 @@
 import { Role } from '@common/Enums';
 
 export interface AuthSession {
-    token: string;
+    userID: string;
+    username: string;
+    email: string;
     role: Role;
 }

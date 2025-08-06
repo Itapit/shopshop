@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Role } from '@common/Enums';
 import { Subscription } from 'rxjs';
 import { AuthSession } from '../auth/auth-session.interface';
-import { SharedService } from '../shared/shared.service';
+import { SharedService } from '../shared/ui-state.service';
 
 @Component({
     selector: 'app-navbar',

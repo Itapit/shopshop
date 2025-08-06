@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { AuthSession } from '../auth/auth-session.interface';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
-export class SharedService {
-    private userDataSubject = new BehaviorSubject<AuthSession | null>(null);
-    public userData$ = this.userDataSubject.asObservable();
-
+export class UiStateService {
     private orderClickSubject = new Subject<void>();
     private searchClickSubject = new Subject<string>();
     private cartClickSubject = new Subject<void>();
@@ -32,12 +28,5 @@ export class SharedService {
     }
     triggerLogo() {
         this.logoClickSubject.next();
-    }
-    setUserData(session: AuthSession | null) {
-        this.userDataSubject.next(session);
-    }
-
-    getUserData(): AuthSession | null {
-        return this.userDataSubject.value;
     }
 }

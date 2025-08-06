@@ -3,10 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignInRequest } from '@common/Interfaces';
 import { Role } from 'common/src/lib/Enums/role.enum';
-import { SharedService } from '../../shared/shared.service';
-import { AuthSession } from '../auth-session.interface';
+import { UiStateService } from '../../shared/ui-state.service';
 import { AuthService } from '../services/auth.service';
-import { TokenService } from '../services/token.service';
+import { SessionService } from '../services/Session.service';
 
 @Component({
     selector: 'app-signin',
@@ -18,8 +17,8 @@ export class SigninComponent {
     constructor(
         private readonly authService: AuthService,
         private router: Router,
-        private tokenService: TokenService,
-        private sharedService: SharedService
+        private sessionService: SessionService,
+        private uiStateService: UiStateService
     ) {}
 
     title = 'Sign In';
@@ -49,22 +48,25 @@ export class SigninComponent {
             email: this.email ?? '',
             password: this.password ?? '',
         };
+
         this.authService.signIn(dto).subscribe({
-            //TODO add a loading screen for the back wait
-            next: (res) => {
-                if (res.access_token && res.role) {
-                    const session: AuthSession = {
-                        token: res.access_token,
-                        role: res.role as Role,
-                    };
-                    this.tokenService.saveSession(session);
-                    this.sharedService.setUserData(session);
-                }
-                if (this.tokenService.getRole() === Role.Client || this.tokenService.getRole() === Role.Admin)
-                    this.router.navigate(['/']);
-            },
+            next: () => this.afterSignInSuccess(),
             error: (err) => {
                 console.error('Signin failed', err);
+            },
+        });
+    }
+
+    private afterSignInSuccess(): void {
+        this.authService.getSession().subscribe({
+            next: (session) => {
+                this.sessionService.setSession(session);
+                if (session.role == Role.Client || session.role == Role.Admin) {
+                    this.router.navigate(['/']);
+                }
+            },
+            error: (err) => {
+                console.error(`failed to get session data after sign in`, err);
             },
         });
     }

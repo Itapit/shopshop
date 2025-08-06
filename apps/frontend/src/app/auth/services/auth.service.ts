@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateUserRequest, CreateUserResponse, SignInRequest, SignInResponse } from '@common/Interfaces';
+import {
+    CreateUserRequest,
+    CreateUserResponse,
+    GetProfileResponse,
+    SignInRequest,
+    SignInResponse,
+} from '@common/Interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -18,5 +24,11 @@ export class AuthService {
 
     signUp(dto: CreateUserRequest): Observable<CreateUserResponse> {
         return this.http.post<CreateUserResponse>(`${this.baseUrl}/users`, dto);
+    }
+
+    getSession(): Observable<GetProfileResponse> {
+        return this.http.get<GetProfileResponse>(`${this.baseUrl}/auth/profile`, {
+            withCredentials: true,
+        });
     }
 }

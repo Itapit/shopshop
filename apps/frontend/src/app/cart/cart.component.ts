@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 import { OrderService } from '../order/services/order.service';
 import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
 import { ProductListComponent } from '../products/product-list/product-list.component';
-import { SharedService } from '../shared/shared.service';
 import { CartService } from './services/cart.service';
 
 @Component({
