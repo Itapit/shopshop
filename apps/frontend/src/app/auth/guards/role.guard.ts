@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { NavigationService } from '../../shared/navigation.service';
 import { AuthService } from '../services/auth.service';
-import { TokenService } from '../services/token.service';
+import { SessionService } from '../services/Session.service';
 
 @Injectable({ providedIn: 'root' })
 export class RoleGuard implements CanActivate {
@@ -10,12 +10,12 @@ export class RoleGuard implements CanActivate {
         private authService: AuthService,
         private router: Router,
         private navigationService: NavigationService,
-        private tokenService: TokenService
+        private sessionService: SessionService
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         const expectedRole = route.data['expectedRole'];
-        const userRole = this.tokenService.getRole();
+        const userRole = this.sessionService.getRole();
         if (userRole === expectedRole) {
             return true;
         }
@@ -23,7 +23,7 @@ export class RoleGuard implements CanActivate {
         console.log('bad route');
         const fallback = this.navigationService.getPreviousUrl();
         if (!fallback || fallback.trim() === '' || fallback === route.routeConfig?.path) {
-            this.router.navigate(['/']); 
+            this.router.navigate(['/']);
         } else {
             this.router.navigateByUrl(fallback);
         }

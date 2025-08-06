@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { SharedService } from '../../shared/ui-state.service';
+import { UiStateService } from '../../shared/ui-state.service';
 
 @Component({
     selector: 'app-cart-link',
@@ -9,9 +9,9 @@ import { SharedService } from '../../shared/ui-state.service';
 })
 export class CartLinkComponent {
     buttonText = signal('Cart');
-    constructor(private sharedService: SharedService) {}
+    constructor(private uiStateService: UiStateService) {}
 
     clickCart() {
-        this.sharedService.triggerCart();
+        this.uiStateService.triggerCart();
     }
 }

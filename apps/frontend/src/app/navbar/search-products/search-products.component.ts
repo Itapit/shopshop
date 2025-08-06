@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SharedService } from '../../shared/ui-state.service';
+import { UiStateService } from '../../shared/ui-state.service';
 
 @Component({
     selector: 'app-search-products',
@@ -9,9 +9,9 @@ import { SharedService } from '../../shared/ui-state.service';
 })
 export class SearchProductsComponent {
     value: string = '';
-    constructor(private sharedService: SharedService) {}
+    constructor(private uiStateService: UiStateService) {}
 
     onSearch() {
-        this.sharedService.triggerSearch(this.value);
+        this.uiStateService.triggerSearch(this.value);
     }
 }

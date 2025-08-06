@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Role } from '@common/Enums';
 import { GetProductsListRequest, GetProductsListResponse, ProductFull } from '@common/Interfaces';
 import { map, Observable, tap } from 'rxjs';
-import { TokenService } from '../auth/services/Session.service';
-import { SharedService } from '../shared/ui-state.service';
+import { SessionService } from '../auth/services/Session.service';
 import { productListOptionsEnum } from './product-list/product-list-options-enum';
 import { ProductsHttpService } from './services/products-http.service';
 @Component({
@@ -15,8 +14,7 @@ import { ProductsHttpService } from './services/products-http.service';
 export class ProductsComponent implements OnInit {
     constructor(
         private productService: ProductsHttpService,
-        private tokenService: TokenService,
-        private sharedService: SharedService
+        private sessionService: SessionService
     ) {}
     productsResponse?: GetProductsListResponse;
     productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
@@ -24,10 +22,10 @@ export class ProductsComponent implements OnInit {
     productListMode = productListOptionsEnum.PublicView;
 
     ngOnInit(): void {
-        if (this.tokenService.getRole() == Role.Client) {
+        if (this.sessionService.getRole() == Role.Client) {
             this.productListMode = productListOptionsEnum.CustomerView;
         }
-        if (this.tokenService.getRole() == Role.Admin) {
+        if (this.sessionService.getRole() == Role.Admin) {
             this.productListMode = productListOptionsEnum.AdminView;
         }
     }

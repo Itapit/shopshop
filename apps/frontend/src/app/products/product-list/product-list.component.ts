@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductFull } from '@common/Interfaces';
 import { PaginatorState } from 'primeng/paginator';
 import { Observable } from 'rxjs';
-import { SharedService } from '../../shared/ui-state.service';
+import { UiStateService } from '../../shared/ui-state.service';
 import { productListOptionsEnum } from './product-list-options-enum';
 @Component({
     selector: 'app-product-list',
@@ -16,7 +16,7 @@ export class ProductListComponent implements OnInit {
     @Input() totalRecords!: number;
     @Output() removeClicked = new EventEmitter<string>();
     keyword: string = '';
-    constructor(private sharedService: SharedService) {}
+    constructor(private uiStateService: UiStateService) {}
     productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
     products: ProductFull[] = [];
@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit {
     limit = 12;
 
     ngOnInit() {
-        this.sharedService.searchClicked$.subscribe((value) => {
+        this.uiStateService.searchClicked$.subscribe((value) => {
             this.handleSearch(value);
         });
         this.loadProducts();

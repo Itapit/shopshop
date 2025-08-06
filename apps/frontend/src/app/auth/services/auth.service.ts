@@ -19,7 +19,7 @@ export class AuthService {
     constructor(private readonly http: HttpClient) {}
 
     signIn(dto: SignInRequest): Observable<SignInResponse> {
-        return this.http.post<SignInResponse>(`${this.baseUrl}/auth/login`, dto);
+        return this.http.post<SignInResponse>(`${this.baseUrl}/auth/signin`, dto);
     }
 
     signUp(dto: CreateUserRequest): Observable<CreateUserResponse> {
@@ -27,8 +27,6 @@ export class AuthService {
     }
 
     getSession(): Observable<GetProfileResponse> {
-        return this.http.get<GetProfileResponse>(`${this.baseUrl}/auth/profile`, {
-            withCredentials: true,
-        });
+        return this.http.get<GetProfileResponse>(`${this.baseUrl}/auth/profile`);
     }
 }
