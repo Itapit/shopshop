@@ -44,7 +44,6 @@ export class ProductListComponent implements OnInit {
         this.fetchFunction(page, limit, this.keyword).subscribe({
             next: (res) => {
                 this.products = res;
-                this.totalRecords = this.products.length;
             },
             error: (err) => {
                 console.error('Error in fetchFunction:', err);
