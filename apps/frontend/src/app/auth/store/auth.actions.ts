@@ -2,7 +2,7 @@ import { CreateUserRequest, CreateUserResponse, GetProfileResponse, SignInReques
 import { createAction, props } from '@ngrx/store';
 
 // Sign In
-export const signIn = createAction('[Auth] Sign In', props<SignInRequest>());
+export const signIn = createAction('[Auth] Sign In', props<{ signInRequest: SignInRequest }>());
 export const signInSuccess = createAction('[Auth] Sign In Success'); // cookie only
 export const signInFailure = createAction('[Auth] Sign In Failure', props<{ error: string }>());
 
