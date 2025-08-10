@@ -14,3 +14,9 @@ export const {
 export const selectIsLoggedIn = createSelector(selectUsername, selectEmail, (username, email) => !!username || !!email);
 
 export const selectIsAdmin = createSelector(selectRole, (role) => role === Role.Admin);
+
+export const selectProfile = createSelector(selectUsername, selectEmail, selectRole, (username, email, role) => ({
+    username,
+    email,
+    role,
+}));
