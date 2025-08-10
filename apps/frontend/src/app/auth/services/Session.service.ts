@@ -34,10 +34,6 @@ export class SessionService {
         return this.getSession()?.role ?? null;
     }
 
-    getUserID(): string | null {
-        return this.getSession()?.userID ?? null;
-    }
-
     getEmail(): string | null {
         return this.getSession()?.email ?? null;
     }
