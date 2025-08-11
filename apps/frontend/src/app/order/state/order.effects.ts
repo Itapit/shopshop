@@ -2,8 +2,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
-import { clearCart, clearCartSuccess, loadCart, loadTotal } from '../../cart/state/cart.actions';
+import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { clearCart } from '../../cart/state/cart.actions';
 import { selectItems } from '../../cart/state/cart.selectors';
 import { OrderService } from '../services/order.service';
 import { placeOrder, placeOrderFailure, placeOrderSuccess } from './order.actions';
@@ -34,6 +34,4 @@ export class OrderEffects {
             map(() => clearCart())
         )
     );
-
-    
 }
