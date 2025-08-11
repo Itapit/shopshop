@@ -16,8 +16,8 @@ import {
 
 @Injectable()
 export class CartEffects {
-    private actions$ = inject(Actions);
-    private api = inject(CartService);
+    
+    constructor(private actions$: Actions, private api: CartService) {}
 
     loadCart$ = createEffect(() =>
         this.actions$.pipe(
