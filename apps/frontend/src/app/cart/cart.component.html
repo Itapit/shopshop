@@ -18,29 +18,27 @@
 
 <div class="cart-summary">
     <p class="total-price">Total price: ₪{{ totalPrice }}</p>
-</div> --> 
-<p-toast position="bottom-right"></p-toast>
+</div> -->
 
 <div class="cart-products-wrapper">
-  <ng-container *ngIf="(items$ | async) as items">
-    <div *ngIf="items.length === 0" class="empty-cart-message">
-      <h3>Your cart is empty</h3>
-      <p>Looks like you haven’t added anything to your cart yet.</p>
-    </div>
+    <ng-container *ngIf="items$ | async as items">
+        <div *ngIf="items.length === 0" class="empty-cart-message">
+            <h3>Your cart is empty</h3>
+            <p>Looks like you haven’t added anything to your cart yet.</p>
+        </div>
 
-    <app-product-list
-      #productList
-      *ngIf="items.length > 0"
-      [mode]="productListOptionsEnum.CartView"
-      [fetchFunction]="fetchProducts"         
-      [totalRecords]="items.length"           
-      (removeClicked)="onRemoveClicked($event)"
-      (orderClicked)="handleOrder()"
-    />
-  </ng-container>
+        <app-product-list
+            #productList
+            *ngIf="items.length > 0"
+            [mode]="productListOptionsEnum.CartView"
+            [fetchFunction]="fetchProducts"
+            [totalRecords]="items.length"
+            (removeClicked)="onRemoveClicked($event)"
+            (orderClicked)="handleOrder()"
+        />
+    </ng-container>
 </div>
 
 <div class="cart-summary">
-  <p class="total-price">Total price: ₪{{ (total$ | async) ?? 0 }}</p>
+    <p class="total-price">Total price: ₪{{ (total$ | async) ?? 0 }}</p>
 </div>
-
