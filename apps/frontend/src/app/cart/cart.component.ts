@@ -1,16 +1,17 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProductFull } from '@common/Interfaces';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { OrderService } from '../order/services/order.service';
-import { placeOrder } from '../order/state/order.actions';
 import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
 import { ProductListComponent } from '../products/product-list/product-list.component';
 import { UiStateService } from '../shared/ui-state.service';
 import { CartService } from './services/cart.service';
-import { loadCart, loadTotal, removeItem } from './state/cart.actions';
+import { clearCartSuccess, loadCart, loadTotal, removeItem } from './state/cart.actions';
 import { selectItems, selectLoading, selectTotal } from './state/cart.selectors';
+import { placeOrderSuccess } from '../order/state/order.actions';
 
 @Component({
     selector: 'app-cart',
@@ -25,6 +26,8 @@ export class CartComponent {
     items$!: Observable<ProductFull[]>;
     total$!: Observable<number | null>;
     loading$!: Observable<boolean>;
+
+    private actions$ = inject(Actions);
 
     productListOptionsEnum = productListOptionsEnum;
 
@@ -41,7 +44,16 @@ export class CartComponent {
         this.total$ = this.store.select(selectTotal);
         this.loading$ = this.store.select(selectLoading);
 
-        
+        this.actions$
+            .pipe(ofType(placeOrderSuccess))
+            .subscribe(() => this.msgService.add({ severity: 'success', summary: 'Order Placed' })); 
+        this.actions$
+            .pipe(ofType(clearCartSuccess))
+            .subscribe(() => {
+                this.msgService.add({ severity: 'success', summary: 'Cart is empty' });
+                this.productListComponent?.loadProducts?.();
+            });
+           
 
         this.store.dispatch(loadCart());
         this.store.dispatch(loadTotal());
@@ -105,8 +117,6 @@ export class CartComponent {
     //     if (!items || items.length === 0) return;
     //     this.productListComponent?.loadProducts?.();
 
-        
-       
     // }
 
     onRemoveClicked(productID: string) {
