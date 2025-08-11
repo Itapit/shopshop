@@ -1,9 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { GetProfileResponse } from '@common/Interfaces';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
-import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import * as AuthActions from './auth.actions';
 
@@ -22,7 +23,16 @@ export class AuthEffects {
             switchMap(({ signInRequest }) =>
                 this.authService.signIn(signInRequest).pipe(
                     mergeMap(() => [AuthActions.signInSuccess(), AuthActions.getSession()]),
-                    catchError((err) => of(AuthActions.signInFailure({ error: err?.message ?? 'Sign in failed' })))
+                    catchError((err: HttpErrorResponse) =>
+                        of(
+                            AuthActions.signInFailure({
+                                error:
+                                    (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
+                                    err?.message ??
+                                    'Get session failed',
+                            })
+                        )
+                    )
                 )
             )
         )
@@ -34,11 +44,31 @@ export class AuthEffects {
             switchMap(() =>
                 this.authService.getSession().pipe(
                     map((profile: GetProfileResponse) => AuthActions.getSessionSuccess({ profile })),
-                    catchError((err) =>
-                        of(AuthActions.getSessionFailure({ error: err?.message ?? 'Get session failed' }))
+                    catchError((err: HttpErrorResponse) =>
+                        of(
+                            AuthActions.getSessionFailure({
+                                error:
+                                    (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
+                                    err?.message ??
+                                    'Get session failed',
+                            })
+                        )
                     )
                 )
             )
+        )
+    );
+
+    getSessionFailureFilter$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getSessionFailure),
+            mergeMap(({ error }) => {
+                const msg = typeof error === 'string' ? error.toLowerCase() : '';
+                if (msg.includes('missing access token cookie')) {
+                    return of(AuthActions.clearAuthError());
+                }
+                return EMPTY;
+            })
         )
     );
 

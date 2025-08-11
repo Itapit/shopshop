@@ -2,6 +2,11 @@
     <div pFocusTrap class="signin-card">
         <h2 class="signin-title">{{ title }}</h2>
 
+        <!-- Global error from store -->
+        <p *ngIf="error$ | async as err" class="error-message" style="margin-bottom: 0.5rem">
+            {{ err }}
+        </p>
+
         <!-- Email Field -->
         <div class="field">
             <label for="email" class="label-with-icon">
@@ -53,6 +58,13 @@
         </div>
 
         <!-- Submit Button -->
-        <p-button class="signin-button" [label]="buttonLabel" icon="pi pi-sign-in" type="submit"></p-button>
+        <p-button
+            class="signin-button"
+            [label]="buttonLabel"
+            icon="pi pi-sign-in"
+            type="submit"
+            [loading]="(loading$ | async) ?? false"
+            [disabled]="form.invalid || ((loading$ | async) ?? false)"
+        ></p-button>
     </div>
 </form>
