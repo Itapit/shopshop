@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UiStateService } from '../../shared/ui-state.service';
+import { NavigationService } from '../../shared/navigation.service';
 
 @Component({
     selector: 'app-website-logo',
@@ -8,9 +8,9 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrl: './website-logo.component.css',
 })
 export class WebsiteLogoComponent {
-    constructor(private uiStateService: UiStateService) {}
+    constructor(private nav: NavigationService) {}
 
     logoClick() {
-        this.uiStateService.triggerLogo();
+        this.nav.toProductsHome();
     }
 }

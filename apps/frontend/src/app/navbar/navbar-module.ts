@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { CartLinkComponent } from './cart-link/cart-link.component';
-import { LogOutComponent } from './log-out-link/log-out.component';
+import { LogOutComponent } from './log-out/log-out.component';
 import { NavbarRoutingModule } from './navbar-routing-module';
 import { NavbarComponent } from './navbar.component';
 import { OrderComponent } from './order/order.component';
