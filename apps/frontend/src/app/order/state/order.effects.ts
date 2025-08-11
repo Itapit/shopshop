@@ -2,17 +2,19 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { catchError, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { clearCart } from '../../cart/state/cart.actions';
 import { selectItems } from '../../cart/state/cart.selectors';
 import { OrderService } from '../services/order.service';
 import { placeOrder, placeOrderFailure, placeOrderSuccess } from './order.actions';
+import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class OrderEffects {
     private actions$ = inject(Actions);
     private store = inject(Store);
     private orders = inject(OrderService);
+    private messageService = inject(MessageService);
 
     placeOrder$ = createEffect(() =>
         this.actions$.pipe(
@@ -33,5 +35,18 @@ export class OrderEffects {
             ofType(placeOrderSuccess),
             map(() => clearCart())
         )
-    );
+    ); 
+    toastOnOrderSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(placeOrderSuccess),
+        tap(() =>
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Order Placed',
+          })
+        )
+      ),
+    { dispatch: false } // important!
+  );
 }

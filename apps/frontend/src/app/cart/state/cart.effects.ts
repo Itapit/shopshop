@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, of, switchMap } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { CartService } from '../services/cart.service';
 import {
     clearCart,
@@ -16,11 +16,13 @@ import {
     removeItemFailure,
     removeItemSuccess,
 } from './cart.actions';
+import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class CartEffects {
     private actions$ = inject(Actions);
     private api = inject(CartService);
+    private messageService = inject(MessageService);
 
     loadCart$ = createEffect(() =>
         this.actions$.pipe(
@@ -90,5 +92,19 @@ export class CartEffects {
             ofType(clearCartSuccess),
             mergeMap(() => of(loadCart(), loadTotal()))
         )
-    );
+    ); 
+
+    toastOnClearCartSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(clearCartSuccess),
+        tap(() =>
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Cart is empty',
+          })
+        )
+      ),
+    { dispatch: false }
+  );
 }

@@ -39,17 +39,6 @@ export class CartComponent {
         this.total$ = this.store.select(selectTotal);
         this.loading$ = this.store.select(selectLoading);
 
-        this.actions$
-            .pipe(ofType(placeOrderSuccess))
-            .subscribe(() => this.msgService.add({ severity: 'success', summary: 'Order Placed' })); 
-        this.actions$
-            .pipe(ofType(clearCartSuccess))
-            .subscribe(() => {
-                this.msgService.add({ severity: 'success', summary: 'Cart is empty' });
-                this.productListComponent?.loadProducts?.();
-            });
-           
-
         this.store.dispatch(loadCart());
         this.store.dispatch(loadTotal());
     }
