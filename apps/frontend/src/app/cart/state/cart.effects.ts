@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { MessageService } from 'primeng/api';
 import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { CartService } from '../services/cart.service';
 import {
@@ -16,7 +17,6 @@ import {
     removeItemFailure,
     removeItemSuccess,
 } from './cart.actions';
-import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class CartEffects {
@@ -86,25 +86,38 @@ export class CartEffects {
         )
     );
 
-   
     afterClearReload$ = createEffect(() =>
         this.actions$.pipe(
             ofType(clearCartSuccess),
             mergeMap(() => of(loadCart(), loadTotal()))
         )
-    ); 
+    );
 
     toastOnClearCartSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(clearCartSuccess),
-        tap(() =>
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Cart is empty',
-          })
-        )
-      ),
-    { dispatch: false }
-  );
+        () =>
+            this.actions$.pipe(
+                ofType(clearCartSuccess),
+                tap(() =>
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Cart is empty',
+                    })
+                )
+            ),
+        { dispatch: false }
+    );
+
+    toastOnRemoveItemSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(removeItemSuccess),
+                tap(() =>
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Item removed from cart',
+                    })
+                )
+            ),
+        { dispatch: false }
+    );
 }
