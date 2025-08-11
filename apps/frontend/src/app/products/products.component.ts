@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Role } from '@common/Enums';
 import { GetProductsListRequest, GetProductsListResponse, ProductFull } from '@common/Interfaces';
-import { map, Observable, Subscription, tap } from 'rxjs';
-import { AuthSession } from '../auth/auth-session.interface';
-import { SessionService } from '../auth/services/Session.service';
+import { Store } from '@ngrx/store';
+import { map, Observable, tap } from 'rxjs';
+import { selectRole } from '../auth/store/auth.selectors';
 import { productListOptionsEnum } from './product-list/product-list-options-enum';
 import { ProductsHttpService } from './services/products-http.service';
 @Component({
@@ -12,28 +12,24 @@ import { ProductsHttpService } from './services/products-http.service';
     templateUrl: './products.component.html',
     styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent implements OnInit {
-    constructor(
-        private productService: ProductsHttpService,
-        private sessionService: SessionService
-    ) {}
+export class ProductsComponent {
+    private readonly store = inject(Store);
+    constructor(private productService: ProductsHttpService) {}
+
     productsResponse?: GetProductsListResponse;
     productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
-    productListMode = productListOptionsEnum.PublicView;
-
-    private userSub!: Subscription;
-
-    ngOnInit(): void {
-        this.userSub = this.sessionService.sessionObservable$.subscribe((session: AuthSession | null) => {
-            if (session?.role === Role.Client) {
-                this.productListMode = productListOptionsEnum.CustomerView;
-            }
-            if (session?.role === Role.Admin) {
-                this.productListMode = productListOptionsEnum.AdminView;
-            }
-        });
-    }
+    productListMode$: Observable<productListOptionsEnum> = this.store
+        .select(selectRole)
+        .pipe(
+            map((role) =>
+                role === Role.Admin
+                    ? productListOptionsEnum.AdminView
+                    : role === Role.Client
+                      ? productListOptionsEnum.CustomerView
+                      : productListOptionsEnum.PublicView
+            )
+        );
 
     fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {
         const query: GetProductsListRequest = { page, limit, keyword };

@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { NavigationService } from '../../shared/navigation.service';
 
 @Component({
     selector: 'app-sign-in-link',
@@ -7,5 +8,11 @@ import { Component, signal } from '@angular/core';
     styleUrl: './sign-in-link.component.css',
 })
 export class SignInLinkComponent {
+    constructor(private nav: NavigationService) {}
+
+    toSignIn(): void {
+        this.nav.toSignIn();
+    }
+
     buttonText = signal('Sign in');
 }
