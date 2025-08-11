@@ -9,17 +9,19 @@ import { CartRoutingModule } from './cart-routing-module';
 import { CartComponent } from './cart.component';
 import { CartEffects } from './state/cart.effects';
 import { cartFeature } from './state/cart.reducer';
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 
 @NgModule({
     imports: [
-        ProductsModule,
-        ButtonModule,
-        PaginatorModule,
-        CartRoutingModule,
-        CommonModule,
-        StoreModule.forFeature(cartFeature),
-        EffectsModule.forFeature([CartEffects]),
-    ],
+    ProductsModule,
+    ButtonModule,
+    PaginatorModule,
+    CartRoutingModule,
+    CommonModule,
+    StoreModule.forFeature(cartFeature),
+    EffectsModule.forFeature([CartEffects]),
+    ProgressSpinnerModule
+],
     declarations: [CartComponent],
     exports: [],
 })
