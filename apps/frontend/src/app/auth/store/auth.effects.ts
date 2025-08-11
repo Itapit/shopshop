@@ -1,14 +1,20 @@
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { GetProfileResponse } from '@common/Interfaces';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import * as AuthActions from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
     private actions$ = inject(Actions);
-    constructor(private authService: AuthService) {}
+    constructor(
+        private authService: AuthService,
+        private messageService: MessageService,
+        private router: Router
+    ) {}
 
     signIn$ = createEffect(() =>
         this.actions$.pipe(
@@ -58,5 +64,31 @@ export class AuthEffects {
                 )
             )
         )
+    );
+
+    logoutSuccessNavigate$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.logoutSuccess),
+                tap(() => {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Logged Out',
+                        detail: 'You have successfully logged out.',
+                    });
+                    this.router.navigate(['/']);
+                })
+            ),
+        { dispatch: false }
+    );
+    logoutFailureToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.logoutFailure),
+                tap(({ error }) => {
+                    this.messageService.add({ severity: 'error', summary: 'Logout failed', detail: error });
+                })
+            ),
+        { dispatch: false }
     );
 }

@@ -5,7 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { AddToCartButtonComponent } from './add-to-cart-button/add-to-cart-button.component';
 import { EditProductButtonComponent } from './edit-product-button/edit-product-button.component';
@@ -29,7 +28,6 @@ import { ProductsComponent } from './products.component';
         ButtonModule,
         PaginatorModule,
         ProgressSpinnerModule,
-        ToastModule,
         TooltipModule,
     ],
     exports: [ProductsComponent, ProductListComponent],

@@ -1,6 +1,6 @@
 import { getRouterSelectors, RouterReducerState } from '@ngrx/router-store';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { RouteId } from './route-ids';
+import { RouteId, RouteIds } from './route-ids';
 
 export const selectRouter = createFeatureSelector<RouterReducerState>('router');
 
@@ -9,5 +9,5 @@ export const { selectCurrentRoute, selectQueryParams, selectRouteParams, selectR
 
 export const selectRouteId = createSelector(
     selectRouteData,
-    (data): RouteId => (data?.['routeId'] as RouteId) ?? RouteId.Unknown
+    (data): RouteId => (data?.['routeId'] as RouteId) ?? RouteIds.Unknown
 );

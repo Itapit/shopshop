@@ -1,4 +1,4 @@
-export const RouteId = {
+export const RouteIds = {
     Home: 'Home',
     AuthSignIn: 'AuthSignIn',
     AuthSignUp: 'AuthSignUp',
@@ -9,4 +9,4 @@ export const RouteId = {
     Unknown: 'Unknown',
 } as const;
 
-export type RouteId = (typeof RouteId)[keyof typeof RouteId];
+export type RouteId = (typeof RouteIds)[keyof typeof RouteIds];
