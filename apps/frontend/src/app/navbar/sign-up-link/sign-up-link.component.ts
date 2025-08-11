@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { UiStateService } from '../../shared/ui-state.service';
+import { NavigationService } from '../../shared/navigation.service';
 
 @Component({
     selector: 'app-sign-up-link',
@@ -8,11 +8,11 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrl: './sign-up-link.component.css',
 })
 export class SignUpLinkComponent {
-    constructor(private uiStateService: UiStateService) {}
+    constructor(private nav: NavigationService) {}
+
+    toSignup(): void {
+        this.nav.toSignUp();
+    }
 
     buttonText = signal('Create User');
-
-    signupClicked() {
-        this.uiStateService.triggerSignUp();
-    }
 }

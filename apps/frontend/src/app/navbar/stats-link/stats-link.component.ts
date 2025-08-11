@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { UiStateService } from '../../shared/ui-state.service';
+import { NavigationService } from '../../shared/navigation.service';
 
 @Component({
     selector: 'app-stats-link',
@@ -8,10 +8,11 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrl: './stats-link.component.css',
 })
 export class StatsLinkComponent {
-    constructor(private uiStateService: UiStateService) {}
-    buttonText = signal('Statistics');
+    constructor(private nav: NavigationService) {}
 
-    statsClick() {
-        this.uiStateService.triggerStats();
+    toAdminStats(): void {
+        this.nav.toAdminStats();
     }
+
+    buttonText = signal('Statistics');
 }

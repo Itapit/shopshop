@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
-    private previousUrl: string = '/';
-    private currentUrl: string = '/';
+    constructor(private router: Router) {}
 
-    constructor(private router: Router) {
-        this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-                
-                this.previousUrl = this.currentUrl;
-                
-                this.currentUrl = event.urlAfterRedirects;
-            }
-        });
+    toCart() {
+        return this.router.navigate(['/cart']);
     }
-
-    public getPreviousUrl(): string {
-        return this.previousUrl;
+    toSignIn() {
+        return this.router.navigate(['/auth/signin']);
+    }
+    toSignUp() {
+        return this.router.navigate(['/auth/signup']);
+    }
+    toAdminStats() {
+        return this.router.navigate(['/admin/stats']);
     }
 }

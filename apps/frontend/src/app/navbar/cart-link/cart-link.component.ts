@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { UiStateService } from '../../shared/ui-state.service';
+import { NavigationService } from '../../shared/navigation.service';
 
 @Component({
     selector: 'app-cart-link',
@@ -8,10 +8,10 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrl: './cart-link.component.css',
 })
 export class CartLinkComponent {
-    buttonText = signal('Cart');
-    constructor(private uiStateService: UiStateService) {}
+    constructor(private nav: NavigationService) {}
 
-    clickCart() {
-        this.uiStateService.triggerCart();
+    toCart(): void {
+        this.nav.toCart();
     }
+    buttonText = signal('Cart');
 }
