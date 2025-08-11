@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteId } from '../state/router/route-ids';
+import { RouteIds } from '../state/router/route-ids';
 import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 
 const routes: Routes = [
     {
         path: 'stats',
         component: OrdersStatsComponent,
-        data: { RouteId: RouteId.AdminStats },
+        data: { routeId: RouteIds.AdminStats },
     },
 ];
 
