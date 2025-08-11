@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'apps/frontend/src/environments/environment';
 
 @NgModule({
     declarations: [],
@@ -10,6 +12,10 @@ import { StoreModule } from '@ngrx/store';
         StoreModule.forRoot(),
         EffectsModule.forRoot([]),
         StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25, 
+            logOnly: environment.production, 
+        }),
         CommonModule,
     ],
 })

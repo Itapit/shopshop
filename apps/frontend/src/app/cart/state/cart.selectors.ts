@@ -3,7 +3,7 @@ import { cartFeature } from './cart.reducer';
 
 export const selectCartState = cartFeature.selectCartState;
 export const selectItems = cartFeature.selectItems;
-export const selectTotal = cartFeature.selectTotal; 
+export const selectTotal = cartFeature.selectTotal;
 export const selectLoading = cartFeature.selectLoading;
 export const selectError = cartFeature.selectError;
 
@@ -14,3 +14,5 @@ export const selectCount = createSelector(selectItems, (items) => items.reduce((
 export const selectSubtotal = createSelector(selectItems, (items) =>
     items.reduce((sum, i) => sum + (i.price ?? 0) * (i.quantity ?? 0), 0)
 );
+
+export const selectTotalRecords = createSelector(cartFeature.selectItems, (items) => items.length);

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of } from 'rxjs';
 import { CartService } from '../services/cart.service';
 import {
     loadCart,
@@ -9,6 +9,9 @@ import {
     loadTotal,
     loadTotalFailure,
     loadTotalSuccess,
+    removeItem,
+    removeItemFailure,
+    removeItemSuccess,
 } from './cart.actions';
 
 @Injectable()
@@ -37,6 +40,32 @@ export class CartEffects {
                     catchError((error) => of(loadTotalFailure({ error })))
                 )
             )
+        )
+    );
+
+    removeItem$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(removeItem),
+            concatMap(({ productID }) =>
+                this.api.updateCartItemQuantity({ productID, quantity: 0 }).pipe(
+                    map(() => removeItemSuccess({ productID })),
+                    catchError((error) => of(removeItemFailure({ productID, error })))
+                )
+            )
+        )
+    );
+
+    reloadCartAfterRemove$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(removeItemSuccess),
+            map(() => loadCart())
+        )
+    );
+
+    reloadTotalAfterRemove$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(removeItemSuccess),
+            map(() => loadTotal())
         )
     );
 }
