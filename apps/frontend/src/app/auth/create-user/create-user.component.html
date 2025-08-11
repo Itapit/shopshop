@@ -1,10 +1,15 @@
-<form #form="ngForm" (ngSubmit)="onCreateUser(form)">
+<form #form="ngForm" (ngSubmit)="onCreateUser(form)" autocomplete="off" novalidate>
     <div pFocusTrap class="create-user-card">
         <h2 class="create-user-title">{{ title }}</h2>
 
+        <!-- Global error from store -->
+        <p *ngIf="error$ | async as err" class="error-message" style="margin-bottom: 0.5rem">
+            {{ err }}
+        </p>
+
         <!-- Username Field -->
         <div class="field">
-            <label for="Username" class="label-with-icon">
+            <label for="username" class="label-with-icon">
                 <i class="pi pi-id-card"></i>
                 {{ usernameLabel }}
             </label>
@@ -17,13 +22,12 @@
                 [(ngModel)]="username"
                 [placeholder]="usernamePlaceHolder"
                 pAutoFocus
-                [autofocus]="true"
                 class="full-width"
                 #usernameRef="ngModel"
+                autocomplete="off"
             />
             <div *ngIf="usernameRef.invalid && usernameRef.touched" class="error-message">
                 <small *ngIf="usernameRef.errors?.['required']">{{ usernameRequiredMSG }}</small>
-                <small *ngIf="usernameRef.errors?.['email']">{{ usernameInvalidMsg }}</small>
             </div>
         </div>
 
@@ -42,10 +46,9 @@
                 email
                 [(ngModel)]="email"
                 [placeholder]="emailPlaceholder"
-                pAutoFocus
-                [autofocus]="true"
                 class="full-width"
                 #emailRef="ngModel"
+                autocomplete="off"
             />
             <div *ngIf="emailRef.invalid && emailRef.touched" class="error-message">
                 <small *ngIf="emailRef.errors?.['required']">{{ emailRequiredMsg }}</small>
@@ -53,7 +56,7 @@
             </div>
         </div>
 
-        <!-- Password Field -->
+        <!-- Password Field  -->
         <div class="field">
             <label for="password" class="label-with-icon">
                 <i class="pi pi-lock"></i>
@@ -78,6 +81,13 @@
         </div>
 
         <!-- Submit Button -->
-        <p-button class="create-user-button" [label]="buttonLabel" icon="pi pi-sign-in" type="submit"></p-button>
+        <p-button
+            class="create-user-button"
+            [label]="buttonLabel"
+            icon="pi pi-user-plus"
+            type="submit"
+            [loading]="(loading$ | async) ?? false"
+            [disabled]="form.invalid || ((loading$ | async) ?? false)"
+        ></p-button>
     </div>
 </form>

@@ -54,6 +54,36 @@ export class AuthEffects {
         )
     );
 
+    signUpSuccessToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.signUpSuccess),
+                tap(() => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'User created',
+                        detail: 'The user was created successfully.',
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+
+    signUpFailureToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.signUpFailure),
+                tap(({ error }) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Create user failed',
+                        detail: error ?? 'Unable to create user.',
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+
     logout$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.logout),
@@ -81,6 +111,7 @@ export class AuthEffects {
             ),
         { dispatch: false }
     );
+
     logoutFailureToast$ = createEffect(
         () =>
             this.actions$.pipe(
