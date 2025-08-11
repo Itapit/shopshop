@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UiStateService } from '../../shared/ui-state.service';
+import { Store } from '@ngrx/store';
+import { selectOrderSaving } from '../../order/state/order.selectors';
+import { placeOrder } from '../../order/state/order.actions';
 
 @Component({
     selector: 'app-order-link',
@@ -8,9 +11,13 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
-    constructor(private uiStateService: UiStateService) {}
+    private store = inject(Store);
+    
+    
+    saving$ = this.store.select(selectOrderSaving);
 
-    clickOrder() {
-        this.uiStateService.triggerOrder();
+    clickOrder() { 
+        this.store.dispatch(placeOrder());
+        
     }
 }

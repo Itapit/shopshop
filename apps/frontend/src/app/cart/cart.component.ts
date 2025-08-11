@@ -1,9 +1,10 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ProductFull, ProductItem } from '@common/Interfaces';
+import { ProductFull } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { OrderService } from '../order/services/order.service';
+import { placeOrder } from '../order/state/order.actions';
 import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
 import { ProductListComponent } from '../products/product-list/product-list.component';
 import { UiStateService } from '../shared/ui-state.service';
@@ -40,7 +41,7 @@ export class CartComponent {
         this.total$ = this.store.select(selectTotal);
         this.loading$ = this.store.select(selectLoading);
 
-        this.uiStateService.orderClicked$.subscribe(() => this.handleOrder());
+        
 
         this.store.dispatch(loadCart());
         this.store.dispatch(loadTotal());
@@ -60,32 +61,53 @@ export class CartComponent {
         );
     };
 
-    async handleOrder() {
-        const items = await firstValueFrom(this.items$);
-        if (!items || items.length === 0) return;
+    // async handleOrder() {
+    //     // if (this.products.length === 0) {
+    //     //     return;
+    //     // }
 
-        const cartItems: ProductItem[] = items.map((p) => ({
-            productID: p.productID,
-            quantity: p.quantity,
-        }));
+    //     // const cartItems: ProductItem[] = this.products.map((product) => ({
+    //     //     productID: product.productID,
+    //     //     quantity: product.quantity,
+    //     // }));
 
-        this.orderService.placeOrder(cartItems).subscribe({
-            next: () => {
-                this.msgService.add({ severity: 'success', summary: 'Order Placed' });
+    //     // this.orderService.placeOrder(cartItems).subscribe({
+    //     //     next: (res) => {
+    //     //         console.log('success order', res);
+    //     //         this.msgService.add({
+    //     //             severity: 'success',
+    //     //             summary: 'Order Placed',
+    //     //         });
+    //     //         this.cartService.deleteCart().subscribe({
+    //     //             next: (res) => {
+    //     //                 console.log('success delete', res);
+    //     //                 this.products = [];
+    //     //                 this.totalPrice = 0;
+    //     //                 this.totalRecords = 0;
+    //     //                 this.productListComponent?.loadProducts?.();
+    //     //                 this.msgService.add({
+    //     //                     severity: 'success',
+    //     //                     summary: 'Cart is empty',
+    //     //                 });
+    //     //             },
+    //     //             error: (err) => {
+    //     //                 console.error('failed', err);
+    //     //             },
+    //     //         });
+    //     //     },
+    //     //     error: (err) => {
+    //     //         console.error('failed', err);
+    //     //     },
+    //     // });
 
-                this.cartService.deleteCart().subscribe({
-                    next: () => {
-                        this.store.dispatch(loadCart());
-                        this.store.dispatch(loadTotal());
-                        this.productListComponent?.loadProducts?.();
-                        this.msgService.add({ severity: 'success', summary: 'Cart is empty' });
-                    },
-                    error: (err) => console.error('failed', err),
-                });
-            },
-            error: (err) => console.error('failed', err),
-        });
-    }
+    //     //console.log('Order has been placed!');
+    //     const items = await firstValueFrom(this.items$);
+    //     if (!items || items.length === 0) return;
+    //     this.productListComponent?.loadProducts?.();
+
+        
+       
+    // }
 
     onRemoveClicked(productID: string) {
         this.store.dispatch(removeItem({ productID }));

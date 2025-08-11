@@ -1,8 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, of } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, switchMap } from 'rxjs';
 import { CartService } from '../services/cart.service';
 import {
+    clearCart,
+    clearCartFailure,
+    clearCartSuccess,
     loadCart,
     loadCartFailure,
     loadCartSuccess,
@@ -16,8 +19,8 @@ import {
 
 @Injectable()
 export class CartEffects {
-    
-    constructor(private actions$: Actions, private api: CartService) {}
+    private actions$ = inject(Actions);
+    private api = inject(CartService);
 
     loadCart$ = createEffect(() =>
         this.actions$.pipe(
@@ -66,6 +69,26 @@ export class CartEffects {
         this.actions$.pipe(
             ofType(removeItemSuccess),
             map(() => loadTotal())
+        )
+    );
+
+    clearCart$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(clearCart),
+            switchMap(() =>
+                this.api.deleteCart().pipe(
+                    map(() => clearCartSuccess()),
+                    catchError((error) => of(clearCartFailure({ error })))
+                )
+            )
+        )
+    );
+
+   
+    afterClearReload$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(clearCartSuccess),
+            mergeMap(() => of(loadCart(), loadTotal()))
         )
     );
 }
