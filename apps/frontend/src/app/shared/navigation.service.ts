@@ -17,4 +17,7 @@ export class NavigationService {
     toAdminStats() {
         return this.router.navigate(['/admin/stats']);
     }
+    toProductsHome() {
+        return this.router.navigate(['/']);
+    }
 }

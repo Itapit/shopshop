@@ -3,7 +3,7 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 import { AuthFacade } from '../../auth/store/auth.facade';
 
 @Component({
-    selector: 'app-log-out-link',
+    selector: 'app-log-out',
     standalone: false,
     templateUrl: './log-out.component.html',
     styleUrls: ['./log-out.component.css'],
