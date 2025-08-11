@@ -29,7 +29,7 @@ export class AuthEffects {
                                 error:
                                     (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
                                     err?.message ??
-                                    'Get session failed',
+                                    'Sign in failed',
                             })
                         )
                     )
@@ -59,6 +59,23 @@ export class AuthEffects {
         )
     );
 
+    getSessionSuccessToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.getSessionSuccess),
+                tap(({ profile }) => {
+                    if (profile?.username) {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Welcome',
+                            detail: `Welcome back, ${profile.username}!`,
+                        });
+                    }
+                })
+            ),
+        { dispatch: false }
+    );
+
     getSessionFailureFilter$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.getSessionFailure),
@@ -78,7 +95,16 @@ export class AuthEffects {
             switchMap((req) =>
                 this.authService.signUp(req).pipe(
                     mergeMap((res) => [AuthActions.signUpSuccess(res)]),
-                    catchError((err) => of(AuthActions.signUpFailure({ error: err?.message ?? 'Sign up failed' })))
+                    catchError((err: HttpErrorResponse) =>
+                        of(
+                            AuthActions.signUpFailure({
+                                error:
+                                    (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
+                                    err?.message ??
+                                    'Sign up failed',
+                            })
+                        )
+                    )
                 )
             )
         )
