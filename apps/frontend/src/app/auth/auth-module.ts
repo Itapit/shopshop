@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ButtonModule } from 'primeng/button';
@@ -15,8 +13,6 @@ import { AuthRoutingModule } from './auth-routing-module';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { LogoutListenerComponent } from './logout/log-out.component';
 import { SigninComponent } from './sign-in/signin.component';
-import { AuthEffects } from './store/auth.effects';
-import { authFeature } from './store/auth.reducer';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
@@ -32,8 +28,6 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
         AutoFocusModule,
         ConfirmDialogModule,
         ToastModule,
-        StoreModule.forFeature(authFeature),
-        EffectsModule.forFeature([AuthEffects]),
     ],
     exports: [LogoutListenerComponent],
     providers: [ConfirmationService],
