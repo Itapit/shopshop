@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CreateUserRequest, SignInRequest } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../state/app-store/app.state';
 import * as AuthActions from './auth.actions';
 import {
     selectAuthError,
@@ -13,10 +12,11 @@ import {
     selectRole,
     selectUsername,
 } from './auth.selectors';
+import { AuthState } from './auth.state';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
-    private store = inject<Store<AppState>>(Store);
+    private store = inject<Store<{ auth: AuthState }>>(Store);
 
     loading$ = this.store.select(selectAuthLoading);
     error$ = this.store.select(selectAuthError);
