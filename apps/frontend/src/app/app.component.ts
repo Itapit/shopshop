@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { SessionService } from './auth/services/Session.service';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -7,11 +6,6 @@ import { SessionService } from './auth/services/Session.service';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-    constructor(private sessionService: SessionService) {}
+export class AppComponent {
     protected title = 'frontend';
-
-    ngOnInit(): void {
-        this.sessionService.setSessionFromProfile();
-    }
 }

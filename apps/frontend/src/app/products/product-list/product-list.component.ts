@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
 
     products: ProductFull[] = [];
     page = 1;
-    limit = 12;
+    limit = 14;
 
     ngOnInit() {
         this.uiStateService.searchClicked$.subscribe((value) => {

@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
-import { UiStateService } from '../../shared/ui-state.service';
+import { AuthFacade } from '../../auth/store/auth.facade';
 
 @Component({
-    selector: 'app-log-out-link',
+    selector: 'app-log-out',
     standalone: false,
     templateUrl: './log-out.component.html',
     styleUrls: ['./log-out.component.css'],
 })
 export class LogOutComponent {
+    private readonly store = inject(AuthFacade);
+
     constructor(
         private confirmationService: ConfirmationService,
-        private uiStateService: UiStateService,
         private messageService: MessageService
     ) {}
 
@@ -26,12 +27,7 @@ export class LogOutComponent {
             rejectButtonStyleClass: 'p-button-outlined p-button-secondary',
             acceptButtonStyleClass: 'p-button-danger',
             accept: () => {
-                this.messageService.add({
-                    severity: 'info',
-                    summary: 'Logged Out',
-                    detail: 'You have successfully logged out.',
-                });
-                this.uiStateService.triggerLogout();
+                this.store.logout();
             },
             reject: (type: ConfirmEventType) => {
                 if (type === ConfirmEventType.REJECT || type === ConfirmEventType.CANCEL) {

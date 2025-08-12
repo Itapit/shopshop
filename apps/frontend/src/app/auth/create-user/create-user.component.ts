@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CreateUserRequest } from '@common/Interfaces';
-import { AuthService } from '../services/auth.service';
+import { AuthFacade } from '../store/auth.facade';
 
 @Component({
     selector: 'app-create-user',
@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
     styleUrl: './create-user.component.css',
 })
 export class CreateUserComponent {
-    constructor(private authService: AuthService) {}
+    private auth = inject(AuthFacade);
 
     title = 'Create User';
     buttonLabel = 'Create User';
@@ -36,6 +36,9 @@ export class CreateUserComponent {
     email: string | undefined;
     password: string | undefined;
 
+    loading$ = this.auth.loading$;
+    error$ = this.auth.error$;
+
     onCreateUser(form: NgForm) {
         if (form.invalid) {
             form.control.markAllAsTouched();
@@ -46,13 +49,6 @@ export class CreateUserComponent {
             email: this.email ?? '',
             password: this.password ?? '',
         };
-        this.authService.signUp(dto).subscribe({
-            next: (res) => {
-                console.log('signup success', res);
-            },
-            error: (err) => {
-                console.error('Signup failed', err);
-            },
-        });
+        this.auth.signUp(dto);
     }
 }

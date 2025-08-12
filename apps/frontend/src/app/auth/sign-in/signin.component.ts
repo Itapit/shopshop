@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignInRequest } from '@common/Interfaces';
-import { Role } from 'common/src/lib/Enums/role.enum';
-import { UiStateService } from '../../shared/ui-state.service';
-import { AuthService } from '../services/auth.service';
-import { SessionService } from '../services/Session.service';
+import { AuthFacade } from '../store/auth.facade';
 
 @Component({
     selector: 'app-signin',
@@ -13,12 +11,12 @@ import { SessionService } from '../services/Session.service';
     templateUrl: './signin.component.html',
     styleUrl: './signin.component.css',
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit {
+    readonly authStore = inject(AuthFacade);
+
     constructor(
-        private readonly authService: AuthService,
-        private router: Router,
-        private sessionService: SessionService,
-        private uiStateService: UiStateService
+        private destroyRef: DestroyRef,
+        private router: Router
     ) {}
 
     title = 'Sign In';
@@ -39,37 +37,22 @@ export class SigninComponent {
     email: string | undefined;
     password: string | undefined;
 
+    loading$ = this.authStore.loading$;
+    error$ = this.authStore.error$;
+    isLoggedIn$ = this.authStore.isLoggedIn$;
+
+    ngOnInit(): void {
+        this.isLoggedIn$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((logged) => {
+            if (logged) this.router.navigateByUrl('/');
+        });
+    }
+
     onSignin(form: NgForm) {
         if (form.invalid) {
             form.control.markAllAsTouched();
             return;
         }
-        const dto: SignInRequest = {
-            email: this.email ?? '',
-            password: this.password ?? '',
-        };
-
-        this.authService.signIn(dto).subscribe({
-            next: () => this.afterSignInSuccess(),
-            error: (err) => {
-                console.error('Signin failed', err);
-            },
-        });
+        const dto: SignInRequest = { email: this.email ?? '', password: this.password ?? '' };
+        this.authStore.signIn(dto);
     }
-
-    private afterSignInSuccess(): void {
-        this.authService.getSession().subscribe({
-            next: (session) => {
-                this.sessionService.setSession(session);
-                if (session.role == Role.Client || session.role == Role.Admin) {
-                    this.router.navigate(['/']);
-                }
-            },
-            error: (err) => {
-                console.error(`failed to get session data after sign in`, err);
-            },
-        });
-    } 
-
-    
 }
