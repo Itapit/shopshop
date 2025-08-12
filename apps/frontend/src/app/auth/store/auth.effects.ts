@@ -1,9 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { GetProfileResponse } from '@common/Interfaces';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { MessageService } from 'primeng/api';
-import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import * as AuthActions from './auth.actions';
 
@@ -22,7 +23,16 @@ export class AuthEffects {
             switchMap(({ signInRequest }) =>
                 this.authService.signIn(signInRequest).pipe(
                     mergeMap(() => [AuthActions.signInSuccess(), AuthActions.getSession()]),
-                    catchError((err) => of(AuthActions.signInFailure({ error: err?.message ?? 'Sign in failed' })))
+                    catchError((err: HttpErrorResponse) =>
+                        of(
+                            AuthActions.signInFailure({
+                                error:
+                                    (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
+                                    err?.message ??
+                                    'Sign in failed',
+                            })
+                        )
+                    )
                 )
             )
         )
@@ -34,11 +44,48 @@ export class AuthEffects {
             switchMap(() =>
                 this.authService.getSession().pipe(
                     map((profile: GetProfileResponse) => AuthActions.getSessionSuccess({ profile })),
-                    catchError((err) =>
-                        of(AuthActions.getSessionFailure({ error: err?.message ?? 'Get session failed' }))
+                    catchError((err: HttpErrorResponse) =>
+                        of(
+                            AuthActions.getSessionFailure({
+                                error:
+                                    (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
+                                    err?.message ??
+                                    'Get session failed',
+                            })
+                        )
                     )
                 )
             )
+        )
+    );
+
+    getSessionSuccessToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.getSessionSuccess),
+                tap(({ profile }) => {
+                    if (profile?.username) {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Welcome',
+                            detail: `Welcome back, ${profile.username}!`,
+                        });
+                    }
+                })
+            ),
+        { dispatch: false }
+    );
+
+    getSessionFailureFilter$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getSessionFailure),
+            mergeMap(({ error }) => {
+                const msg = typeof error === 'string' ? error.toLowerCase() : '';
+                if (msg.includes('missing access token cookie')) {
+                    return of(AuthActions.clearAuthError());
+                }
+                return EMPTY;
+            })
         )
     );
 
@@ -48,10 +95,49 @@ export class AuthEffects {
             switchMap((req) =>
                 this.authService.signUp(req).pipe(
                     mergeMap((res) => [AuthActions.signUpSuccess(res)]),
-                    catchError((err) => of(AuthActions.signUpFailure({ error: err?.message ?? 'Sign up failed' })))
+                    catchError((err: HttpErrorResponse) =>
+                        of(
+                            AuthActions.signUpFailure({
+                                error:
+                                    (typeof err?.error === 'string' ? err.error : err?.error?.message) ??
+                                    err?.message ??
+                                    'Sign up failed',
+                            })
+                        )
+                    )
                 )
             )
         )
+    );
+
+    signUpSuccessToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.signUpSuccess),
+                tap(() => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'User created',
+                        detail: 'The user was created successfully.',
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+
+    signUpFailureToast$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuthActions.signUpFailure),
+                tap(({ error }) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Create user failed',
+                        detail: error ?? 'Unable to create user.',
+                    });
+                })
+            ),
+        { dispatch: false }
     );
 
     logout$ = createEffect(() =>
@@ -81,6 +167,7 @@ export class AuthEffects {
             ),
         { dispatch: false }
     );
+
     logoutFailureToast$ = createEffect(
         () =>
             this.actions$.pipe(
