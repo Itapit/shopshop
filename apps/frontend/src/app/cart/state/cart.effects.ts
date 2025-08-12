@@ -1,8 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap, of } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { CartService } from '../services/cart.service';
 import {
+    clearCart,
+    clearCartFailure,
+    clearCartSuccess,
     loadCart,
     loadCartFailure,
     loadCartSuccess,
@@ -18,6 +22,7 @@ import {
 export class CartEffects {
     private actions$ = inject(Actions);
     private api = inject(CartService);
+    private messageService = inject(MessageService);
 
     loadCart$ = createEffect(() =>
         this.actions$.pipe(
@@ -67,5 +72,52 @@ export class CartEffects {
             ofType(removeItemSuccess),
             map(() => loadTotal())
         )
+    );
+
+    clearCart$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(clearCart),
+            switchMap(() =>
+                this.api.deleteCart().pipe(
+                    map(() => clearCartSuccess()),
+                    catchError((error) => of(clearCartFailure({ error })))
+                )
+            )
+        )
+    );
+
+    afterClearReload$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(clearCartSuccess),
+            mergeMap(() => of(loadCart(), loadTotal()))
+        )
+    );
+
+    toastOnClearCartSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(clearCartSuccess),
+                tap(() =>
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Cart is empty',
+                    })
+                )
+            ),
+        { dispatch: false }
+    );
+
+    toastOnRemoveItemSuccess$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(removeItemSuccess),
+                tap(() =>
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Item removed from cart',
+                    })
+                )
+            ),
+        { dispatch: false }
     );
 }

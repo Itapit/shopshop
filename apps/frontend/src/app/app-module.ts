@@ -14,6 +14,7 @@ import { CartModule } from './cart/cart-module';
 import { NavbarModule } from './navbar/navbar-module';
 import { ProductsModule } from './products/products-module';
 import { AppStoreModule } from './state/app-store/app-store.module';
+import { OrderModule } from './order/order-module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { AppStoreModule } from './state/app-store/app-store.module';
         ToastModule,
         ConfirmDialogModule,
         AppStoreModule,
+        OrderModule,
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             name: 'shopshop ngrx',
