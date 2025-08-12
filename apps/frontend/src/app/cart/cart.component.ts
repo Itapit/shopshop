@@ -24,23 +24,20 @@ export class CartComponent {
     total$!: Observable<number | null>;
     loading$!: Observable<boolean>;
 
-    private actions$ = inject(Actions);
 
     productListOptionsEnum = productListOptionsEnum;
 
     constructor(
-        private store: Store,
-        private msgService: MessageService,
-        
+        private cartStore: Store,
     ) {}
 
     ngOnInit() {
-        this.items$ = this.store.select(selectItems);
-        this.total$ = this.store.select(selectTotal);
-        this.loading$ = this.store.select(selectLoading);
+        this.items$ = this.cartStore.select(selectItems);
+        this.total$ = this.cartStore.select(selectTotal);
+        this.loading$ = this.cartStore.select(selectLoading);
 
-        this.store.dispatch(loadCart());
-        this.store.dispatch(loadTotal());
+        this.cartStore.dispatch(loadCart());
+        this.cartStore.dispatch(loadTotal());
     }
 
     fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {
@@ -59,7 +56,7 @@ export class CartComponent {
 
     
     onRemoveClicked(productID: string) {
-        this.store.dispatch(removeItem({ productID }));
+        this.cartStore.dispatch(removeItem({ productID }));
         this.productListComponent?.loadProducts?.();
     }
 }
