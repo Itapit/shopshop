@@ -1,15 +1,15 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ProductFull, ProductItem } from '@common/Interfaces';
+import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ProductFull } from '@common/Interfaces';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-import { firstValueFrom, map, Observable } from 'rxjs';
-import { OrderService } from '../order/services/order.service';
+import { map, Observable } from 'rxjs';
 import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
 import { ProductListComponent } from '../products/product-list/product-list.component';
-import { UiStateService } from '../shared/ui-state.service';
-import { CartService } from './services/cart.service';
-import { loadCart, loadTotal, removeItem } from './state/cart.actions';
+import { clearCartSuccess, loadCart, loadTotal, removeItem } from './state/cart.actions';
 import { selectItems, selectLoading, selectTotal } from './state/cart.selectors';
+import { placeOrderSuccess } from '../order/state/order.actions';
+import { CartState } from './state/cart.state';
 
 @Component({
     selector: 'app-cart',
@@ -24,24 +24,21 @@ export class CartComponent {
     items$!: Observable<ProductFull[]>;
     total$!: Observable<number | null>;
     loading$!: Observable<boolean>;
+    
+   
+
 
     productListOptionsEnum = productListOptionsEnum;
 
     constructor(
-        private store: Store,
-        private msgService: MessageService,
-        private uiStateService: UiStateService,
-        private cartService: CartService,
-        private orderService: OrderService
+        private store: Store<{ cart: CartState }>,
     ) {}
 
     ngOnInit() {
         this.items$ = this.store.select(selectItems);
         this.total$ = this.store.select(selectTotal);
         this.loading$ = this.store.select(selectLoading);
-
-        this.uiStateService.orderClicked$.subscribe(() => this.handleOrder());
-
+        
         this.store.dispatch(loadCart());
         this.store.dispatch(loadTotal());
     }
@@ -60,33 +57,7 @@ export class CartComponent {
         );
     };
 
-    async handleOrder() {
-        const items = await firstValueFrom(this.items$);
-        if (!items || items.length === 0) return;
-
-        const cartItems: ProductItem[] = items.map((p) => ({
-            productID: p.productID,
-            quantity: p.quantity,
-        }));
-
-        this.orderService.placeOrder(cartItems).subscribe({
-            next: () => {
-                this.msgService.add({ severity: 'success', summary: 'Order Placed' });
-
-                this.cartService.deleteCart().subscribe({
-                    next: () => {
-                        this.store.dispatch(loadCart());
-                        this.store.dispatch(loadTotal());
-                        this.productListComponent?.loadProducts?.();
-                        this.msgService.add({ severity: 'success', summary: 'Cart is empty' });
-                    },
-                    error: (err) => console.error('failed', err),
-                });
-            },
-            error: (err) => console.error('failed', err),
-        });
-    }
-
+    
     onRemoveClicked(productID: string) {
         this.store.dispatch(removeItem({ productID }));
         this.productListComponent?.loadProducts?.();
