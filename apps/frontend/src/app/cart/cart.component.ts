@@ -9,6 +9,7 @@ import { ProductListComponent } from '../products/product-list/product-list.comp
 import { clearCartSuccess, loadCart, loadTotal, removeItem } from './state/cart.actions';
 import { selectItems, selectLoading, selectTotal } from './state/cart.selectors';
 import { placeOrderSuccess } from '../order/state/order.actions';
+import { CartState } from './state/cart.state';
 
 @Component({
     selector: 'app-cart',
@@ -23,21 +24,23 @@ export class CartComponent {
     items$!: Observable<ProductFull[]>;
     total$!: Observable<number | null>;
     loading$!: Observable<boolean>;
+    
+   
 
 
     productListOptionsEnum = productListOptionsEnum;
 
     constructor(
-        private cartStore: Store,
+        private store: Store<{ cart: CartState }>,
     ) {}
 
     ngOnInit() {
-        this.items$ = this.cartStore.select(selectItems);
-        this.total$ = this.cartStore.select(selectTotal);
-        this.loading$ = this.cartStore.select(selectLoading);
-
-        this.cartStore.dispatch(loadCart());
-        this.cartStore.dispatch(loadTotal());
+        this.items$ = this.store.select(selectItems);
+        this.total$ = this.store.select(selectTotal);
+        this.loading$ = this.store.select(selectLoading);
+        
+        this.store.dispatch(loadCart());
+        this.store.dispatch(loadTotal());
     }
 
     fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {
@@ -56,7 +59,7 @@ export class CartComponent {
 
     
     onRemoveClicked(productID: string) {
-        this.cartStore.dispatch(removeItem({ productID }));
+        this.store.dispatch(removeItem({ productID }));
         this.productListComponent?.loadProducts?.();
     }
 }
