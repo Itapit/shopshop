@@ -1,0 +1,10 @@
+FROM node:24.5.0
+
+# Dev-only container; we don't bake deps in, we mount them via a volume.
+WORKDIR /workspace
+
+# Pre-create common dirs so the named volumes mount cleanly and permissions are right.
+RUN mkdir -p /workspace/node_modules /workspace/.nx && chown -R 1000:1000 /workspace
+
+# Default shell; compose will override the command to run nx serve.
+CMD ["bash"]

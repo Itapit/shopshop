@@ -1,0 +1,11 @@
+# repo root ignores (safe for dev images)
+.git
+.gitignore
+node_modules
+dist
+tmp
+coverage
+.nx/cache
+.vscode
+.idea
+.DS_Store

@@ -1,0 +1,7 @@
+FROM node:24.5.0
+
+WORKDIR /workspace
+
+RUN mkdir -p /workspace/node_modules /workspace/.nx && chown -R 1000:1000 /workspace
+
+CMD ["bash"]
