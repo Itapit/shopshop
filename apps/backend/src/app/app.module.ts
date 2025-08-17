@@ -9,6 +9,7 @@ import { CartModule } from './carts/cart.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
+import { SalesAnalyticsModule } from './sales-analytics/sales-analytics.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { UsersModule } from './users/users.module';
         ProductsModule,
         OrdersModule,
         CartModule,
+        SalesAnalyticsModule,
         AnalyticsModule,
     ],
     controllers: [AppController],
