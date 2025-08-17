@@ -98,6 +98,8 @@ services:
             <<: *common-env
         volumes: *common-volumes
         command: bash -lc "sleep infinity"
+        stdin_open: true
+        tty: true
         depends_on:
             deps:
                 condition: service_completed_successfully
