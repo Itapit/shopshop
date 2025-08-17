@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { SalesAnalyticsRepository } from './repository/sales-analytics.repository';
 
 @Injectable()
 export class SalesAnalyticsService {
-  // place holder for future methods
+  constructor(private readonly salesAnalyticsRepository: SalesAnalyticsRepository) {}
+
+  
 }

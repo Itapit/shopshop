@@ -3,10 +3,7 @@ import { SalesAnalyticsService } from './sales-analytics.service';
 
 @Controller('analytics')
 export class SalesAnalyticsController {
-  constructor(private readonly svc: SalesAnalyticsService) {}
+  constructor(private readonly salesAnalyticsService: SalesAnalyticsService) {}
 
-  @Get('ping')
-  ping() {
-    return { ok: true, service: 'sales-analytics' };
-  }
+ 
 }
