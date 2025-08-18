@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { DatePresetKey, DateRange } from '../date-range-filter/date-range.model';
+import { DatePresetKey } from '../date-range-filter/enums';
+import { DateRange } from '../date-range-filter/interfaces';
 import * as analyticsActions from './analytics.actions';
-import { selectGlobalDateRange, selectGlobalLabel, selectGlobalPreset } from './analytics.selectors';
+import { selectGlobalDateRange, selectGlobalPreset } from './analytics.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class DateRangeFacade {
@@ -10,7 +11,6 @@ export class DateRangeFacade {
 
     globalRange$ = this.store.select(selectGlobalDateRange);
     globalPreset$ = this.store.select(selectGlobalPreset);
-    globalLabel$ = this.store.select(selectGlobalLabel);
 
     setPreset(preset: DatePresetKey) {
         this.store.dispatch(analyticsActions.setGlobalByPreset({ preset }));

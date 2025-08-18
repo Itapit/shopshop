@@ -1,8 +1,8 @@
 // state/date-range/date-range.effects.ts
-import { Injectable, inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { inject, Injectable } from '@angular/core';
+import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { filter, map } from 'rxjs/operators';
-import { DatePresetKey } from '../date-range-filter/date-range.model';
+import { DatePresetKey } from '../date-range-filter/enums';
 import { DateRangeMathService } from '../date-range-filter/services/date-range-math.service';
 import * as analyticsActions from './analytics.actions';
 
@@ -10,6 +10,15 @@ import * as analyticsActions from './analytics.actions';
 export class AnalyticsDateRangeEffects {
     private actions$ = inject(Actions);
     private math = inject(DateRangeMathService);
+
+    private readonly DEFAULT_PRESET = DatePresetKey.LAST_30;
+
+    init$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ROOT_EFFECTS_INIT),
+            map(() => analyticsActions.setGlobalByPreset({ preset: this.DEFAULT_PRESET }))
+        )
+    );
 
     presetToRange$ = createEffect(() =>
         this.actions$.pipe(

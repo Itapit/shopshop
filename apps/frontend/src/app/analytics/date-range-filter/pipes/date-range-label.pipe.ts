@@ -1,10 +1,11 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
-import { DatePresetKey, DateRange } from '../date-range.model';
+import { DatePresetKey } from '../enums';
+import { DateRange } from '../interfaces';
 import { DATE_PRESET_LABELS } from '../services/date-preset-labels.token';
 
 export interface DateRangeLabelOptions {
     showPreset?: boolean; // default: true
-    arrow?: string; // default: ' → '
+    arrow?: string; // default: ' -> '
     locale?: string; // default: LOCALE_ID
     format?: Intl.DateTimeFormatOptions; // default: { year:'numeric', month:'short', day:'2-digit' }
 }

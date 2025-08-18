@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import * as analyticsActions from './analytics.actions';
-import { initialanalyticsState } from './analytics.state';
+import { initialAnalyticsState } from './analytics.state';
 
 export const analyticsReducer = createReducer(
-    initialanalyticsState,
+    initialAnalyticsState,
 
     on(analyticsActions.applyGlobalRange, (state, { range, preset }) => ({
         ...state,
@@ -11,5 +11,5 @@ export const analyticsReducer = createReducer(
         presetDate: preset,
     })),
 
-    on(analyticsActions.clearGlobalDateRange, () => initialanalyticsState)
+    on(analyticsActions.clearGlobalDateRange, () => initialAnalyticsState)
 );

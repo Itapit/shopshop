@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { DatePresetKey } from '../date-range.model';
+import { DatePresetKey } from '../enums';
 
 export const DEFAULT_PRESET_LABELS: Record<DatePresetKey, string> = {
     [DatePresetKey.LAST_7]: 'Last 7 days',

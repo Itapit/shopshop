@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DatePresetKey, DateRange } from '../date-range.model';
+import { DatePresetKey } from '../enums';
+import { DateRange } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class DateRangeMathService {

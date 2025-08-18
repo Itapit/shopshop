@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import { DatePresetKey } from '../date-range.model';
+import { DatePresetKey } from '../enums';
 import { DATE_PRESET_LABELS } from '../services/date-preset-labels.token';
 
 @Pipe({

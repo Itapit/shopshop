@@ -1,17 +1,14 @@
-import { computeRangeForPreset } from '../analytics.helpers';
-import { DatePresetKey, DateRange } from '../date-range-filter/date-range.model';
+import { DatePresetKey } from '../date-range-filter/enums';
+import { DateRange } from '../date-range-filter/interfaces';
 
 export const analyticsFeatureKey = 'analytics';
 
-const DEFAULT_PRESET = DatePresetKey.LAST_30;
-const DEFAULT_RANGE = computeRangeForPreset(DEFAULT_PRESET);
-
 export interface AnalyticsState {
-    globalDate: DateRange;
-    presetDate: DatePresetKey;
+    globalDate: DateRange | null;
+    presetDate: DatePresetKey | null;
 }
 
-export const initialanalyticsState: AnalyticsState = {
-    globalDate: DEFAULT_RANGE,
-    presetDate: DEFAULT_PRESET,
+export const initialAnalyticsState: AnalyticsState = {
+    globalDate: null,
+    presetDate: null,
 };
