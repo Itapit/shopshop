@@ -1,8 +1,8 @@
 import { IsEnum, Matches, IsOptional} from 'class-validator';
 import { SalesMetric} from '@common/Enums/sales-metric.enum';
-import { TopProductsRequest } from '@common/Interfaces';
+import { TopProductsQuantityRequest } from '@common/Interfaces';
 
-export class TopProductsRequestDto implements TopProductsRequest {
+export class TopProductsQuantityRequestDto implements TopProductsQuantityRequest {
   
   @IsEnum(SalesMetric, { message: 'metric must be "quantity" or "profit"' })
   metric!: SalesMetric;

@@ -1,0 +1,1 @@
+export * from './top-products-response.interface';
