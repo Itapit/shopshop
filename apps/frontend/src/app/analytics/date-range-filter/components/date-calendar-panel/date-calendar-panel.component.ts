@@ -17,39 +17,40 @@ import { DateRange } from '../../interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateCalendarPanelComponent implements OnChanges {
-    // Control visibility from parent
     @Input() open = false;
-    // init selection from global at start
     @Input() initialRange: DateRange | null = null;
     @Input() disabled = false;
 
-    //Emit on every pick/change (range may be partial until two dates picked)
     @Output() rangeChange = new EventEmitter<DateRange | null>();
-    //Emit Apply with the chosen range (non-null)
     @Output() apply = new EventEmitter<DateRange>();
-    // Emit Cancel/Close
     @Output() cancel = new EventEmitter<void>();
 
     selected: Date[] | null = null;
 
+    defaultDate: Date = new Date();
+
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['open'] || changes['initialRange']) {
-            if (this.open && this.initialRange) {
-                this.selected = [new Date(this.initialRange.start), new Date(this.initialRange.end)];
-            } else if (this.open && !this.initialRange) {
-                this.selected = null;
-            }
+        const anchor = toDateOrNull(this.initialRange?.end) ?? new Date();
+        this.defaultDate = anchor;
+
+        // Seed selection ONLY if both dates are valid and panel is open
+        if ((changes['open'] || changes['initialRange']) && this.open) {
+            const start = toDateOrNull(this.initialRange?.start);
+            const end = toDateOrNull(this.initialRange?.end);
+            this.selected = start && end ? [start, end] : null;
         }
     }
 
     onModelChange(v: Date[] | null) {
-        this.selected = v;
-        if (!v || v.length < 2) {
+        const clean = Array.isArray(v) ? v.filter(isRealDate) : [];
+        this.selected = clean.length ? clean : null;
+
+        if (this.selected && this.selected.length === 2) {
+            const [start, end] = this.selected;
+            this.rangeChange.emit({ start, end });
+        } else {
             this.rangeChange.emit(null);
-            return;
         }
-        const [start, end] = v;
-        this.rangeChange.emit({ start, end });
     }
 
     onApply() {
@@ -61,4 +62,16 @@ export class DateCalendarPanelComponent implements OnChanges {
     onCancel() {
         this.cancel.emit();
     }
+}
+
+function toDateOrNull(value: unknown): Date | null {
+    if (value instanceof Date) return isNaN(value.getTime()) ? null : new Date(value);
+    if (typeof value === 'string' || typeof value === 'number') {
+        const d = new Date(value);
+        return isNaN(d.getTime()) ? null : d;
+    }
+    return null;
+}
+function isRealDate(d: unknown): d is Date {
+    return d instanceof Date && !isNaN(d.getTime());
 }

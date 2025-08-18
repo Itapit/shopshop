@@ -1,7 +1,61 @@
-.analytics-header {
+.analytics-page {
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+}
+
+.global-filter-bar.bottom-fixed {
+    --bar-height: 84px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    height: var(--bar-height);
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+    padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    background: var(--surface-0, #fff);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+:host ::ng-deep app-date-range .date-range {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: min(100%, 880px);
+}
+
+:host ::ng-deep app-date-range .header {
+    order: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+:host ::ng-deep app-date-range .chip,
+:host ::ng-deep app-date-range .muted {
+    display: block;
+    text-align: center;
+}
+
+:host ::ng-deep app-date-range app-date-preset-buttons {
+    order: 2;
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+}
+
+:host ::ng-deep app-date-range app-date-calendar-panel .panel {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    bottom: calc(var(--bar-height) + env(safe-area-inset-bottom, 0px));
+    z-index: 2000;
+    max-height: min(70vh, 720px);
+    overflow: auto;
+    background: var(--surface-0, #fff);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    padding: 0.75rem;
 }
