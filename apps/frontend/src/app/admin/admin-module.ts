@@ -10,10 +10,9 @@ import { AnalyticsModule } from '../analytics/analytics-module';
 import { AdminRoutingModule } from './admin-routing-module';
 import { AdminComponent } from './admin.component';
 import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
-import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 
 @NgModule({
-    declarations: [AdminComponent, EditProductDialogComponent, OrdersStatsComponent],
+    declarations: [AdminComponent, EditProductDialogComponent],
     imports: [
         CommonModule,
         AdminRoutingModule,
