@@ -21,23 +21,37 @@ export class SalesAnalyticsRepository {
     ): Promise<MonthlyQuantityDto[]> {
         const pipeline: PipelineStage[] = [
             { $match: { createdAt: { $gte: startUtc, $lt: endUtc } } },
-            { $unwind: { path: '$items' } },
+            { $unwind: '$items' },
+
             {
                 $project: {
-                    productId: { $ifNull: ['$items.product_id', '$items._id'] },
+                    productIdRaw: {
+                        $ifNull: [
+                            '$items.productID',
+                            { $ifNull: ['$items.productId', { $ifNull: ['$items.product_id', '$items._id'] }] },
+                        ],
+                    },
                     quantity: '$items.quantity',
-                    month: {
-                        $dateToString: {
-                            format: '%Y-%m',
-                            date: '$createdAt',
-                            timezone,
-                        },
+                    month: { $dateToString: { format: '%Y-%m', date: '$createdAt', timezone } },
+                },
+            },
+
+            {
+                $addFields: {
+                    productKey: {
+                        $cond: [
+                            { $eq: [{ $type: '$productIdRaw' }, 'objectId'] },
+                            { $toString: '$productIdRaw' },
+                            '$productIdRaw',
+                        ],
                     },
                 },
             },
+            { $match: { productKey: { $ne: null } } },
+
             {
                 $group: {
-                    _id: { month: '$month', productId: '$productId' },
+                    _id: { month: '$month', productId: '$productKey' },
                     quantity: { $sum: '$quantity' },
                 },
             },
@@ -45,14 +59,13 @@ export class SalesAnalyticsRepository {
                 $project: {
                     _id: 0,
                     month: '$_id.month',
-                    productId: { $toString: '$_id.productId' },
+                    productId: '$_id.productId',
                     quantity: 1,
                 },
             },
             { $match: { month: { $in: months } } },
             { $sort: { month: 1, productId: 1 } },
         ];
-
         let rows = await this.OrderModel.aggregate<{ month: string; productId: string; quantity: number }>(pipeline)
             .allowDiskUse(true)
             .exec();
@@ -63,39 +76,50 @@ export class SalesAnalyticsRepository {
         startUtc: Date,
         endUtc: Date,
         months: string[],
-        timezone: string = 'Asia/Jerusalem'
+        timezone = 'Asia/Jerusalem'
     ): Promise<MonthlyProfitDto[]> {
         const productsColl = this.ProductModel.collection.name;
 
         const pipeline: PipelineStage[] = [
             { $match: { createdAt: { $gte: startUtc, $lt: endUtc } } },
-            { $unwind: { path: '$items' } },
+            { $unwind: '$items' },
 
-            // 1) Project a raw id (could be string or ObjectId) + qty + month label
             {
                 $project: {
-                    productIdRaw: { $ifNull: ['$items.product_id', '$items._id'] },
-                    quantity: '$items.quantity',
-                    month: {
-                        $dateToString: { format: '%Y-%m', date: '$createdAt', timezone },
+                    productIdRaw: {
+                        $ifNull: [
+                            '$items.productID',
+                            { $ifNull: ['$items.productId', { $ifNull: ['$items.product_id', '$items._id'] }] },
+                        ],
                     },
+                    quantity: '$items.quantity',
+                    month: { $dateToString: { format: '%Y-%m', date: '$createdAt', timezone } },
                 },
             },
 
-            // 2) Normalize to ObjectId for lookup (if it's a string, cast it)
             {
                 $addFields: {
                     productIdObj: {
-                        $cond: [
-                            { $eq: [{ $type: '$productIdRaw' }, 'string'] },
-                            { $toObjectId: '$productIdRaw' },
-                            '$productIdRaw',
-                        ],
+                        $switch: {
+                            branches: [
+                                { case: { $eq: [{ $type: '$productIdRaw' }, 'objectId'] }, then: '$productIdRaw' },
+                                {
+                                    case: {
+                                        $and: [
+                                            { $eq: [{ $type: '$productIdRaw' }, 'string'] },
+                                            { $regexMatch: { input: '$productIdRaw', regex: /^[0-9a-fA-F]{24}$/ } },
+                                        ],
+                                    },
+                                    then: { $toObjectId: '$productIdRaw' },
+                                },
+                            ],
+                            default: null,
+                        },
                     },
                 },
             },
+            { $match: { productIdObj: { $ne: null } } },
 
-            // 3) Lookup product by _id (now an ObjectId)
             {
                 $lookup: {
                     from: productsColl,
@@ -106,15 +130,19 @@ export class SalesAnalyticsRepository {
             },
             { $unwind: { path: '$prod', preserveNullAndEmptyArrays: true } },
 
-            // 4) Compute line profit
             {
                 $addFields: {
-                    unitPrice: { $ifNull: ['$prod.price', 0] },
-                    lineProfit: { $multiply: ['$quantity', { $ifNull: ['$prod.price', 0] }] },
+                    unitPrice: {
+                        $cond: [
+                            { $in: [{ $type: '$prod.price' }, ['double', 'int', 'long', 'decimal']] },
+                            '$prod.price',
+                            { $toDouble: { $ifNull: ['$prod.price', 0] } },
+                        ],
+                    },
                 },
             },
+            { $addFields: { lineProfit: { $multiply: ['$quantity', '$unitPrice'] } } },
 
-            // 5) Group by (month, product)
             {
                 $group: {
                     _id: { month: '$month', productId: '$productIdObj' },
@@ -122,7 +150,7 @@ export class SalesAnalyticsRepository {
                 },
             },
 
-            // 6) Final shape (productId as string)
+        
             {
                 $project: {
                     _id: 0,
