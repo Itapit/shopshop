@@ -48,10 +48,19 @@ export class SalesAnalyticsService {
     
     const totalsPerMonth = months.map(
       m => rows.filter(r => r.month === m).reduce((sum, r) => sum + r.quantity, 0)
-    );
+    ); 
+
+    const response = new TopProductsQuantityResponseDto();
+    response.months = months;
+    response.rows = rows.map(row => ({
+      month: row.month,
+      productId: row.productId,
+      quantity: row.quantity,
+    }));
+    response.totalsPerMonth = totalsPerMonth;
 
     
-    return { months, rows, totalsPerMonth };
+    return response;
   }
 
   

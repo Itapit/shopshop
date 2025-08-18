@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, PipelineStage } from 'mongoose';
 import { OrderDocument } from '../../orders/repository/orders.schema';
+import { mapMonthlyQuantity } from '../mappers/monthly-quantity.mapper';
 @Injectable()
 export class SalesAnalyticsRepository {
     constructor(@InjectModel('Order') private readonly OrderModel: Model<OrderDocument>) {}
@@ -46,8 +47,9 @@ export class SalesAnalyticsRepository {
             { $sort: { month: 1, productId: 1 } },
         ];
 
-        return this.OrderModel.aggregate<{ month: string; productId: string; quantity: number }>(pipeline)
+        let rows =  await this.OrderModel.aggregate<{ month: string; productId: string; quantity: number }>(pipeline)
             .allowDiskUse(true)
-            .exec();
+            .exec(); 
+        return mapMonthlyQuantity(rows);
     }
 }
