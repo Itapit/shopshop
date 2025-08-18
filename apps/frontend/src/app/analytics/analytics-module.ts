@@ -4,6 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { AnalyticsComponent } from './analytics.component';
 import { DateRangeFilterModule } from './date-range-filter/date-range.module';
+import { AnalyticsDateRangeEffects } from './store/analytics.effects';
 import { analyticsReducer } from './store/analytics.reducer';
 import { analyticsFeatureKey } from './store/analytics.state';
 
@@ -12,7 +13,7 @@ import { analyticsFeatureKey } from './store/analytics.state';
     imports: [
         CommonModule,
         StoreModule.forFeature(analyticsFeatureKey, analyticsReducer),
-        EffectsModule.forFeature(AnimationEffect),
+        EffectsModule.forFeature(AnalyticsDateRangeEffects),
         DateRangeFilterModule,
     ],
     exports: [AnalyticsComponent],
