@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { ChipModule } from 'primeng/chip';
@@ -30,6 +31,7 @@ import { PresetLabelPipe } from './pipes/preset-label.pipe';
         CalendarModule,
         OverlayPanelModule,
         ChipModule,
+        FormsModule,
     ],
     exports: [DateRangeComponent],
 })

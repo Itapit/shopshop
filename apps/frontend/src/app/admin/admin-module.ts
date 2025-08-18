@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { AnalyticsModule } from '../analytics/analytics-module';
 import { AdminRoutingModule } from './admin-routing-module';
 import { AdminComponent } from './admin.component';
 import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
@@ -21,6 +22,7 @@ import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
         InputNumberModule,
         InputTextModule,
         ButtonModule,
+        AnalyticsModule,
     ],
     exports: [EditProductDialogComponent],
 })
