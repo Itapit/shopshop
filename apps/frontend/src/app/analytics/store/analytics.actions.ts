@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { DatePresetKey, DateRange } from '../date-range/date-range.model';
+import { DatePresetKey, DateRange } from '../date-range-filter/date-range.model';
 
 export const setGlobalByPreset = createAction('[Analytics] Set Global By Preset', props<{ preset: DatePresetKey }>());
 

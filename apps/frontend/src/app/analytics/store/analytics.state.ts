@@ -1,5 +1,5 @@
 import { computeRangeForPreset } from '../analytics.helpers';
-import { DatePresetKey, DateRange } from '../date-range/date-range.model';
+import { DatePresetKey, DateRange } from '../date-range-filter/date-range.model';
 
 export const analyticsFeatureKey = 'analytics';
 

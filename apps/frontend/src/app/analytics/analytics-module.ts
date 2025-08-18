@@ -1,12 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { AnalyticsComponent } from './analytics.component';
-import { DateRangeComponent } from './date-range/date-range.component';
-import { SalesOverTimeComponent } from './sales-over-time/sales-over-time.component';
+import { DateRangeFilterModule } from './date-range-filter/date-range.module';
+import { analyticsReducer } from './store/analytics.reducer';
+import { analyticsFeatureKey } from './store/analytics.state';
 
 @NgModule({
-    declarations: [AnalyticsComponent, SalesOverTimeComponent, DateRangeComponent],
-    imports: [CommonModule],
+    declarations: [AnalyticsComponent],
+    imports: [
+        CommonModule,
+        StoreModule.forFeature(analyticsFeatureKey, analyticsReducer),
+        EffectsModule.forFeature(AnimationEffect),
+        DateRangeFilterModule,
+    ],
     exports: [AnalyticsComponent],
 })
 export class AnalyticsModule {}

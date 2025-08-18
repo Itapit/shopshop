@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { DatePresetKey, DateRange } from '../date-range/date-range.model';
+import { DatePresetKey, DateRange } from '../date-range-filter/date-range.model';
 import * as analyticsActions from './analytics.actions';
 import { selectGlobalDateRange, selectGlobalLabel, selectGlobalPreset } from './analytics.selectors';
 
