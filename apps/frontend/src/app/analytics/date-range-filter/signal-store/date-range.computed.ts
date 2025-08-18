@@ -1,6 +1,7 @@
 import { computed } from '@angular/core';
 import { withComputed } from '@ngrx/signals';
-import { DatePresetKey, DateRange } from '../date-range.model';
+import { DatePresetKey } from '../enums';
+import { DateRange } from '../interfaces';
 
 export function withDateRangeLocalComputed() {
     return withComputed(({ enabled, localRange, globalSnapshot, localPreset }) => ({

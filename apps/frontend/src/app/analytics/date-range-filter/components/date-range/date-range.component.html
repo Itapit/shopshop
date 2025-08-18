@@ -11,7 +11,7 @@
             <ng-container *ngIf="local.enabled(); else usingGlobal">
                 <!-- Local override label -->
                 <ng-container *ngIf="local.effectiveRange() as r; else noRange">
-                    {{ r | dateRangeLabel: local.effectivePreset() ?? globalPreset() ?? 'CUSTOM' }}
+                    {{ r | dateRangeLabel: local.effectivePreset() ?? globalPreset() ?? DatePresetKey.CUSTOM }}
                 </ng-container>
             </ng-container>
         </ng-template>

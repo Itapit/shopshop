@@ -1,6 +1,6 @@
 import { effect } from '@angular/core';
 import { patchState, withHooks } from '@ngrx/signals';
-import { DatePresetKey } from '../date-range.model';
+import { DatePresetKey } from '../enums';
 import { cloneRange } from './date-range.state';
 
 export function withDateRangeLocalHooks() {

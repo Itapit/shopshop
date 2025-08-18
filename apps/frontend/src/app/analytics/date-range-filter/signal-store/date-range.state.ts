@@ -1,4 +1,5 @@
-import { DatePresetKey, DateRange } from '../date-range.model';
+import { DatePresetKey } from '../enums';
+import { DateRange } from '../interfaces';
 
 export type LocalDateRangeState = {
     // global range

@@ -16,6 +16,7 @@ import { DateRangeLocalSignalStore } from '../../signal-store';
 })
 export class DateRangeComponent implements OnInit, OnDestroy {
     @Input() mode: DateRangeOptions = DateRangeOptions.Global;
+    DatePresetKey = DatePresetKey;
 
     private facade = inject(DateRangeFacade);
     public local = inject(DateRangeLocalSignalStore);
