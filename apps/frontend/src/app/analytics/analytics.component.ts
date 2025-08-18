@@ -9,4 +9,10 @@ import { DateRangeOptions } from './date-range-filter';
 })
 export class AnalyticsComponent {
     DateRangeOptions = DateRangeOptions; // expose the enum to html
+
+    celebrate = true;
+
+    triggerFireworks() {
+        this.celebrate = !this.celebrate;
+    }
 }
