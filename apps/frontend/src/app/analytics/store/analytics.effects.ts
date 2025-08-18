@@ -1,4 +1,3 @@
-// state/date-range/date-range.effects.ts
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { filter, map } from 'rxjs/operators';

@@ -1,5 +1,5 @@
+import { DateRange } from '@common/Interfaces';
 import { DatePresetKey } from '../date-range-filter/enums';
-import { DateRange } from '../date-range-filter/interfaces';
 
 export const analyticsFeatureKey = 'analytics';
 

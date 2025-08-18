@@ -4,6 +4,6 @@
         "outDir": "../../dist/out-tsc",
         "types": []
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "../../common/src/lib/Interfaces/analytics/base/date-range.interface.ts"],
     "exclude": ["jest.config.ts", "src/test-setup.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }

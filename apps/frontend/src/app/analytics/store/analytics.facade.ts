@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
+import { DateRange } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
 import { DatePresetKey } from '../date-range-filter/enums';
-import { DateRange } from '../date-range-filter/interfaces';
 import * as analyticsActions from './analytics.actions';
 import { selectGlobalDateRange, selectGlobalPreset } from './analytics.selectors';
 

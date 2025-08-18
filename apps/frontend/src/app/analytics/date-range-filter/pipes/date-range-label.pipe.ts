@@ -1,6 +1,6 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
+import { DateRange } from '@common/Interfaces';
 import { DatePresetKey } from '../enums';
-import { DateRange } from '../interfaces';
 import { DATE_PRESET_LABELS } from '../services/date-preset-labels.token';
 
 export interface DateRangeLabelOptions {

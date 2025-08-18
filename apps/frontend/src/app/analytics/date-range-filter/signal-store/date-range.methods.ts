@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
+import { DateRange } from '@common/Interfaces';
 import { patchState, withMethods } from '@ngrx/signals';
 import { DatePresetKey } from '../enums';
-import { DateRange } from '../interfaces';
 import { DateRangeMathService } from '../services/date-range-math.service';
 import { cloneRange } from './date-range.state';
 

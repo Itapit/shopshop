@@ -7,7 +7,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
-import { DateRange } from '../../interfaces';
+import { DateRange } from '@common/Interfaces';
 
 @Component({
     selector: 'app-date-calendar-panel',

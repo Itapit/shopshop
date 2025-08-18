@@ -1,6 +1,6 @@
+import { DateRange } from '@common/Interfaces';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DatePresetKey } from '../date-range-filter/enums';
-import { DateRange } from '../date-range-filter/interfaces';
 import { analyticsFeatureKey, AnalyticsState } from './analytics.state';
 
 export const selectAnalyticsState = createFeatureSelector<AnalyticsState>(analyticsFeatureKey);
