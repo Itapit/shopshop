@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DateRangeOptions } from './date-range-filter';
 
 @Component({
     selector: 'app-analytics',
@@ -6,4 +7,12 @@ import { Component } from '@angular/core';
     templateUrl: './analytics.component.html',
     styleUrl: './analytics.component.css',
 })
-export class AnalyticsComponent {}
+export class AnalyticsComponent {
+    DateRangeOptions = DateRangeOptions; // expose the enum to html
+
+    celebrate = true;
+
+    triggerFireworks() {
+        this.celebrate = !this.celebrate;
+    }
+}

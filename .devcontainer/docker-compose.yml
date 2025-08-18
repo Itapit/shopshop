@@ -8,6 +8,7 @@ x-common-env: &common-env
     npm_config_cache: /home/node/.npm
     NX_TASKS_RUNNER_DYNAMIC_OUTPUT: 'false'
     CI: 'true'
+    NX_DAEMON: 'false'
 
 x-common-volumes: &common-volumes
     - ../:/workspace
