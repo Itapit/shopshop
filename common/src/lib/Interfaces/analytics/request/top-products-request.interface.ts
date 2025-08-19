@@ -4,5 +4,5 @@ export interface TopProductsQuantityRequest {
     metric: SalesMetric;
     from: string;
     to: string;
-    k?: string
+    k?: number;
 }

@@ -26,6 +26,7 @@ export class SalesAnalyticsService {
         const fromYYYYMM = checker.from;
         const toYYYYMM = checker.to;
         const timezone = this.defaultTz;
+        const k = checker.k ?? 5;
 
         const months = this.buildMonthList(fromYYYYMM, toYYYYMM);
         if (months.length === 0) {
@@ -40,7 +41,10 @@ export class SalesAnalyticsService {
                 startUtc,
                 endUtc,
                 months,
-                timezone
+                timezone,
+                k
+                
+
             );
             const totalsPerMonth = months.map((m) =>
                 rows.filter((r) => r.month === m).reduce((sum, r) => sum + r.quantity, 0)
@@ -59,7 +63,8 @@ export class SalesAnalyticsService {
                 startUtc,
                 endUtc,
                 months,
-                timezone
+                timezone,
+                k
             );
 
             const totalsPerMonth = months.map((m) =>
