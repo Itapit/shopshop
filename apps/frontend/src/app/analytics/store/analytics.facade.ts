@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
 import { DatePresetKey } from '../date-range-filter/enums';
@@ -20,7 +20,7 @@ export class DateRangeFacade {
         this.store.dispatch(analyticsActions.setGlobalByPreset({ preset }));
     }
 
-    setCustom(range: DateRange) {
+    setCustom(range: DateRangeObj) {
         this.store.dispatch(analyticsActions.setGlobalByCustomRange({ range }));
     }
 }

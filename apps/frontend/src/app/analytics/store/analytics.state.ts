@@ -1,10 +1,10 @@
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { DatePresetKey } from '../date-range-filter/enums';
 
 export const analyticsFeatureKey = 'analytics';
 
 export interface AnalyticsState {
-    globalDate: DateRange | null;
+    globalDate: DateRangeObj | null;
     presetDate: DatePresetKey | null;
 }
 

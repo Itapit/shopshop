@@ -1,12 +1,12 @@
 import { computed } from '@angular/core';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { withComputed } from '@ngrx/signals';
 import { DatePresetKey } from '../enums';
 
 export function withDateRangeLocalComputed() {
     return withComputed(({ enabled, localRange, globalSnapshot, localPreset }) => ({
         /** Use local when enabled & present, otherwise fall back to global snapshot */
-        effectiveRange: computed<DateRange | null>(() => {
+        effectiveRange: computed<DateRangeObj | null>(() => {
             const useLocal = enabled() && !!localRange();
             return useLocal ? localRange() : globalSnapshot();
         }),

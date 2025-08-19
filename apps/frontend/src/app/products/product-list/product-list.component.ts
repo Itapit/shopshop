@@ -3,7 +3,7 @@ import { ProductFull } from '@common/Interfaces';
 import { PaginatorState } from 'primeng/paginator';
 import { Observable } from 'rxjs';
 import { UiStateService } from '../../shared/ui-state.service';
-import { productListOptionsEnum } from './product-list-options-enum';
+import { productListOptionsEnum } from './product-list-options.enum';
 @Component({
     selector: 'app-product-list',
     standalone: false,
