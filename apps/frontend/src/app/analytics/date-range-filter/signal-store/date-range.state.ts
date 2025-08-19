@@ -11,7 +11,7 @@ export type LocalDateRangeState = {
     localPreset: DatePresetKey | null;
     seededFromGlobal: boolean;
 
-    // UI state for calander
+    // UI state for calendar
     calendarOpen: boolean;
     workingRange: DateRangeObj | null;
 };
