@@ -1,3 +1,3 @@
-export * from './Create-Product-request.dto';
-export * from './Get-Products-List-request.dto';
-export * from './Update-Product-request.dto';
+export * from './create-product-request.dto';
+export * from './get-products-list-request.dto';
+export * from './update-product-request.dto';

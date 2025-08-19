@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { map, Observable, tap } from 'rxjs';
 import { selectRole } from '../auth/store/auth.selectors';
 import { AuthState } from '../auth/store/auth.state';
-import { productListOptionsEnum } from './product-list/product-list-options-enum';
+import { productListOptionsEnum } from './product-list/product-list-options.enum';
 import { ProductsHttpService } from './services/products-http.service';
 
 @Component({
