@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { DateRangeFacade } from '../../../store/analytics.facade';
 import { DatePresetKey, DateRangeOptions } from '../../enums';
 import { DateRangeLocalSignalStore } from '../../signal-store';
@@ -65,11 +65,11 @@ export class DateRangeComponent implements OnInit, OnDestroy {
         this.local.openCalendar(this.local.effectiveRange());
     }
 
-    onCalendarRangeChange(r: DateRange | null) {
+    onCalendarRangeChange(r: DateRangeObj | null) {
         this.local.stageWorkingRange(r);
     }
 
-    onCalendarApply(r: DateRange) {
+    onCalendarApply(r: DateRangeObj) {
         if (!this.isLocal()) {
             this.facade.setCustom(r);
         } else {

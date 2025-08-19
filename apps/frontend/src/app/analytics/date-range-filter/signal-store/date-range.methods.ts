@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { patchState, withMethods } from '@ngrx/signals';
 import { DatePresetKey } from '../enums';
 import { DateRangeMathService } from '../services/date-range-math.service';
@@ -11,7 +11,7 @@ export function withDateRangeLocalMethods() {
 
         return {
             /** Keep this in sync with the global NgRx selector from the container */
-            updateGlobalSnapshot(global: DateRange | null) {
+            updateGlobalSnapshot(global: DateRangeObj | null) {
                 patchState(store, { globalSnapshot: cloneRange(global) });
             },
 
@@ -31,7 +31,7 @@ export function withDateRangeLocalMethods() {
             },
 
             /** Set a local custom range directly (e.g., calendar Apply) */
-            setLocalRange(range: DateRange) {
+            setLocalRange(range: DateRangeObj) {
                 patchState(store, {
                     localRange: math.clampRange(range),
                     localPreset: DatePresetKey.CUSTOM,
@@ -47,7 +47,7 @@ export function withDateRangeLocalMethods() {
             },
 
             /** Open the calendar and seed the working range */
-            openCalendar(initial?: DateRange | null) {
+            openCalendar(initial?: DateRangeObj | null) {
                 const seed = cloneRange(initial ?? effectiveRange());
                 patchState(store, { workingRange: seed, calendarOpen: true });
             },
@@ -57,12 +57,12 @@ export function withDateRangeLocalMethods() {
             },
 
             /** Stage range as the user picks in the calendar (not applied yet) */
-            stageWorkingRange(range: DateRange | null) {
+            stageWorkingRange(range: DateRangeObj | null) {
                 patchState(store, { workingRange: range ? math.clampRange(range) : null });
             },
 
             /** Apply staged working range as CUSTOM and close the calendar */
-            applyWorkingAsCustom(): DateRange | null {
+            applyWorkingAsCustom(): DateRangeObj | null {
                 const w = workingRange();
                 if (!w) return null;
                 const clean = math.clampRange(w);

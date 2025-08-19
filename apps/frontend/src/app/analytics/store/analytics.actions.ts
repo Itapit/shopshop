@@ -1,4 +1,4 @@
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { createAction, props } from '@ngrx/store';
 import { DatePresetKey } from '../date-range-filter/enums';
 
@@ -6,12 +6,12 @@ export const setGlobalByPreset = createAction('[Analytics] Set Global By Preset'
 
 export const setGlobalByCustomRange = createAction(
     '[Analytics] Set Global By Custom Range',
-    props<{ range: DateRange }>()
+    props<{ range: DateRangeObj }>()
 );
 
 export const applyGlobalRange = createAction(
     '[Analytics] Apply Global Range',
-    props<{ range: DateRange; preset: DatePresetKey }>()
+    props<{ range: DateRangeObj; preset: DatePresetKey }>()
 );
 
 export const clearGlobalDateRange = createAction('[Analytics] Clear Global');

@@ -1,7 +1,7 @@
 import { CandleInterval } from '../../../Enums/candle-interval.enum';
-import { DateRange } from '../base';
+import { DateRangeStr } from '../date';
 
-export interface StatsRequest {
-    dateRange: DateRange;
+export interface SalesStatsRequest {
+    dateRange: DateRangeStr;
     candleInterval: CandleInterval;
 }

@@ -1,19 +1,19 @@
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { DatePresetKey } from '../enums';
 
 export type LocalDateRangeState = {
     // global range
-    globalSnapshot: DateRange | null;
+    globalSnapshot: DateRangeObj | null;
 
     // local range
     enabled: boolean;
-    localRange: DateRange | null;
+    localRange: DateRangeObj | null;
     localPreset: DatePresetKey | null;
     seededFromGlobal: boolean;
 
     // UI state for calander
     calendarOpen: boolean;
-    workingRange: DateRange | null;
+    workingRange: DateRangeObj | null;
 };
 
 export const initialLocalDateRangeState: LocalDateRangeState = {
@@ -28,6 +28,6 @@ export const initialLocalDateRangeState: LocalDateRangeState = {
     workingRange: null,
 };
 
-export function cloneRange(r: DateRange | null): DateRange | null {
+export function cloneRange(r: DateRangeObj | null): DateRangeObj | null {
     return r ? { start: new Date(r.start), end: new Date(r.end) } : null;
 }
