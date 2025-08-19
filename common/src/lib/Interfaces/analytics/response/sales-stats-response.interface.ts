@@ -5,6 +5,7 @@ import { DateRangeStr } from '../date';
 export interface SalesStatsResponse {
     dateRange: DateRangeStr;
     candleInterval: CandleInterval;
-    candles: SalesCandle[];
+    timezone: string; //Asia/Jerusalem for now, adding for future support
+    candles: ReadonlyArray<SalesCandle>;
     summery: SalesSummery;
 }
