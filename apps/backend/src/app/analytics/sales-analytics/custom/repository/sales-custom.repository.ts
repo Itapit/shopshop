@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, PipelineStage } from 'mongoose';
-import { OrderDocument } from '../../orders/repository/orders.schema';
-import { ProductDocument } from '../../products/repository/product.schema';
+import { OrderDocument } from '../../../../orders/repository/orders.schema';
+import { ProductDocument } from '../../../../products/repository/product.schema';
 import { MonthlyProfitDto, MonthlyQuantityDto } from '../DTOs/base';
 import { mapMonthlyProfit } from '../mappers/monthly-profit.mapper';
 import { mapMonthlyQuantity } from '../mappers/monthly-quantity.mapper';
+
 @Injectable()
 export class SalesAnalyticsRepository {
     constructor(
@@ -150,7 +151,6 @@ export class SalesAnalyticsRepository {
                 },
             },
 
-        
             {
                 $project: {
                     _id: 0,

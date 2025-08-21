@@ -5,10 +5,10 @@ import { validate } from 'class-validator';
 import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-request.dto';
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
-import { SalesAnalyticsRepository } from './repository/sales-analytics.repository';
+import { SalesAnalyticsRepository } from './repository/sales-custom.repository';
 
 @Injectable()
-export class SalesAnalyticsService {
+export class SalesCustomService {
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 
