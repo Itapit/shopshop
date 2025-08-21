@@ -11,6 +11,7 @@ import { SalesCustomService } from './sales-custom.service';
 @Controller('analytics')
 export class SalesCustomController {
     constructor(private readonly salesCustomService: SalesCustomService) {}
+
     @UseGuards(AuthGuard, RolesGuard)
     @Roles(Role.Admin)
     @Get('top-products-quantity')

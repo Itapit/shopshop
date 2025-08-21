@@ -9,6 +9,8 @@ import { SalesAnalyticsRepository } from './repository/sales-custom.repository';
 
 @Injectable()
 export class SalesCustomService {
+    //TODO add an enum or smth for the quantity/profit
+    //TODO split the big function a bit into smaller pure functions helpers
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 

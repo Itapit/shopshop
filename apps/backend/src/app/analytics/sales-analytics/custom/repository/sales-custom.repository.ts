@@ -9,6 +9,8 @@ import { mapMonthlyQuantity } from '../mappers/monthly-quantity.mapper';
 
 @Injectable()
 export class SalesAnalyticsRepository {
+    // TODO: split the pipes into separates file within a pipes folder
+    // TODO: move the timezone so it wont be hardcoded , can have a it as default
     constructor(
         @InjectModel('Order') private readonly OrderModel: Model<OrderDocument>,
         @InjectModel('Product') private readonly ProductModel: Model<ProductDocument>
