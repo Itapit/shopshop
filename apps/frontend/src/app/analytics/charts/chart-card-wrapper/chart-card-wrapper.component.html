@@ -1,0 +1,10 @@
+<app-chart-card
+  [title]="title"
+  [data]="(data$ | async) || { labels: [], datasets: [] }"
+  [options]="options"
+  [loading]="(loading$ | async) ?? false"
+  [error]="(error$ | async) ?? null">
+
+ 
+  <ng-content select="[card-actions]"></ng-content>
+</app-chart-card>
