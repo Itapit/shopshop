@@ -7,12 +7,12 @@ import { SalesGeneralService } from './sales-general.service';
 
 @Controller('analytics')
 export class SalesGeneralController {
-    constructor(private readonly svc: SalesGeneralService) {}
+    constructor(private readonly salesGeneralService: SalesGeneralService) {}
 
     @UseGuards(AuthGuard, RolesGuard)
     @Roles(Role.Admin)
     @Get('general-metrics')
     async getGeneralMetrics(@Query() req: SalesStatsRequestDto): Promise<SalesStatsResponse> {
-        return this.svc.getSalesGeneralMetrics(req);
+        return this.salesGeneralService.getSalesGeneralMetrics(req);
     }
 }

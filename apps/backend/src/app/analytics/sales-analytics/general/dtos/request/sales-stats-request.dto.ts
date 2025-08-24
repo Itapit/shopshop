@@ -1,12 +1,13 @@
 import { CandleInterval } from '@common/Enums';
-import { DateRangeStr, SalesStatsRequest } from '@common/Interfaces';
+import { SalesStatsRequest } from '@common/Interfaces';
 import { Type } from 'class-transformer';
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { DateRangeStrDto } from '../base';
 
 export class SalesStatsRequestDto implements SalesStatsRequest {
+    @ValidateNested()
     @Type(() => DateRangeStrDto)
-    dateRange: DateRangeStr;
+    dateRange: DateRangeStrDto;
 
     @IsEnum(CandleInterval)
     candleInterval: CandleInterval;

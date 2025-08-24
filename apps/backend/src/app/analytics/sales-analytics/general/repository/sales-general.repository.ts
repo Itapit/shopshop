@@ -10,11 +10,18 @@ import { OrderDocument } from 'apps/backend/src/app/orders/repository/orders.sch
 import { salesCandlesPipe, salesSummaryPipe } from './pipes';
 
 @Injectable()
-export class SalesAnalyticsRepository {
-    constructor(@InjectModel('orders') private readonly orders: Model<OrderDocument>) {}
+export class SalesGeneralAnalyticsRepository {
+    constructor(@InjectModel('Order') private readonly orders: Model<OrderDocument>) {}
 
-    async getSalesStats(req: SalesStatsRequestDto): Promise<SalesStatsCore> {
+    async getSalesGeneralMetrics(req: SalesStatsRequestDto): Promise<SalesStatsCore> {
+        console.log('cccc');
         const { dateRange, candleInterval, timezone } = req;
+        console.log('bbbb');
+        console.log(req);
+        console.log('ddd');
+        console.log(dateRange);
+        console.log(candleInterval);
+        console.log(timezone);
 
         // Parse incoming strings to Date objects
         const { start, end } = toDateObj(dateRange);

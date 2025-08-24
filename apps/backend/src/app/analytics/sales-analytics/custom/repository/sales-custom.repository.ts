@@ -8,7 +8,7 @@ import { mapMonthlyProfit } from '../mappers/monthly-profit.mapper';
 import { mapMonthlyQuantity } from '../mappers/monthly-quantity.mapper';
 
 @Injectable()
-export class SalesAnalyticsRepository {
+export class SalesCustomAnalyticsRepository {
     // TODO: split the pipes into separates file within a pipes folder
     // TODO: move the timezone so it wont be hardcoded , can have a it as default
     constructor(

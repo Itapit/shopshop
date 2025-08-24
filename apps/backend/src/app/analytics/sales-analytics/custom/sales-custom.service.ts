@@ -5,7 +5,7 @@ import { validate } from 'class-validator';
 import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-request.dto';
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
-import { SalesAnalyticsRepository } from './repository/sales-custom.repository';
+import { SalesCustomAnalyticsRepository } from './repository/sales-custom.repository';
 
 @Injectable()
 export class SalesCustomService {
@@ -14,7 +14,7 @@ export class SalesCustomService {
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 
-    constructor(private readonly salesAnalyticsRepository: SalesAnalyticsRepository) {}
+    constructor(private readonly salesAnalyticsRepository: SalesCustomAnalyticsRepository) {}
 
     async fetchMonthlyProductQuantity(
         dto: TopProductsQuantityRequest
