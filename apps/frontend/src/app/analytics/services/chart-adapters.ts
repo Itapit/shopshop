@@ -1,44 +1,66 @@
-import { TopProductsQuantityResponse } from '@common/Interfaces';
+import {
+  TopProductsQuantityResponse,
+  TopProductsProfitResponse,
+} from '@common/Interfaces';
 import { ChartData } from 'chart.js';
 
-export function topProductsQtyToChartData(
-  resp: TopProductsQuantityResponse,
+type MetricKey = 'quantity' | 'profit';
+type TopProductsResponse = TopProductsQuantityResponse | TopProductsProfitResponse;
+
+function isQtyRow(r: any): r is { month: string; productId: string; quantity: number } {
+  return r && typeof r === 'object' && 'quantity' in r;
+}
+
+/**
+ * Build Chart.js datasets for Top-K products over months.
+ * Works for both quantity and profit responses.
+ */
+export function topProductsToChartData(
+  resp: TopProductsResponse,
   opts?: {
-    /** optional: map productId -> display name */
+    /** map productId -> display name */
     productLabels?: Record<string, string>;
-    /** include the totalsPerMonth as an extra dataset (e.g., a line) */
+    /** include totalsPerMonth as an extra dataset */
     includeTotals?: boolean;
-    /** optional: explicit product order (array of productIds) */
+    /** force a specific metric; otherwise inferred from rows */
+    metric?: MetricKey;
+    /** explicit dataset order (productIds) */
     order?: string[];
   }
 ): ChartData<'bar'> {
-  const { months, rows, totalsPerMonth } = resp;
+  const { months, rows, totalsPerMonth } = resp as any;
 
-  // index months for O(1) placement
-  const monthIndex = new Map<string, number>(months.map((m, i) => [m, i]));
+  // Infer metric if not provided
+  const metric: MetricKey =
+    opts?.metric ??
+    (rows?.length && isQtyRow(rows[0]) ? 'quantity' : 'profit');
 
-  // collect product ids
+  // Fast index for months
+  const monthIndex = new Map<string, number>(months.map((m: string, i: number) => [m, i]));
+
+  // Collect product ids
   const productIds = new Set<string>();
   for (const r of rows) productIds.add(r.productId);
 
-  // prefill matrix with zeros
+  // Prefill matrix with zeros
   const dataByProduct: Record<string, number[]> = {};
   for (const pid of productIds) dataByProduct[pid] = Array(months.length).fill(0);
 
-  // fill quantities into the right (product, month) cell
+  // Fill values into the (product, month) cells
   for (const r of rows) {
     const mi = monthIndex.get(r.month);
-    if (mi != null) dataByProduct[r.productId][mi] = r.quantity ?? 0;
+    if (mi == null) continue;
+    const value = metric === 'quantity' ? (r.quantity ?? 0) : (r.profit ?? 0);
+    dataByProduct[r.productId][mi] = value;
   }
 
-  // decide dataset order
+  // Decide order of datasets
   let orderedProductIds: string[];
   if (opts?.order?.length) {
-    // keep only products that exist in the response
     const present = new Set(productIds);
     orderedProductIds = opts.order.filter((id) => present.has(id));
   } else {
-    // default: sort by total quantity desc
+    // Default: sort by total (desc)
     orderedProductIds = Array.from(productIds).sort((a, b) => {
       const ta = dataByProduct[a].reduce((s, v) => s + v, 0);
       const tb = dataByProduct[b].reduce((s, v) => s + v, 0);
@@ -51,11 +73,11 @@ export function topProductsQtyToChartData(
     data: dataByProduct[pid],
   }));
 
-  if (opts?.includeTotals && totalsPerMonth?.length === months.length) {
+  // Optional totals overlay
+  if (opts?.includeTotals && Array.isArray(totalsPerMonth) && totalsPerMonth.length === months.length) {
     datasets.push({
       label: 'Total',
       data: totalsPerMonth,
-      // (styling can be set in ChartOptions if you want a line overlay, etc.)
     });
   }
 

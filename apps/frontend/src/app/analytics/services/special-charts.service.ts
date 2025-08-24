@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TopProductsQuantityResponse, TopProductsRequest } from '@common/Interfaces';
+import { TopProductsProfitResponse, TopProductsQuantityResponse, TopProductsRequest } from '@common/Interfaces';
 import { environment } from 'apps/frontend/src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class SpecialApi {
   constructor(private http: HttpClient) {}
    private readonly baseUrl = `${environment.BACKEND_BASE_URL}/analytics`;
 
-  getTopProductsQuantity(params: TopProductsRequest): Observable<TopProductsQuantityResponse> {
+  getTopProductsQuantity(params: TopProductsRequest ): Observable<TopProductsQuantityResponse | TopProductsProfitResponse> {
     const qp = new HttpParams()
       .set('from', params.from)
       .set('to', params.to)
@@ -31,6 +31,7 @@ export class SpecialApi {
       .set('metric', params.metric);
 
     
-    return this.http.get<TopProductsQuantityResponse>(`${this.baseUrl}/top-products`, { params: qp });
-  }
+    return this.http.get<TopProductsQuantityResponse | TopProductsProfitResponse>(`${this.baseUrl}/top-products`, { params: qp });
+  } 
+  
 }

@@ -3,7 +3,7 @@ import { DateRangeOptions } from './date-range-filter';
 import { SpecialApi } from './services/special-charts.service';
 import { SalesMetric } from '@common/Enums';
 import { map } from 'rxjs';
-import { topProductsQtyToChartData } from './services/chart-adapters';
+import { topProductsToChartData } from './services/chart-adapters';
 import { DateRangeObj } from '@common/Interfaces';
 
 
@@ -42,7 +42,23 @@ export class AnalyticsComponent {
             })
             .pipe(
                 map((resp) =>
-                    topProductsQtyToChartData(resp, {
+                    topProductsToChartData(resp, {
+                        
+                        includeTotals: false,
+                    })
+                )
+            ); 
+    loadTopProfit= (q: DateRangeObj) =>
+        this.specialApi
+            .getTopProductsQuantity({
+                metric: SalesMetric.Profit,
+                from: fmtYYYYMM(q.start),
+                to: fmtYYYYMM(q.end),
+                k: 5,
+            })
+            .pipe(
+                map((resp) =>
+                    topProductsToChartData(resp, {
                         
                         includeTotals: false,
                     })
