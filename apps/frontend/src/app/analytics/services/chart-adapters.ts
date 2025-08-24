@@ -7,18 +7,19 @@ import { ChartData } from 'chart.js';
 type MetricKey = 'quantity' | 'profit';
 type TopProductsResponse = TopProductsQuantityResponse | TopProductsProfitResponse;
 
-function isQtyRow(r: any): r is { month: string; productId: string; quantity: number } {
-  return r && typeof r === 'object' && 'quantity' in r;
-}
+// Local row type: what we actually get back at runtime
+type AnyRow = {
+  month: string;
+  productId: string;
+  productName?: string;
+  quantity?: number;
+  profit?: number;
+};
 
-/**
- * Build Chart.js datasets for Top-K products over months.
- * Works for both quantity and profit responses.
- */
 export function topProductsToChartData(
   resp: TopProductsResponse,
   opts?: {
-    /** map productId -> display name */
+    /** map productId -> display name; overrides names from rows if provided */
     productLabels?: Record<string, string>;
     /** include totalsPerMonth as an extra dataset */
     includeTotals?: boolean;
@@ -28,30 +29,43 @@ export function topProductsToChartData(
     order?: string[];
   }
 ): ChartData<'bar'> {
-  const { months, rows, totalsPerMonth } = resp as any;
+  const months: string[] = (resp as any).months ?? [];
+  const rows: AnyRow[] = ((resp as any).rows ?? []) as AnyRow[];
+  const totalsPerMonth: number[] = (resp as any).totalsPerMonth ?? [];
 
   // Infer metric if not provided
   const metric: MetricKey =
     opts?.metric ??
-    (rows?.length && isQtyRow(rows[0]) ? 'quantity' : 'profit');
+    (rows.some((r) => typeof r.quantity === 'number') ? 'quantity' : 'profit');
 
-  // Fast index for months
-  const monthIndex = new Map<string, number>(months.map((m: string, i: number) => [m, i]));
+  // month -> index
+  const monthIndex = new Map<string, number>(months.map((m, i) => [m, i]));
+
+  // Build name map from rows (productId -> productName). opts overrides later.
+  const rowNameMap: Record<string, string> = {};
+  for (const r of rows) {
+    const pid = r.productId; // read first to avoid narrowing issues
+    const name = r.productName;
+    if (pid && typeof name === 'string' && name && !rowNameMap[pid]) {
+      rowNameMap[pid] = name;
+    }
+  }
+  const labelOf = (pid: string) => opts?.productLabels?.[pid] ?? rowNameMap[pid] ?? pid;
 
   // Collect product ids
   const productIds = new Set<string>();
-  for (const r of rows) productIds.add(r.productId);
+  for (const r of rows) if (r.productId) productIds.add(r.productId);
 
   // Prefill matrix with zeros
   const dataByProduct: Record<string, number[]> = {};
   for (const pid of productIds) dataByProduct[pid] = Array(months.length).fill(0);
 
-  // Fill values into the (product, month) cells
+  // Fill values (sum duplicates per product/month just in case)
   for (const r of rows) {
     const mi = monthIndex.get(r.month);
-    if (mi == null) continue;
+    if (mi == null || !r.productId) continue;
     const value = metric === 'quantity' ? (r.quantity ?? 0) : (r.profit ?? 0);
-    dataByProduct[r.productId][mi] = value;
+    dataByProduct[r.productId][mi] += value;
   }
 
   // Decide order of datasets
@@ -69,16 +83,13 @@ export function topProductsToChartData(
   }
 
   const datasets = orderedProductIds.map((pid) => ({
-    label: opts?.productLabels?.[pid] ?? pid,
+    label: labelOf(pid),     // shows productName if available
     data: dataByProduct[pid],
+    // stack: 'products',    // uncomment for stacked bars
   }));
 
-  // Optional totals overlay
-  if (opts?.includeTotals && Array.isArray(totalsPerMonth) && totalsPerMonth.length === months.length) {
-    datasets.push({
-      label: 'Total',
-      data: totalsPerMonth,
-    });
+  if (opts?.includeTotals && totalsPerMonth.length === months.length) {
+    datasets.push({ label: 'Total', data: totalsPerMonth });
   }
 
   return { labels: months, datasets };
