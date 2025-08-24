@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Store } from '@ngrx/store';
+import { DateRangeObj } from '@common/Interfaces';
 import { ChartData, ChartOptions } from 'chart.js';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { DateRangeLocalSignalStore, DateRangeOptions } from '../../date-range-filter';
 import { DateRangeFacade } from '../../store/analytics.facade';
-import { DateRangeObj } from '@common/Interfaces';
 
 type OverviewKeys = 'unitsSold' | 'distinctProducts' | 'newCustomers' | 'profit';
-
 
 type Source =
     | { type: 'overview'; keys: OverviewKeys[] }
@@ -23,7 +21,33 @@ type Source =
     providers: [DateRangeLocalSignalStore],
 })
 export class ChartCardWrapperComponent implements OnInit, OnDestroy {
-    DateRangeOptions = DateRangeOptions;
+    @Input() title = '';
+    @Input({ required: true }) source!: Source;
+    @Input() chartType: 'bar' | 'line' = 'bar';
+    DateRangeOptions = DateRangeOptions; 
+
+
+    private dataSub = new BehaviorSubject<ChartData<'bar' | 'line'>>({ labels: [], datasets: [] });
+    private loadingSub = new BehaviorSubject<boolean>(false);
+    private errorSub = new BehaviorSubject<string | null>(null); 
+
+    data$!: Observable<ChartData<'bar' | 'line'>>;
+    loading$!: Observable<boolean>;
+    error$!: Observable<string | null>; 
+
+    //private store = inject(Store);
+    private facade = inject(DateRangeFacade);
+    readonly local = inject(DateRangeLocalSignalStore); 
+
+    readonly globalRangeSig = toSignal(this.facade.globalRange$, { initialValue: null }); 
+
+    readonly options: ChartOptions<'bar' | 'line'> = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' } },
+        scales: { y: { beginAtZero: true } },
+    };
+
 
     readonly query = computed<DateRangeObj | null>(() => {
         const r = this.local.effectiveRange();
@@ -45,60 +69,33 @@ export class ChartCardWrapperComponent implements OnInit, OnDestroy {
             });
     });
 
-    @Input() title = '';
-    @Input({ required: true }) source!: Source;
-    @Input() chartType: 'bar' | 'line' = 'bar';
-
-    //private store = inject(Store);
-    private facade = inject(DateRangeFacade);
-    readonly local = inject(DateRangeLocalSignalStore);
+    
 
     
-    readonly globalRangeSig = toSignal(this.facade.globalRange$, { initialValue: null });
     private seed = effect(() => {
         const g = this.globalRangeSig();
         if (g) this.local.updateGlobalSnapshot(g);
     });
 
-    // Options & state (same as before)
-    readonly options: ChartOptions<'bar' | 'line'> = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
-        scales: { y: { beginAtZero: true } },
-    };
-
-    data$!: Observable<ChartData<'bar' | 'line'>>;
-    loading$!: Observable<boolean>;
-    error$!: Observable<string | null>;
-
-    private dataSub = new BehaviorSubject<ChartData<'bar' | 'line'>>({ labels: [], datasets: [] });
-    private loadingSub = new BehaviorSubject<boolean>(false);
-    private errorSub = new BehaviorSubject<string | null>(null);
+    
+    
 
     
+    
+
     private cancelPrevious?: () => void;
-
-    
 
     ngOnInit(): void {
         if (this.source.type === 'overview') {
-            
             return;
-        } 
-        else{
-
-        
-        this.data$ = this.dataSub.asObservable();
-        this.loading$ = this.loadingSub.asObservable();
-        this.error$ = this.errorSub.asObservable();
+        } else {
+            this.data$ = this.dataSub.asObservable();
+            this.loading$ = this.loadingSub.asObservable();
+            this.error$ = this.errorSub.asObservable();
         }
-
-        
     }
 
     ngOnDestroy(): void {
         this.cancelPrevious?.();
-        
     }
 }
