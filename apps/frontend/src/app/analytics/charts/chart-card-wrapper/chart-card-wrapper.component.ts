@@ -24,6 +24,7 @@ export class ChartCardWrapperComponent implements OnInit, OnDestroy {
     @Input() title = '';
     @Input({ required: true }) source!: Source;
     @Input() chartType: 'bar' | 'line' = 'bar';
+    @Input() description: string | null = null;
     DateRangeOptions = DateRangeOptions; 
 
 

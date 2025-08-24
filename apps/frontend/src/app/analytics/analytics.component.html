@@ -6,14 +6,15 @@
 
 <app-chart-card-wrapper
   [title]="'Top Products by Quantity'"
-  [source]="{ type: 'special', load: loadTopQty }">
-  
+  [source]="{ type: 'special', load: loadTopQty }"
+  [description] ="'For the chosen period, calculate the top-selling products by quantity and their contribution by month.'">
   
 </app-chart-card-wrapper>
 
 <app-chart-card-wrapper
   [title]="'Top Products by Profit'"
-  [source]="{ type: 'special', load: loadTopProfit }">
+  [source]="{ type: 'special', load: loadTopProfit }"
+  [description]="'For the chosen period, calculate the most profitable products and their contribution by month.'">
   
   
 </app-chart-card-wrapper>

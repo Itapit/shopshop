@@ -14,4 +14,5 @@ export class ChartCardComponent {
   @Input() options: ChartOptions = {};
   @Input() loading = false;
   @Input() error: string | null = null;
+  @Input() description: string | null = null;
 }

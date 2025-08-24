@@ -12,3 +12,8 @@
   </ng-container>
   <p *ngIf="error" class="error">{{ error }}</p>
 </section>
+<footer class="card-footer" *ngIf="description">
+  <span class="info-chip"><i class="pi pi-info"></i></span>
+  <div class="description" *ngIf="description">{{ description }}</div>
+  <ng-content select="[card-description]"></ng-content>
+</footer>
