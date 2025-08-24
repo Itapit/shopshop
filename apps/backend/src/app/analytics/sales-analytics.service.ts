@@ -6,13 +6,14 @@ import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-reque
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
 import { SalesAnalyticsRepository } from './repository/sales-analytics.repository';
+import { ProductsRepository } from '../products/repository/products.repository';
 
 @Injectable()
 export class SalesAnalyticsService {
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 
-    constructor(private readonly salesAnalyticsRepository: SalesAnalyticsRepository) {}
+    constructor(private readonly salesAnalyticsRepository: SalesAnalyticsRepository ,private readonly productRepo: ProductsRepository ) {}
 
     async fetchMonthlyProductQuantity(
         dto: TopProductsRequest
@@ -52,10 +53,15 @@ export class SalesAnalyticsService {
 
             this.response = new TopProductsQuantityResponseDto();
             this.response.months = months;
-            this.response.rows = rows.map((row) => ({
+            
+            const productNames = await Promise.all(
+                rows.map(row => this.productRepo.findById(row.productId).then(p => p ? p.name : 'Unknown Product'))
+            );
+            this.response.rows = rows.map((row, idx) => ({
                 month: row.month,
                 productId: row.productId,
                 quantity: row.quantity,
+                productName: productNames[idx],
             }));
             this.response.totalsPerMonth = totalsPerMonth;
         } else if (checker.metric == 'profit') {
@@ -73,10 +79,14 @@ export class SalesAnalyticsService {
 
             this.response = new TopProductsProfitResponseDto();
             this.response.months = months;
-            this.response.rows = rows.map((row) => ({
+            const productNames = await Promise.all(
+                rows.map(row => this.productRepo.findById(row.productId).then(p => p ? p.name : 'Unknown Product'))
+            );
+            this.response.rows = rows.map((row , idx) => ({
                 month: row.month,
                 productId: row.productId,
                 profit: row.profit,
+                productName: productNames[idx]
             }));
             this.response.totalsPerMonth = totalsPerMonth;
         }

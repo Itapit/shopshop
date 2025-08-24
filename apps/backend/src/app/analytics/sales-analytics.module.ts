@@ -6,6 +6,7 @@ import { SALES_ANALYTICS_REPOSITORY } from './repository/sales-analytics-reposit
 import { SalesAnalyticsRepository } from './repository/sales-analytics.repository';
 import { SalesAnalyticsController } from './sales-analytics.controller';
 import { SalesAnalyticsService } from './sales-analytics.service';
+import { ProductsModule } from '../products/products.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { SalesAnalyticsService } from './sales-analytics.service';
             { name: 'Order', schema: OrderSchemaFactory },
             { name: 'Product', schema: ProductSchemaFactory },
         ]),
+        ProductsModule
     ],
     controllers: [SalesAnalyticsController],
     providers: [

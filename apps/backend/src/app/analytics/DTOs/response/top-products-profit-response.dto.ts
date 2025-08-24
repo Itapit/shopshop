@@ -4,6 +4,7 @@ class TopProductsProfitRow {
   month!: string;
   productId!: string;
   profit!: number;
+  productName!: string;
 }
 
 export class TopProductsProfitResponseDto implements TopProductsProfitResponse {

@@ -4,6 +4,7 @@ class TopProductsQuantityRow {
   month!: string;
   productId!: string;
   quantity!: number;
+  productName!: string;
 }
 
 export class TopProductsQuantityResponseDto implements TopProductsQuantityResponse {
