@@ -1,75 +1,104 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-
-// === החלף/התאם לשמות הסלקטורים שלך ב-Store: ===
-//import { selectOverviewChartData, selectOverviewLoading, selectOverviewError } from '../../../store/analytics.selectors';
-// לדוגמה: selectOverviewChartData(keys: string[]) => Observable<ChartData<'bar'|'line'>>
+import { ChartData, ChartOptions } from 'chart.js';
+import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { DateRangeLocalSignalStore, DateRangeOptions } from '../../date-range-filter';
+import { DateRangeFacade } from '../../store/analytics.facade';
+import { DateRangeObj } from '@common/Interfaces';
 
 type OverviewKeys = 'unitsSold' | 'distinctProducts' | 'newCustomers' | 'profit';
 
+
 type Source =
-  | { type: 'overview'; keys: OverviewKeys[] } // גנרי: מה-Store
-  | { type: 'special';  load: () => Observable<ChartData<'bar'|'line'>> }; // מיוחד: טוען לבד
+    | { type: 'overview'; keys: OverviewKeys[] }
+    | { type: 'special'; load: (q: DateRangeObj) => Observable<ChartData<'bar' | 'line'>> };
 
 @Component({
-  selector: 'app-chart-card-wrapper',
-  standalone: false,
-  templateUrl: './chart-card-wrapper.component.html',
-  styleUrls: ['./chart-card-wrapper.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-chart-card-wrapper',
+    standalone: false,
+    templateUrl: './chart-card-wrapper.component.html',
+    styleUrls: ['./chart-card-wrapper.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [DateRangeLocalSignalStore],
 })
 export class ChartCardWrapperComponent implements OnInit, OnDestroy {
-  @Input() title = '';
-  @Input({ required: true }) source!: Source;
-  @Input() chartType: 'bar' | 'line' = 'bar';
+    DateRangeOptions = DateRangeOptions;
 
-  private store = inject(Store);
+    readonly query = computed<DateRangeObj | null>(() => {
+        const r = this.local.effectiveRange();
+        return r ? { start: r.start, end: r.end } : null;
+    });
 
-  // אופציות בסיס
-  readonly options: ChartOptions<'bar'|'line'> = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom' } },
-    scales: { y: { beginAtZero: true } },
-  };
+    private readonly reloadEffect = effect(() => {
+        if (this.source.type !== 'special') return;
+        const q = this.query();
+        if (!q) return;
 
-  // נחשוף תמיד Observable-ים כדי לחבר ל-async pipe
-  data$!: Observable<ChartData<'bar'|'line'>>;
-  loading$!: Observable<boolean>;
-  error$!: Observable<string | null>;
+        this.loadingSub.next(true);
+        this.source
+            .load(q)
+            .pipe(finalize(() => this.loadingSub.next(false)))
+            .subscribe({
+                next: (d) => this.dataSub.next(d),
+                error: (e) => this.errorSub.next(e?.message ?? 'Failed to load'),
+            });
+    });
 
-  // לסורס מיוחד — ערוצים מקומיים
-  private dataSub = new BehaviorSubject<ChartData<'bar'|'line'>>({ labels: [], datasets: [] });
-  private loadingSub = new BehaviorSubject<boolean>(false);
-  private errorSub = new BehaviorSubject<string | null>(null);
-  private sub?: Subscription;
+    @Input() title = '';
+    @Input({ required: true }) source!: Source;
+    @Input() chartType: 'bar' | 'line' = 'bar';
 
-  ngOnInit(): void {
-    if (!this.source) return;
+    //private store = inject(Store);
+    private facade = inject(DateRangeFacade);
+    readonly local = inject(DateRangeLocalSignalStore);
 
-    if (this.source.type === 'overview') {
-    //   // --- מצב גנרי: מושכים מה-Store הגלובלי ---
-    //   this.data$    = this.store.select(selectOverviewChartData(this.source.keys));
-    //   this.loading$ = this.store.select(selectOverviewLoading);
-    //   this.error$   = this.store.select(selectOverviewError);
-    } else {
-      // --- מצב מיוחד: טוענים באופן עצמאי, מקומית בלבד ---
-      this.data$    = this.dataSub.asObservable();
-      this.loading$ = this.loadingSub.asObservable();
-      this.error$   = this.errorSub.asObservable();
+    
+    readonly globalRangeSig = toSignal(this.facade.globalRange$, { initialValue: null });
+    private seed = effect(() => {
+        const g = this.globalRangeSig();
+        if (g) this.local.updateGlobalSnapshot(g);
+    });
 
-      this.loadingSub.next(true);
-      this.sub = this.source.load().subscribe({
-        next: d => this.dataSub.next(d),
-        error: e => this.errorSub.next(e?.message ?? 'Failed to load'),
-        complete: () => this.loadingSub.next(false),
-      });
+    // Options & state (same as before)
+    readonly options: ChartOptions<'bar' | 'line'> = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' } },
+        scales: { y: { beginAtZero: true } },
+    };
+
+    data$!: Observable<ChartData<'bar' | 'line'>>;
+    loading$!: Observable<boolean>;
+    error$!: Observable<string | null>;
+
+    private dataSub = new BehaviorSubject<ChartData<'bar' | 'line'>>({ labels: [], datasets: [] });
+    private loadingSub = new BehaviorSubject<boolean>(false);
+    private errorSub = new BehaviorSubject<string | null>(null);
+
+    
+    private cancelPrevious?: () => void;
+
+    
+
+    ngOnInit(): void {
+        if (this.source.type === 'overview') {
+            
+            return;
+        } 
+        else{
+
+        
+        this.data$ = this.dataSub.asObservable();
+        this.loading$ = this.loadingSub.asObservable();
+        this.error$ = this.errorSub.asObservable();
+        }
+
+        
     }
-  }
 
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-  }
+    ngOnDestroy(): void {
+        this.cancelPrevious?.();
+        
+    }
 }

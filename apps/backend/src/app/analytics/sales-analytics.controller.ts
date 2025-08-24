@@ -1,6 +1,6 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { SalesAnalyticsService } from './sales-analytics.service';
-import { TopProductsQuantityRequest } from '@common/Interfaces';
+import { TopProductsRequest } from '@common/Interfaces';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -13,9 +13,9 @@ export class SalesAnalyticsController {
   constructor(private readonly salesAnalyticsService: SalesAnalyticsService) {}
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
-  @Get('top-products-quantity')
+  @Get('top-products')
   async getTopProductsByMetric(
-    @Query() dto: TopProductsQuantityRequest
+    @Query() dto: TopProductsRequest
   ): Promise<TopProductsQuantityResponseDto | TopProductsProfitResponseDto> {
     return this.salesAnalyticsService.fetchMonthlyProductQuantity(dto);
   }

@@ -1,4 +1,4 @@
-import { TopProductsQuantityRequest } from '@common/Interfaces';
+import { TopProductsRequest } from '@common/Interfaces';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
@@ -15,7 +15,7 @@ export class SalesAnalyticsService {
     constructor(private readonly salesAnalyticsRepository: SalesAnalyticsRepository) {}
 
     async fetchMonthlyProductQuantity(
-        dto: TopProductsQuantityRequest
+        dto: TopProductsRequest
     ): Promise<TopProductsQuantityResponseDto | TopProductsProfitResponseDto> {
         const checker = plainToInstance(TopProductsQuantityRequestDto, dto);
         const errors = await validate(checker);

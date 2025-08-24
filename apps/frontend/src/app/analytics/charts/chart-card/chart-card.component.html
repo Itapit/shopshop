@@ -1,12 +1,14 @@
-<div class="card">
-  <header class="card-header">
-    <h3>{{ title }}</h3>
-    <div class="actions"><ng-content select="[card-actions]"></ng-content></div>
-  </header>
-
-  <section class="card-body">
-    <p-skeleton *ngIf="loading" height="220px"></p-skeleton>
-    <p *ngIf="error" class="error">{{ error }}</p>
-    <p-chart *ngIf="!loading && !error" type="bar" [data]="data" [options]="options"></p-chart>
-  </section>
-</div>
+<!-- chart-card.component.html -->
+<header class="card-header">
+  <h3>{{ title }}</h3>
+  <div class="actions">
+    <ng-content select="[card-actions]"></ng-content>
+  </div>
+</header>
+<section class="card-body" style="height:320px">
+  <p-skeleton *ngIf="loading" height="100%"></p-skeleton>
+  <ng-container *ngIf="!loading && !error">
+    <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+  </ng-container>
+  <p *ngIf="error" class="error">{{ error }}</p>
+</section>

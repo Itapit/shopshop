@@ -5,6 +5,9 @@
   [loading]="(loading$ | async) ?? false"
   [error]="(error$ | async) ?? null">
 
- 
+  <app-date-range card-actions [mode]="DateRangeOptions.Local"></app-date-range>
   <ng-content select="[card-actions]"></ng-content>
+  
 </app-chart-card>
+
+ 

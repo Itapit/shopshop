@@ -19,7 +19,9 @@ export class DateRangeComponent implements OnInit, OnDestroy {
     DatePresetKey = DatePresetKey;
 
     private facade = inject(DateRangeFacade);
-    public local = inject(DateRangeLocalSignalStore);
+    private parentStore = inject(DateRangeLocalSignalStore, { optional: true, skipSelf: true });
+    public local = this.parentStore ?? inject(DateRangeLocalSignalStore);
+    //public local = inject(DateRangeLocalSignalStore);
 
     readonly globalRange = toSignal(this.facade.globalRange$, { initialValue: null });
     readonly globalPreset = toSignal(this.facade.globalPreset$, { initialValue: null });

@@ -3,3 +3,10 @@
 <section class="global-filter-bar bottom-fixed">
     <app-date-range [mode]="DateRangeOptions.Global"></app-date-range>
 </section>
+
+<app-chart-card-wrapper
+  [title]="'Top 5 quantity sold'"
+  [source]="{ type: 'special', load: loadTopQty }">
+  
+  
+</app-chart-card-wrapper>

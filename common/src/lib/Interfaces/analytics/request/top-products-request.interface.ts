@@ -1,6 +1,6 @@
 import { SalesMetric } from '@common/Enums/sales-metric.enum';
 
-export interface TopProductsQuantityRequest {
+export interface TopProductsRequest {
     metric: SalesMetric;
     from: string;
     to: string;

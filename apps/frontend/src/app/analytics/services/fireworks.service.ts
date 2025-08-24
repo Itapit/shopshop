@@ -24,8 +24,8 @@ export class FireworksService {
         const end = Date.now() + durationMs;
 
         const id = setInterval(() => {
-            confetti({ particleCount: 800, angle: 50, spread: 100, origin: { x: 0 } });
-            confetti({ particleCount: 800, angle: 130, spread: 100, origin: { x: 1 } });
+            confetti({ particleCount: 200, angle: 50, spread: 100, origin: { x: 0 } });
+            confetti({ particleCount: 200, angle: 130, spread: 100, origin: { x: 1 } });
             if (Date.now() > end) clearInterval(id);
         }, intervalMs);
     }
