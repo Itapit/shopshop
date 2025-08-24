@@ -1,6 +1,7 @@
 import { CandleInterval } from '@common/Enums';
 import { PipelineStage } from 'mongoose';
 import {
+    computeBucketStart,
     groupCandles,
     matchDateRange,
     projectCandleMetrics,
@@ -9,6 +10,7 @@ import {
     sortByBucketAsc,
     unwindItems,
 } from '../stages';
+import { computeIsNewCustomer } from '../stages/compute-is-new-customer.stage';
 
 export const salesCandlesPipe = (
     start: Date,
@@ -20,9 +22,11 @@ export const salesCandlesPipe = (
     setFirstOrderPerCustomer,
     unwindItems,
     projectOrderTotals,
+    computeBucketStart(interval, timezone),
+    computeIsNewCustomer(interval, timezone),
 
-    groupCandles(interval, timezone),
-    projectCandleMetrics,
+    groupCandles,
+    projectCandleMetrics(interval, timezone),
     sortByBucketAsc,
     { $group: { _id: null, candles: { $push: '$$ROOT' } } },
     { $project: { _id: 0, candles: 1 } },

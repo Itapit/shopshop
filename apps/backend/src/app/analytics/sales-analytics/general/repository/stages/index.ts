@@ -1,3 +1,5 @@
+export * from './compute-bucket-start.stage';
+export * from './compute-is-new-customer.stage';
 export * from './group-candle.stage';
 export * from './group-summery.stage';
 export * from './match-date-range.stage';

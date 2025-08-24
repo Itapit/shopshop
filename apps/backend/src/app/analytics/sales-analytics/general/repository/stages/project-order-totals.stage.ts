@@ -5,6 +5,8 @@ export const projectOrderTotals: PipelineStage = {
         createdAt: 1,
         customer_id: 1,
         productID: '$items.productID',
+        firstOrderAt: 1,
+
         quantity: {
             // check if the quantity is int , if not convert it
             $cond: [{ $isNumber: '$items.quantity' }, '$items.quantity', { $toInt: '$items.quantity' }],
