@@ -1,4 +1,5 @@
-import { SalesStatsResponse } from '@common/Interfaces';
+import { CandleInterval } from '@common/Enums';
+import { SalesStatsResponse, toDateObj } from '@common/Interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { SalesStatsCore, SalesStatsRequestDto } from './dtos';
 import {
@@ -14,12 +15,17 @@ export class SalesGeneralService {
     ) {}
 
     async getSalesGeneralMetrics(dto: SalesStatsRequestDto): Promise<SalesStatsResponse> {
-        const core: SalesStatsCore = await this.repo.getSalesGeneralMetrics(dto);
+        const { start, end } = toDateObj(dto.dateRange);
+        const interval = dto.candleInterval as CandleInterval;
+        const timezone = dto.timezone ?? 'Asia/Jerusalem';
 
+        const core: SalesStatsCore = await this.repo.getSalesGeneralMetrics(start, end, interval, timezone);
+
+        // Echo original request metadata back to client
         return {
             dateRange: dto.dateRange,
             candleInterval: dto.candleInterval,
-            timezone: dto.timezone ?? 'Asia/Jerusalem',
+            timezone,
             candles: core.candles,
             summery: core.summery,
         };
