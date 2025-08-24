@@ -25,22 +25,20 @@ export class ChartCardWrapperComponent implements OnInit, OnDestroy {
     @Input({ required: true }) source!: Source;
     @Input() chartType: 'bar' | 'line' = 'bar';
     @Input() description: string | null = null;
-    DateRangeOptions = DateRangeOptions; 
-
+    DateRangeOptions = DateRangeOptions;
 
     private dataSub = new BehaviorSubject<ChartData<'bar' | 'line'>>({ labels: [], datasets: [] });
     private loadingSub = new BehaviorSubject<boolean>(false);
-    private errorSub = new BehaviorSubject<string | null>(null); 
+    private errorSub = new BehaviorSubject<string | null>(null);
 
     data$!: Observable<ChartData<'bar' | 'line'>>;
     loading$!: Observable<boolean>;
-    error$!: Observable<string | null>; 
+    error$!: Observable<string | null>;
 
-    //private store = inject(Store);
     private facade = inject(DateRangeFacade);
-    readonly local = inject(DateRangeLocalSignalStore); 
+    readonly local = inject(DateRangeLocalSignalStore);
 
-    readonly globalRangeSig = toSignal(this.facade.globalRange$, { initialValue: null }); 
+    readonly globalRangeSig = toSignal(this.facade.globalRange$, { initialValue: null });
 
     readonly options: ChartOptions<'bar' | 'line'> = {
         responsive: true,
@@ -48,7 +46,6 @@ export class ChartCardWrapperComponent implements OnInit, OnDestroy {
         plugins: { legend: { position: 'bottom' } },
         scales: { y: { beginAtZero: true } },
     };
-
 
     readonly query = computed<DateRangeObj | null>(() => {
         const r = this.local.effectiveRange();
@@ -70,19 +67,10 @@ export class ChartCardWrapperComponent implements OnInit, OnDestroy {
             });
     });
 
-    
-
-    
     private seed = effect(() => {
         const g = this.globalRangeSig();
         if (g) this.local.updateGlobalSnapshot(g);
     });
-
-    
-    
-
-    
-    
 
     private cancelPrevious?: () => void;
 

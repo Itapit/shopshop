@@ -20,18 +20,21 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SpecialApi {
-  constructor(private http: HttpClient) {}
-   private readonly baseUrl = `${environment.BACKEND_BASE_URL}/analytics`;
+    constructor(private http: HttpClient) {}
+    private readonly baseUrl = `${environment.BACKEND_BASE_URL}/analytics`;
 
-  getTopProductsQuantity(params: TopProductsRequest ): Observable<TopProductsQuantityResponse | TopProductsProfitResponse> {
-    const qp = new HttpParams()
-      .set('from', params.from)
-      .set('to', params.to)
-      .set('k', String(params.k))
-      .set('metric', params.metric);
+    //TODO clean this a bit so it wont need to do .set and just send the dto , look at products service for example
+    getTopProductsQuantity(
+        params: TopProductsRequest
+    ): Observable<TopProductsQuantityResponse | TopProductsProfitResponse> {
+        const qp = new HttpParams()
+            .set('from', params.from)
+            .set('to', params.to)
+            .set('k', String(params.k))
+            .set('metric', params.metric);
 
-    
-    return this.http.get<TopProductsQuantityResponse | TopProductsProfitResponse>(`${this.baseUrl}/top-products`, { params: qp });
-  } 
-  
+        return this.http.get<TopProductsQuantityResponse | TopProductsProfitResponse>(`${this.baseUrl}/top-products`, {
+            params: qp,
+        });
+    }
 }
