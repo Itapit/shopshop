@@ -52,7 +52,7 @@ export class OrdersService {
             total_price: totalPrice,
         });
 
-        return new CreateOrderResponseDto(createdOrder); //TODO create a constructor in the class
+        return new CreateOrderResponseDto(createdOrder); 
     }
 
     async totalProfit(): Promise<number> {

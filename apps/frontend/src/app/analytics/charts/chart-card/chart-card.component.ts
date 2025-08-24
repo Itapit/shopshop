@@ -9,8 +9,8 @@ import { ChartData, ChartOptions } from 'chart.js';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartCardComponent {
-    //TODO move the title to wrapper
-    @Input() title = '';
+    
+    
     @Input() data!: ChartData;
     @Input() options: ChartOptions = {};
     @Input() loading = false;
