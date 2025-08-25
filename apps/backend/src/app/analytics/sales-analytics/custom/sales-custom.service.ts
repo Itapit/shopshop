@@ -1,12 +1,12 @@
 import { TopProductsRequest } from '@common/Interfaces';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-request.dto';
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
-import { SalesCustomAnalyticsRepository } from './repository/sales-custom.repository';
-import { ProductsRepository } from '../../../products/repository/products.repository';
+import { SALES_CUSTOM_ANALYTICS_REPOSITORY , ISalesCustomAnalyticsRepository } from './repository/sales-custom-repository.interface';
+import { IProductsRepository, PRODUCTS_REPOSITORY } from '../../../products/repository/products-repository.interface';
 
 @Injectable()
 export class SalesCustomService {
@@ -15,7 +15,7 @@ export class SalesCustomService {
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 
-    constructor(private readonly salesAnalyticsRepository: SalesCustomAnalyticsRepository ,private readonly productRepo: ProductsRepository ) {}
+    constructor(@Inject(SALES_CUSTOM_ANALYTICS_REPOSITORY) private readonly salesAnalyticsRepository: ISalesCustomAnalyticsRepository , @Inject(PRODUCTS_REPOSITORY) private readonly productRepo: IProductsRepository ) {}
     //TODO use the repo interface token
 
     async fetchMonthlyProduct(
