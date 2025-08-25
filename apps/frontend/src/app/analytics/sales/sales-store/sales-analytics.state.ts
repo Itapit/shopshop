@@ -1,13 +1,17 @@
 import { SalesCandle, SalesSummary } from '@common/Interfaces';
 
-export const SalesAnalyticsFeatureKey = 'salesAnalytics';
+export const salesAnalyticsFeatureKey = 'salesAnalytics';
 
 export interface SalesAnalyticsState {
-    candles: SalesCandle[] | null;
+    candles: ReadonlyArray<SalesCandle> | null;
     summary: SalesSummary | null;
+    loading: boolean;
+    error: string | null;
 }
 
 export const initialSalesAnalyticsState: SalesAnalyticsState = {
     candles: null,
     summary: null,
+    loading: false,
+    error: null,
 };
