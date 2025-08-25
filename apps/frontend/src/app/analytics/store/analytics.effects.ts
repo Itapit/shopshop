@@ -14,13 +14,13 @@ export class AnalyticsDateRangeEffects {
 
     private readonly DEFAULT_PRESET = DatePresetKey.LAST_7;
     private readonly DEFAULT_CANDLE_INTERVAL = CandleInterval.Day;
-    private readonly DEFAULT_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    private readonly DEFAULT_TIMEZONE = 'Asia/Jerusalem';
 
     ngrxOnInitEffects(): Action {
         return analyticsActions.applyDefaultsValues({
             preset: this.DEFAULT_PRESET,
             candleInterval: this.DEFAULT_CANDLE_INTERVAL,
-            timezone: this.DEFAULT_TIMEZONE,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? this.DEFAULT_TIMEZONE,
         });
     }
 
