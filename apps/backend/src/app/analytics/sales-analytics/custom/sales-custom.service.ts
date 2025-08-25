@@ -1,22 +1,23 @@
-import { TopProductsRequest } from '@common/Interfaces';
+import { TopProductsQuantityRequest } from '@common/Interfaces';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-request.dto';
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
-import { SalesAnalyticsRepository } from './repository/sales-analytics.repository';
-import { ProductsRepository } from '../products/repository/products.repository';
+import { SalesCustomAnalyticsRepository } from './repository/sales-custom.repository';
 
 @Injectable()
-export class SalesAnalyticsService {
+export class SalesCustomService {
+    //TODO add an enum or smth for the quantity/profit
+    //TODO split the big function a bit into smaller pure functions helpers
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
-
-    constructor(private readonly salesAnalyticsRepository: SalesAnalyticsRepository ,private readonly productRepo: ProductsRepository ) {}
+    //TODO use the repo interface token
+    constructor(private readonly salesAnalyticsRepository: SalesCustomAnalyticsRepository) {}
 
     async fetchMonthlyProductQuantity(
-        dto: TopProductsRequest
+        dto: TopProductsQuantityRequest
     ): Promise<TopProductsQuantityResponseDto | TopProductsProfitResponseDto> {
         const checker = plainToInstance(TopProductsQuantityRequestDto, dto);
         const errors = await validate(checker);
@@ -27,7 +28,6 @@ export class SalesAnalyticsService {
         const fromYYYYMM = checker.from;
         const toYYYYMM = checker.to;
         const timezone = this.defaultTz;
-        const k = checker.k ?? 5;
 
         const months = this.buildMonthList(fromYYYYMM, toYYYYMM);
         if (months.length === 0) {
@@ -42,10 +42,7 @@ export class SalesAnalyticsService {
                 startUtc,
                 endUtc,
                 months,
-                timezone,
-                k
-                
-
+                timezone
             );
             const totalsPerMonth = months.map((m) =>
                 rows.filter((r) => r.month === m).reduce((sum, r) => sum + r.quantity, 0)
@@ -53,15 +50,10 @@ export class SalesAnalyticsService {
 
             this.response = new TopProductsQuantityResponseDto();
             this.response.months = months;
-            
-            const productNames = await Promise.all(
-                rows.map(row => this.productRepo.findById(row.productId).then(p => p ? p.name : 'Unknown Product'))
-            );
-            this.response.rows = rows.map((row, idx) => ({
+            this.response.rows = rows.map((row) => ({
                 month: row.month,
                 productId: row.productId,
                 quantity: row.quantity,
-                productName: productNames[idx],
             }));
             this.response.totalsPerMonth = totalsPerMonth;
         } else if (checker.metric == 'profit') {
@@ -69,8 +61,7 @@ export class SalesAnalyticsService {
                 startUtc,
                 endUtc,
                 months,
-                timezone,
-                k
+                timezone
             );
 
             const totalsPerMonth = months.map((m) =>
@@ -79,14 +70,10 @@ export class SalesAnalyticsService {
 
             this.response = new TopProductsProfitResponseDto();
             this.response.months = months;
-            const productNames = await Promise.all(
-                rows.map(row => this.productRepo.findById(row.productId).then(p => p ? p.name : 'Unknown Product'))
-            );
-            this.response.rows = rows.map((row , idx) => ({
+            this.response.rows = rows.map((row) => ({
                 month: row.month,
                 productId: row.productId,
                 profit: row.profit,
-                productName: productNames[idx]
             }));
             this.response.totalsPerMonth = totalsPerMonth;
         }

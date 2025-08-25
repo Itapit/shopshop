@@ -11,7 +11,7 @@ import { OrderSchemaFactory } from './repository/orders.schema';
 @Module({
     imports: [MongooseModule.forFeature([{ name: 'Order', schema: OrderSchemaFactory }]), ProductsModule, UsersModule],
     controllers: [OrdersController],
-    providers: [OrdersService, OrdersRepository, { provide: ORDERS_REPOSITORY, useClass: OrdersRepository }],
+    providers: [OrdersService, OrdersRepository, { provide: ORDERS_REPOSITORY, useExisting: OrdersRepository }],
     exports: [OrdersService],
 })
 export class OrdersModule {}

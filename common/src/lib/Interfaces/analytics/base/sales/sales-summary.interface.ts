@@ -1,4 +1,4 @@
-export interface SalesSummery {
+export interface SalesSummary {
     TotalOrdersCount: number;
     TotalItemsSold: number;
     TotalUniqueProductsSold: number;

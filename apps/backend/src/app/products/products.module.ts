@@ -14,7 +14,7 @@ import { ProductsRepository } from './repository/products.repository';
         ProductsRepository,
         {
             provide: PRODUCTS_REPOSITORY,
-            useClass: ProductsRepository,
+            useExisting: ProductsRepository,
         },
     ],
     exports: [ProductsRepository],
