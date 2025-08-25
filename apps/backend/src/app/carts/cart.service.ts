@@ -12,8 +12,7 @@ import { CARTS_REPOSITORY, ICartsRepository } from './repository/carts-reposirto
 
 @Injectable()
 export class CartsService {
-    //TODO use the repo interface token
-
+    
     constructor(
         @Inject(CARTS_REPOSITORY) private readonly cartsRepository: ICartsRepository,
         @Inject(PRODUCTS_REPOSITORY) private readonly productsRepo: IProductsRepository

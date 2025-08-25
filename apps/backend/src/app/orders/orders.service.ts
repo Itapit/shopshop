@@ -14,7 +14,6 @@ import { IOrdersRepository, ORDERS_REPOSITORY } from './repository/orders-reposi
 import { IProductsRepository, PRODUCTS_REPOSITORY } from '../products/repository/products-repository.interface';
 @Injectable()
 export class OrdersService {
-    //TODO use the repo interface token
 
     constructor(
         @Inject(ORDERS_REPOSITORY) private readonly ordersRepo: IOrdersRepository,

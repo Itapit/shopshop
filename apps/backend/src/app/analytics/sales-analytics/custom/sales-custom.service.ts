@@ -16,7 +16,7 @@ export class SalesCustomService {
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 
     constructor(@Inject(SALES_CUSTOM_ANALYTICS_REPOSITORY) private readonly salesAnalyticsRepository: ISalesCustomAnalyticsRepository , @Inject(PRODUCTS_REPOSITORY) private readonly productRepo: IProductsRepository ) {}
-    //TODO use the repo interface token
+    
 
     async fetchMonthlyProduct(
         dto: TopProductsRequest
