@@ -8,7 +8,7 @@ import { selectCandles, selectError, selectLoading, selectSummary } from './sale
 const notNull = <T>(v: T | null | undefined): v is T => v != null;
 
 @Injectable({ providedIn: 'root' })
-export class DateRangeFacade {
+export class SalesAnalyticsFacade {
     private store = inject(Store);
 
     readonly salesAnalyticsCandles$ = this.store.select(selectCandles).pipe(filter(notNull));

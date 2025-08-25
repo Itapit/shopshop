@@ -13,10 +13,10 @@ export const salesAnalyticsReducer = createReducer(
         error: null,
     })),
 
-    on(salesAnalyticsActions.loadGeneralStatsSuccess, (state, { statsStats }) => ({
+    on(salesAnalyticsActions.loadGeneralStatsSuccess, (state, { salesStatsResponse }) => ({
         ...state,
-        candles: statsStats.candles,
-        summary: statsStats.summary,
+        candles: salesStatsResponse.candles,
+        summary: salesStatsResponse.summary,
         loading: false,
         error: null,
     })),

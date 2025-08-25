@@ -14,7 +14,7 @@ export class SalesAnalyticsEffects {
             ofType(salesAnalyticsActions.loadGeneralStats),
             switchMap(({ salesStatsRequest }) =>
                 this.generalService.loadGeneralSalesStats(salesStatsRequest).pipe(
-                    map((statsStats) => salesAnalyticsActions.loadGeneralStatsSuccess({ statsStats })),
+                    map((salesStatsResponse) => salesAnalyticsActions.loadGeneralStatsSuccess({ salesStatsResponse })),
                     catchError((e) =>
                         of(salesAnalyticsActions.loadGeneralStatsFailure({ error: e?.message ?? 'Unknown error' }))
                     ),
