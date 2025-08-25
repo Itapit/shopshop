@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { DatePresetKey } from '../enums';
 
 @Injectable({ providedIn: 'root' })
 export class DateRangeMathService {
-    computeRangeForPreset(preset: DatePresetKey, nowMs: number = Date.now()): DateRange {
+    computeRangeForPreset(preset: DatePresetKey, nowMs: number = Date.now()): DateRangeObj {
         const end = this.endOfDay(new Date(nowMs));
         switch (preset) {
             case DatePresetKey.LAST_7:
@@ -27,7 +27,7 @@ export class DateRangeMathService {
         }
     }
 
-    clampRange(range: DateRange): DateRange {
+    clampRange(range: DateRangeObj): DateRangeObj {
         const s = new Date(range.start),
             e = new Date(range.end);
         return s.getTime() <= e.getTime() ? { start: s, end: e } : { start: e, end: s };

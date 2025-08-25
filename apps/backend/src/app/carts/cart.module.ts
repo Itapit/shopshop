@@ -10,7 +10,7 @@ import { CartSchemaFactory } from './repository/carts.schema';
 @Module({
     imports: [MongooseModule.forFeature([{ name: 'Cart', schema: CartSchemaFactory }]), ProductsModule],
     controllers: [CartController],
-    providers: [CartsService, CartsRepository, { provide: CARTS_REPOSITORY, useClass: CartsRepository }],
+    providers: [CartsService, CartsRepository, { provide: CARTS_REPOSITORY, useExisting: CartsRepository }],
     exports: [CartsService],
 })
 export class CartModule {}

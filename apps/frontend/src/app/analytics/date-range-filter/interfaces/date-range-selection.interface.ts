@@ -1,7 +1,7 @@
-import { DateRange } from '../../../../../../../common/src/lib/Interfaces/analytics/base/date-range.interface';
+import { DateRangeObj } from '@common/Interfaces';
 import { DatePresetKey } from '../enums/date-preset-key.enum';
 
 export interface DateRangeSelection {
-    range: DateRange;
+    range: DateRangeObj;
     preset: DatePresetKey;
 }

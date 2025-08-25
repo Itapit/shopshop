@@ -1,5 +1,5 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { DatePresetKey } from '../enums';
 import { DATE_PRESET_LABELS } from '../services/date-preset-labels.token';
 
@@ -26,7 +26,7 @@ export class DateRangeLabelPipe implements PipeTransform {
     }
 
     transform(
-        range: DateRange | null | undefined,
+        range: DateRangeObj | null | undefined,
         preset?: DatePresetKey | null,
         options?: DateRangeLabelOptions
     ): string {

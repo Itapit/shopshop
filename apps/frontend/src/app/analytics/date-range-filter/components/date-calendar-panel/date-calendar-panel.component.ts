@@ -7,7 +7,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
-import { DateRange } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 
 @Component({
     selector: 'app-date-calendar-panel',
@@ -18,11 +18,11 @@ import { DateRange } from '@common/Interfaces';
 })
 export class DateCalendarPanelComponent implements OnChanges {
     @Input() open = false;
-    @Input() initialRange: DateRange | null = null;
+    @Input() initialRange: DateRangeObj | null = null;
     @Input() disabled = false;
 
-    @Output() rangeChange = new EventEmitter<DateRange | null>();
-    @Output() apply = new EventEmitter<DateRange>();
+    @Output() rangeChange = new EventEmitter<DateRangeObj | null>();
+    @Output() apply = new EventEmitter<DateRangeObj>();
     @Output() cancel = new EventEmitter<void>();
 
     selected: Date[] | null = null;

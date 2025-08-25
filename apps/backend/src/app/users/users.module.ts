@@ -14,7 +14,7 @@ import { UsersService } from './users.service';
         UsersRepository,
         {
             provide: USERS_REPOSITORY,
-            useClass: UsersRepository,
+            useExisting: UsersRepository,
         },
     ],
     exports: [UsersService, USERS_REPOSITORY],

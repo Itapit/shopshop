@@ -1,14 +1,11 @@
-import { Component, inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProductFull } from '@common/Interfaces';
-import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { MessageService } from 'primeng/api';
 import { map, Observable } from 'rxjs';
-import { productListOptionsEnum } from '../products/product-list/product-list-options-enum';
+import { productListOptionsEnum } from '../products/product-list/product-list-options.enum';
 import { ProductListComponent } from '../products/product-list/product-list.component';
-import { clearCartSuccess, loadCart, loadTotal, removeItem } from './state/cart.actions';
+import { loadCart, loadTotal, removeItem } from './state/cart.actions';
 import { selectItems, selectLoading, selectTotal } from './state/cart.selectors';
-import { placeOrderSuccess } from '../order/state/order.actions';
 import { CartState } from './state/cart.state';
 
 @Component({
@@ -24,21 +21,16 @@ export class CartComponent {
     items$!: Observable<ProductFull[]>;
     total$!: Observable<number | null>;
     loading$!: Observable<boolean>;
-    
-   
-
 
     productListOptionsEnum = productListOptionsEnum;
 
-    constructor(
-        private store: Store<{ cart: CartState }>,
-    ) {}
+    constructor(private store: Store<{ cart: CartState }>) {}
 
     ngOnInit() {
         this.items$ = this.store.select(selectItems);
         this.total$ = this.store.select(selectTotal);
         this.loading$ = this.store.select(selectLoading);
-        
+
         this.store.dispatch(loadCart());
         this.store.dispatch(loadTotal());
     }
@@ -57,7 +49,6 @@ export class CartComponent {
         );
     };
 
-    
     onRemoveClicked(productID: string) {
         this.store.dispatch(removeItem({ productID }));
         this.productListComponent?.loadProducts?.();
