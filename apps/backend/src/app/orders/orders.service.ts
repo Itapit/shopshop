@@ -2,6 +2,7 @@ import { CreateOrderRequest, GetOrdersListRequest } from '@common/Interfaces';
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
+import { IProductsRepository, PRODUCTS_REPOSITORY } from '../products/repository/products-repository.interface';
 import {
     CreateOrderRequestDto,
     CreateOrderResponseDto,
@@ -11,7 +12,6 @@ import {
 } from './DTOs';
 import { mapOrderToDto } from './order.mapper';
 import { IOrdersRepository, ORDERS_REPOSITORY } from './repository/orders-repository.interface';
-import { IProductsRepository, PRODUCTS_REPOSITORY } from '../products/repository/products-repository.interface';
 @Injectable()
 export class OrdersService {
     //TODO use the repo interface token
@@ -54,7 +54,7 @@ export class OrdersService {
             total_price: totalPrice,
         });
 
-        return new CreateOrderResponseDto(createdOrder); 
+        return new CreateOrderResponseDto(createdOrder);
     }
 
     async totalProfit(): Promise<number> {

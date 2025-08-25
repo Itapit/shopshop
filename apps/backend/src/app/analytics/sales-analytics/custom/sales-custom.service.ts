@@ -2,11 +2,14 @@ import { TopProductsRequest } from '@common/Interfaces';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
+import { IProductsRepository, PRODUCTS_REPOSITORY } from '../../../products/repository/products-repository.interface';
 import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-request.dto';
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
-import { SALES_CUSTOM_ANALYTICS_REPOSITORY , ISalesCustomAnalyticsRepository } from './repository/sales-custom-repository.interface';
-import { IProductsRepository, PRODUCTS_REPOSITORY } from '../../../products/repository/products-repository.interface';
+import {
+    ISalesCustomAnalyticsRepository,
+    SALES_CUSTOM_ANALYTICS_REPOSITORY,
+} from './repository/sales-custom-repository.interface';
 
 @Injectable()
 export class SalesCustomService {
@@ -15,7 +18,11 @@ export class SalesCustomService {
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
 
-    constructor(@Inject(SALES_CUSTOM_ANALYTICS_REPOSITORY) private readonly salesAnalyticsRepository: ISalesCustomAnalyticsRepository , @Inject(PRODUCTS_REPOSITORY) private readonly productRepo: IProductsRepository ) {}
+    constructor(
+        @Inject(SALES_CUSTOM_ANALYTICS_REPOSITORY)
+        private readonly salesAnalyticsRepository: ISalesCustomAnalyticsRepository,
+        @Inject(PRODUCTS_REPOSITORY) private readonly productRepo: IProductsRepository
+    ) {}
     //TODO use the repo interface token
 
     async fetchMonthlyProduct(
@@ -47,8 +54,6 @@ export class SalesCustomService {
                 months,
                 timezone,
                 k
-                
-
             );
             const totalsPerMonth = months.map((m) =>
                 rows.filter((r) => r.month === m).reduce((sum, r) => sum + r.quantity, 0)
@@ -56,9 +61,11 @@ export class SalesCustomService {
 
             this.response = new TopProductsQuantityResponseDto();
             this.response.months = months;
-            
+
             const productNames = await Promise.all(
-                rows.map(row => this.productRepo.findById(row.productId).then(p => p ? p.name : 'Unknown Product'))
+                rows.map((row) =>
+                    this.productRepo.findById(row.productId).then((p) => (p ? p.name : 'Unknown Product'))
+                )
             );
             this.response.rows = rows.map((row, idx) => ({
                 month: row.month,
@@ -83,13 +90,15 @@ export class SalesCustomService {
             this.response = new TopProductsProfitResponseDto();
             this.response.months = months;
             const productNames = await Promise.all(
-                rows.map(row => this.productRepo.findById(row.productId).then(p => p ? p.name : 'Unknown Product'))
+                rows.map((row) =>
+                    this.productRepo.findById(row.productId).then((p) => (p ? p.name : 'Unknown Product'))
+                )
             );
-            this.response.rows = rows.map((row , idx) => ({
+            this.response.rows = rows.map((row, idx) => ({
                 month: row.month,
                 productId: row.productId,
                 profit: row.profit,
-                productName: productNames[idx]
+                productName: productNames[idx],
             }));
             this.response.totalsPerMonth = totalsPerMonth;
         }

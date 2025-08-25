@@ -9,8 +9,6 @@ import { ChartData, ChartOptions } from 'chart.js';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartCardComponent {
-    
-    
     @Input() data!: ChartData;
     @Input() options: ChartOptions = {};
     @Input() loading = false;

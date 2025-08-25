@@ -23,7 +23,6 @@ export class SpecialApi {
     constructor(private http: HttpClient) {}
     private readonly baseUrl = `${environment.BACKEND_BASE_URL}/analytics`;
 
-    
     getTopProductsQuantity(
         params: TopProductsRequest
     ): Observable<TopProductsQuantityResponse | TopProductsProfitResponse> {

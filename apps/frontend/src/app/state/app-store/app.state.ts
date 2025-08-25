@@ -6,8 +6,8 @@ import { OrderState } from '../../order/state/order.state';
 export interface AppState {
     router: RouterReducerState<SerializedRouterStateSnapshot>;
     auth: AuthState;
-    cart: CartState; 
-    order: OrderState; 
+    cart: CartState;
+    order: OrderState;
 }
 
 export const initialAppState: Partial<AppState> = {};
