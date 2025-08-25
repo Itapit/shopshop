@@ -1,131 +1,143 @@
 /* ===== Theme tokens ===== */
 :host {
-  --cal-bg: #fff;
-  --cal-border: #cfe0ff;
-  --cal-shadow: 0 14px 32px rgba(15,23,42,.12);
-  --cal-muted: #6e7d97;
-  --cal-strong: #0f172a;
-  --cal-accent: #4f8dfc;
-  --cal-accent-weak: #eaf2ff;
+    --cal-bg: #fff;
+    --cal-border: #cfe0ff;
+    --cal-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+    --cal-muted: #6e7d97;
+    --cal-strong: #0f172a;
+    --cal-accent: #4f8dfc;
+    --cal-accent-weak: #eaf2ff;
 }
 
 /* ===== Panel container ===== */
 .panel {
-  background: var(--cal-bg);
-  border: 1px solid var(--cal-border);
-  border-radius: 16px;
-  box-shadow: var(--cal-shadow);
-  padding: 10px;
-  width: max-content;            /* shrink to calendar width */
+    background: var(--cal-bg);
+    border: 1px solid var(--cal-border);
+    border-radius: 16px;
+    box-shadow: var(--cal-shadow);
+    padding: 10px;
+    width: max-content; /* shrink to calendar width */
 }
 
 /* =======================================================================
    PrimeNG calendar internals (needs ::ng-deep to pierce encapsulation)
    ======================================================================= */
 :host ::ng-deep .p-datepicker {
-  background: var(--cal-bg) !important;
-  border: none !important;
-  border-radius: 14px !important;
-  box-shadow: none !important;
-  padding: 6px 8px 2px !important;
+    background: var(--cal-bg) !important;
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    padding: 6px 8px 2px !important;
 }
 
 /* Header (month/year + arrows) */
 :host ::ng-deep .p-datepicker .p-datepicker-header {
-  background: #f7faff !important;
-  border: none !important;
-  border-radius: 12px !important;
-  padding: 10px 12px !important;
-  color: var(--cal-strong) !important;
+    background: #f7faff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 10px 12px !important;
+    color: var(--cal-strong) !important;
 }
 :host ::ng-deep .p-datepicker .p-datepicker-title {
-  font-weight: 700 !important;
-  letter-spacing: .2px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2px !important;
 }
 :host ::ng-deep .p-datepicker-prev,
 :host ::ng-deep .p-datepicker-next {
-  width: 34px; height: 34px;
-  border-radius: 10px;
-  color: #163660 !important;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    color: #163660 !important;
 }
 :host ::ng-deep .p-datepicker-prev:hover,
 :host ::ng-deep .p-datepicker-next:hover {
-  background: var(--cal-accent-weak) !important;
+    background: var(--cal-accent-weak) !important;
 }
 
 /* Weekday header */
 :host ::ng-deep .p-datepicker-calendar thead th {
-  color: var(--cal-muted) !important;
-  font-weight: 600 !important;
-  padding: 8px 0 !important;
-  border: none !important;
+    color: var(--cal-muted) !important;
+    font-weight: 600 !important;
+    padding: 8px 0 !important;
+    border: none !important;
 }
 
 /* Day grid */
 :host ::ng-deep .p-datepicker-calendar {
-  margin-top: 4px !important;
+    margin-top: 4px !important;
 }
 :host ::ng-deep .p-datepicker-calendar td {
-  padding: 6px !important;
-  border: none !important;
+    padding: 6px !important;
+    border: none !important;
 }
 :host ::ng-deep .p-datepicker-calendar td > span {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  font-weight: 600;
-  color: var(--cal-strong);
-  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--cal-strong);
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 :host ::ng-deep .p-datepicker-calendar td > span:hover {
-  background: var(--cal-accent-weak) !important;
+    background: var(--cal-accent-weak) !important;
 }
 
 /* Selected & range states */
 :host ::ng-deep .p-datepicker-calendar td.p-highlight > span,
 :host ::ng-deep .p-datepicker-calendar td > span.p-highlight {
-  background: var(--cal-accent) !important;
-  color: #fff !important;
-  box-shadow: 0 6px 16px rgba(79,141,252,.35);
+    background: var(--cal-accent) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 16px rgba(79, 141, 252, 0.35);
 }
 :host ::ng-deep .p-datepicker-calendar td.p-highlight-range > span,
 :host ::ng-deep .p-datepicker-calendar td.in-range > span {
-  background: rgba(79,141,252,.16) !important;
-  color: var(--cal-strong) !important;
+    background: rgba(79, 141, 252, 0.16) !important;
+    color: var(--cal-strong) !important;
 }
 :host ::ng-deep .p-datepicker-today > span {
-  box-shadow: inset 0 0 0 2px var(--cal-border) !important;
+    box-shadow: inset 0 0 0 2px var(--cal-border) !important;
 }
 
 /* Disabled calendar (when [disabled]="true") */
 :host ::ng-deep .p-datepicker.p-disabled {
-  opacity: .6;
-  filter: grayscale(.1);
-  pointer-events: none;
+    opacity: 0.6;
+    filter: grayscale(0.1);
+    pointer-events: none;
 }
 
 /* ===== Footer actions ===== */
 .actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 10px 2px 2px;
-  border-top: 1px solid #e9effa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 10px 2px 2px;
+    border-top: 1px solid #e9effa;
 }
 .actions .p-button {
-  border-radius: 10px;
-  padding: 8px 14px;
+    border-radius: 10px;
+    padding: 8px 14px;
 }
-.actions .p-button .p-button-label { font-weight: 600; }
-.actions .p-button.p-button-text { color: var(--cal-muted); }
+.actions .p-button .p-button-label {
+    font-weight: 600;
+}
+.actions .p-button.p-button-text {
+    color: var(--cal-muted);
+}
 .actions .p-button:not(.p-button-text) {
-  background: var(--cal-accent);
-  border-color: var(--cal-accent);
+    background: var(--cal-accent);
+    border-color: var(--cal-accent);
 }
 
 /* Compact on narrow screens */
 @media (max-width: 480px) {
-  :host ::ng-deep .p-datepicker-calendar td > span { width: 32px; height: 32px; }
+    :host ::ng-deep .p-datepicker-calendar td > span {
+        width: 32px;
+        height: 32px;
+    }
 }

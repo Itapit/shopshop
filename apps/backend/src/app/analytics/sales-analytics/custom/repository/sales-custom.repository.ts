@@ -81,7 +81,7 @@ export class SalesCustomAnalyticsRepository {
         endUtc: Date,
         months: string[],
         timezone = 'Asia/Jerusalem',
-        k:number = 5
+        k: number = 5
     ): Promise<MonthlyProfitDto[]> {
         const productsColl = this.ProductModel.collection.name;
 

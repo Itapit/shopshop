@@ -14,9 +14,9 @@ export class TopProductsQuantityRequestDto implements TopProductsRequest {
     to!: string;
 
     @IsOptional()
-    @Type(() => Number) 
+    @Type(() => Number)
     @IsInt()
     @Min(1)
-    @Max(20) 
+    @Max(20)
     k?: number;
 }

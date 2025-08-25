@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchemaFactory } from '../../orders/repository/orders.schema';
+import { ProductsModule } from '../../products/products.module';
 import { ProductSchemaFactory } from '../../products/repository/product.schema';
 import { SALES_CUSTOM_ANALYTICS_REPOSITORY } from './custom/repository/sales-custom-repository.interface';
 import { SalesCustomAnalyticsRepository } from './custom/repository/sales-custom.repository';
@@ -10,15 +11,14 @@ import { SALES_GENERAL_ANALYTICS_REPOSITORY } from './general/repository/sales-g
 import { SalesGeneralAnalyticsRepository } from './general/repository/sales-general.repository';
 import { SalesGeneralController } from './general/sales-general.controller';
 import { SalesGeneralService } from './general/sales-general.service';
-import { ProductsModule } from '../../products/products.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: 'Order', schema: OrderSchemaFactory },
             { name: 'Product', schema: ProductSchemaFactory },
-        ]), 
-        ProductsModule
+        ]),
+        ProductsModule,
     ],
     controllers: [SalesCustomController, SalesGeneralController],
     providers: [
