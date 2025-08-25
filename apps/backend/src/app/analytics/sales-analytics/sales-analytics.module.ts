@@ -10,13 +10,15 @@ import { SALES_GENERAL_ANALYTICS_REPOSITORY } from './general/repository/sales-g
 import { SalesGeneralAnalyticsRepository } from './general/repository/sales-general.repository';
 import { SalesGeneralController } from './general/sales-general.controller';
 import { SalesGeneralService } from './general/sales-general.service';
+import { ProductsModule } from '../../products/products.module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: 'Order', schema: OrderSchemaFactory },
             { name: 'Product', schema: ProductSchemaFactory },
-        ]),
+        ]), 
+        ProductsModule
     ],
     controllers: [SalesCustomController, SalesGeneralController],
     providers: [

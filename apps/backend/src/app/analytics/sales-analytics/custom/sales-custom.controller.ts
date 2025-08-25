@@ -1,5 +1,5 @@
 import { Role } from '@common/Enums';
-import { TopProductsQuantityRequest } from '@common/Interfaces';
+import { TopProductsRequest } from '@common/Interfaces';
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../../auth/guards/auth.guard';
 import { RolesGuard } from '../../../auth/guards/roles.guard';
@@ -14,10 +14,10 @@ export class SalesCustomController {
 
     @UseGuards(AuthGuard, RolesGuard)
     @Roles(Role.Admin)
-    @Get('top-products-quantity')
+    @Get('top-products')
     async getTopProductsByMetric(
-        @Query() dto: TopProductsQuantityRequest
+        @Query() dto: TopProductsRequest
     ): Promise<TopProductsQuantityResponseDto | TopProductsProfitResponseDto> {
-        return this.salesCustomService.fetchMonthlyProductQuantity(dto);
+        return this.salesCustomService.fetchMonthlyProduct(dto);
     }
 }

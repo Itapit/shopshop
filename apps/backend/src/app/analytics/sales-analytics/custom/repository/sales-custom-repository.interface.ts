@@ -2,5 +2,5 @@ export const SALES_CUSTOM_ANALYTICS_REPOSITORY = Symbol('SALES_ANALYTICS_REPOSIT
 
 export interface ISalesAnalyticsRepository {
     //TODO: add all functions to the interface
-    fetchMonthlyProductQuantity(params: { fromYYYYMM: string; toYYYYMM: string; timezone: string }): Promise<any[]>;
+    fetchMonthlyProduct(params: { fromYYYYMM: string; toYYYYMM: string; timezone: string }): Promise<any[]>;
 }

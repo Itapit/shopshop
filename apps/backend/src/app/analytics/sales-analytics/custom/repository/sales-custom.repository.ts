@@ -20,7 +20,8 @@ export class SalesCustomAnalyticsRepository {
         startUtc: Date,
         endUtc: Date,
         months: string[],
-        timezone: string = 'Asia/Jerusalem'
+        timezone: string = 'Asia/Jerusalem',
+        k: number = 5
     ): Promise<MonthlyQuantityDto[]> {
         const pipeline: PipelineStage[] = [
             { $match: { createdAt: { $gte: startUtc, $lt: endUtc } } },
