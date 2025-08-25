@@ -80,7 +80,8 @@ export class SalesCustomAnalyticsRepository {
         startUtc: Date,
         endUtc: Date,
         months: string[],
-        timezone = 'Asia/Jerusalem'
+        timezone = 'Asia/Jerusalem',
+        k:number = 5
     ): Promise<MonthlyProfitDto[]> {
         const productsColl = this.ProductModel.collection.name;
 
