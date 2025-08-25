@@ -3,7 +3,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { IProductsRepository, PRODUCTS_REPOSITORY } from '../../../products/repository/products-repository.interface';
-import { TopProductsQuantityRequestDto } from './DTOs/request/top-products-request.dto';
+import { TopProductsRequestDto } from './DTOs/request/top-products-request.dto';
 import { TopProductsProfitResponseDto } from './DTOs/response/top-products-profit-response.dto';
 import { TopProductsQuantityResponseDto } from './DTOs/response/top-products-quantity-response.dto';
 import {
@@ -28,7 +28,7 @@ export class SalesCustomService {
     async fetchMonthlyProduct(
         dto: TopProductsRequest
     ): Promise<TopProductsQuantityResponseDto | TopProductsProfitResponseDto> {
-        const checker = plainToInstance(TopProductsQuantityRequestDto, dto);
+        const checker = plainToInstance(TopProductsRequestDto, dto);
         const errors = await validate(checker);
         if (errors.length > 0) {
             throw new BadRequestException(errors);
@@ -36,7 +36,7 @@ export class SalesCustomService {
 
         const fromYYYYMM = checker.from;
         const toYYYYMM = checker.to;
-        const timezone = this.defaultTz;
+        const timezone = checker.timezone ?? this.defaultTz;
         const k = checker.k ?? 5;
 
         const months = this.buildMonthList(fromYYYYMM, toYYYYMM);

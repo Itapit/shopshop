@@ -3,7 +3,7 @@ import { TopProductsRequest } from '@common/Interfaces';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, Matches, Max, Min } from 'class-validator';
 
-export class TopProductsQuantityRequestDto implements TopProductsRequest {
+export class TopProductsRequestDto implements TopProductsRequest {
     @IsEnum(SalesMetric, { message: 'metric must be "quantity" or "profit"' })
     metric!: SalesMetric;
 
@@ -18,5 +18,8 @@ export class TopProductsQuantityRequestDto implements TopProductsRequest {
     @IsInt()
     @Min(1)
     @Max(20)
-    k?: number;
+    k?: number; 
+
+    @IsOptional()
+    timezone?: string; 
 }

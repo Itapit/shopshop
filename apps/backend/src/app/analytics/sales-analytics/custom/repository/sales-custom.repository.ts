@@ -18,7 +18,7 @@ export class SalesCustomAnalyticsRepository {
         startUtc: Date,
         endUtc: Date,
         months: string[],
-        timezone = 'Asia/Jerusalem',
+        timezone : string,
         k = 5
     ) {
         const pipeline: PipelineStage[] = buildTopKQuantityPipeline({ startUtc, endUtc, months, timezone, k });
@@ -32,7 +32,7 @@ export class SalesCustomAnalyticsRepository {
         startUtc: Date,
         endUtc: Date,
         months: string[],
-        timezone = 'Asia/Jerusalem',
+        timezone : string,
         k = 5
     ) {
         const productsColl = this.ProductModel.collection.name;
