@@ -22,11 +22,11 @@ import { SalesGeneralService } from './general/sales-general.service';
     providers: [
         SalesCustomService,
         SalesCustomAnalyticsRepository,
-        { provide: SALES_CUSTOM_ANALYTICS_REPOSITORY, useClass: SalesCustomAnalyticsRepository },
+        { provide: SALES_CUSTOM_ANALYTICS_REPOSITORY, useExisting: SalesCustomAnalyticsRepository },
 
         SalesGeneralService,
         SalesGeneralAnalyticsRepository,
-        { provide: SALES_GENERAL_ANALYTICS_REPOSITORY, useClass: SalesGeneralAnalyticsRepository },
+        { provide: SALES_GENERAL_ANALYTICS_REPOSITORY, useExisting: SalesGeneralAnalyticsRepository },
     ],
     exports: [SalesCustomService],
 })

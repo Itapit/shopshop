@@ -13,7 +13,7 @@ export class SalesCustomService {
     //TODO split the big function a bit into smaller pure functions helpers
     private readonly defaultTz = 'Asia/Jerusalem';
     private response: TopProductsQuantityResponseDto | TopProductsProfitResponseDto;
-
+    //TODO use the repo interface token
     constructor(private readonly salesAnalyticsRepository: SalesCustomAnalyticsRepository) {}
 
     async fetchMonthlyProductQuantity(
