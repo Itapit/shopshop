@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TopProductsProfitResponse, TopProductsQuantityResponse, TopProductsRequest } from '@common/Interfaces';
 import { environment } from 'apps/frontend/src/environments/environment';
@@ -23,18 +23,12 @@ export class SpecialApi {
     constructor(private http: HttpClient) {}
     private readonly baseUrl = `${environment.BACKEND_BASE_URL}/analytics`;
 
-    //TODO clean this a bit so it wont need to do .set and just send the dto , look at products service for example
+    
     getTopProductsQuantity(
         params: TopProductsRequest
     ): Observable<TopProductsQuantityResponse | TopProductsProfitResponse> {
-        const qp = new HttpParams()
-            .set('from', params.from)
-            .set('to', params.to)
-            .set('k', String(params.k))
-            .set('metric', params.metric);
-
         return this.http.get<TopProductsQuantityResponse | TopProductsProfitResponse>(`${this.baseUrl}/top-products`, {
-            params: qp,
+            params: params as any,
         });
     }
 }
