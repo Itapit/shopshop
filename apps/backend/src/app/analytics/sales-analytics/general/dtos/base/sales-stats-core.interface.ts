@@ -1,6 +1,6 @@
-import { SalesCandle, SalesSummery } from '@common/Interfaces';
+import { SalesCandle, SalesSummary } from '@common/Interfaces';
 
 export interface SalesStatsCore {
-    summery: SalesSummery;
+    summary: SalesSummary;
     candles: SalesCandle[];
 }

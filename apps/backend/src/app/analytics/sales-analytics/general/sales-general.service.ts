@@ -27,7 +27,7 @@ export class SalesGeneralService {
             candleInterval: dto.candleInterval,
             timezone,
             candles: core.candles,
-            summery: core.summery,
+            summary: core.summary,
         };
     }
 }

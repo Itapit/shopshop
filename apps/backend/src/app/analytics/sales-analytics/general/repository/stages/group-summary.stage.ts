@@ -1,6 +1,6 @@
 import { PipelineStage } from 'mongoose';
 
-export const groupSummaryPrepareOrderTotals: PipelineStage = {
+export const groupPerOrderMetrics: PipelineStage = {
     // turn each order into a single row with: customer id , order revenue , products id , item sold count
     $group: {
         _id: '$_id',
@@ -12,7 +12,7 @@ export const groupSummaryPrepareOrderTotals: PipelineStage = {
     },
 };
 
-export const groupSummaryFinal = (start: Date, end: Date): PipelineStage => ({
+export const aggregateSummaryTotals = (start: Date, end: Date): PipelineStage => ({
     // group all documents into one for the whole time period
     $group: {
         _id: null,
@@ -35,7 +35,7 @@ export const groupSummaryFinal = (start: Date, end: Date): PipelineStage => ({
     },
 });
 
-export const reshapeSummary: PipelineStage = {
+export const reshapeSummaryFields: PipelineStage = {
     /*
     remove the id
     keep TotalOrdersCount, TotalItemsSold, TotalGrossRevenue

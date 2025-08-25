@@ -6,7 +6,7 @@ import { CandleInterval } from '@common/Enums';
 import { SalesStatsCore } from '../dtos';
 
 import { OrderDocument } from 'apps/backend/src/app/orders/repository/orders.schema';
-import { emptySummery, salesGeneralPipe } from './pipes/sales-wrapper.pipe';
+import { emptySummary, salesGeneralPipe } from './pipes/sales-wrapper.pipe';
 
 @Injectable()
 export class SalesGeneralAnalyticsRepository {
@@ -25,6 +25,6 @@ export class SalesGeneralAnalyticsRepository {
             .read('secondaryPreferred')
             .exec();
 
-        return (docs?.[0] as SalesStatsCore) ?? { summery: emptySummery(), candles: [] };
+        return (docs?.[0] as SalesStatsCore) ?? { summary: emptySummary(), candles: [] };
     }
 }

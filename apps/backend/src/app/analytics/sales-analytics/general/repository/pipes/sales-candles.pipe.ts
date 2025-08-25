@@ -1,7 +1,7 @@
 import { CandleInterval } from '@common/Enums';
 import { PipelineStage } from 'mongoose';
 import {
-    computeBucketStart,
+    calculateCandleStartDate,
     groupCandles,
     matchDateRange,
     projectCandleMetrics,
@@ -22,7 +22,7 @@ export const salesCandlesPipe = (
     setFirstOrderPerCustomer,
     unwindItems,
     projectOrderTotals,
-    computeBucketStart(interval, timezone),
+    calculateCandleStartDate(interval, timezone),
     computeIsNewCustomer(interval, timezone),
 
     groupCandles,

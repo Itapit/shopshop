@@ -1,10 +1,10 @@
 import { CandleInterval } from '@common/Enums';
-import { SalesSummery } from '@common/Interfaces';
+import { SalesSummary } from '@common/Interfaces';
 import { PipelineStage } from 'mongoose';
 import { salesCandlesPipe } from './sales-candles.pipe';
-import { salesSummaryPipe } from './sales-summery.pipe';
+import { salesSummaryPipe } from './sales-summary.pipe';
 
-export function emptySummery(): SalesSummery {
+export function emptySummary(): SalesSummary {
     return {
         TotalOrdersCount: 0,
         TotalItemsSold: 0,
@@ -15,7 +15,7 @@ export function emptySummery(): SalesSummery {
     };
 }
 
-//Builds the full  pipeline for general metrics: using the summery and candles pipes
+//Builds the full  pipeline for general metrics: using the summary and candles pipes
 export function salesGeneralPipe(start: Date, end: Date, interval: CandleInterval, timezone?: string): PipelineStage[] {
     const summaryStages = salesSummaryPipe(start, end) as PipelineStage.FacetPipelineStage[];
     const candlesStages = salesCandlesPipe(
@@ -34,10 +34,10 @@ export function salesGeneralPipe(start: Date, end: Date, interval: CandleInterva
         },
         {
             $project: {
-                summery: {
+                summary: {
                     $ifNull: [
-                        { $arrayElemAt: ['$summary.summery', 0] },
-                        { $literal: emptySummery() }, // inject a constant object
+                        { $arrayElemAt: ['$summary.summary', 0] },
+                        { $literal: emptySummary() }, // inject a constant object
                     ],
                 },
                 candles: {

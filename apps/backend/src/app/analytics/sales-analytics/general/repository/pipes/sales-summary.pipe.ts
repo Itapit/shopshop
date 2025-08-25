@@ -1,11 +1,11 @@
 import { PipelineStage } from 'mongoose';
 import {
-    groupSummaryFinal,
-    groupSummaryPrepareOrderTotals,
+    aggregateSummaryTotals,
+    groupPerOrderMetrics,
     matchDateRange,
     projectOrderTotals,
     projectUniqueProductsCount,
-    reshapeSummary,
+    reshapeSummaryFields,
     setFirstOrderPerCustomer,
     unwindItems,
 } from '../stages';
@@ -15,9 +15,9 @@ export const salesSummaryPipe = (start: Date, end: Date): PipelineStage[] => [
     setFirstOrderPerCustomer,
     unwindItems,
     projectOrderTotals,
-    groupSummaryPrepareOrderTotals,
-    groupSummaryFinal(start, end),
-    reshapeSummary,
+    groupPerOrderMetrics,
+    aggregateSummaryTotals(start, end),
+    reshapeSummaryFields,
     projectUniqueProductsCount,
-    { $project: { summery: '$$ROOT' } },
+    { $project: { summary: '$$ROOT' } },
 ];

@@ -2,7 +2,7 @@ import { CandleInterval } from '@common/Enums';
 import { PipelineStage } from 'mongoose';
 import { toDateTruncUnit, tzOrDefault } from '../utils/candle.util';
 
-export const computeBucketStart = (interval: CandleInterval, timezone?: string): PipelineStage => ({
+export const calculateCandleStartDate = (interval: CandleInterval, timezone?: string): PipelineStage => ({
     $set: {
         bucketStart: {
             $dateTrunc: {

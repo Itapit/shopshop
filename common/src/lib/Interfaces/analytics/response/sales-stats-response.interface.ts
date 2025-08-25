@@ -1,5 +1,5 @@
 import { CandleInterval } from '@common/Enums';
-import { SalesCandle, SalesSummery } from '../base';
+import { SalesCandle, SalesSummary } from '../base';
 import { DateRangeStr } from '../date';
 
 export interface SalesStatsResponse {
@@ -7,5 +7,5 @@ export interface SalesStatsResponse {
     candleInterval: CandleInterval;
     timezone: string; //Asia/Jerusalem for now, adding for future support
     candles: ReadonlyArray<SalesCandle>;
-    summery: SalesSummery;
+    summary: SalesSummary;
 }
