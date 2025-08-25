@@ -1,6 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
-import * as analyticsActions from './analytics.actions';
-import { initialAnalyticsState } from './analytics.state';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { analyticsActions } from './analytics.actions';
+import { analyticsFeatureKey, initialAnalyticsState } from './analytics.state';
 
 export const analyticsReducer = createReducer(
     initialAnalyticsState,
@@ -20,3 +20,8 @@ export const analyticsReducer = createReducer(
         timezone: timezone,
     }))
 );
+
+export const analyticsFeature = createFeature({
+    name: analyticsFeatureKey,
+    reducer: analyticsReducer,
+});

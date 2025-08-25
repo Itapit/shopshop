@@ -1,12 +1,9 @@
-import { DateRangeObj } from '@common/Interfaces';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { DatePresetKey } from '../date-range-filter/enums';
+import { analyticsFeature } from './analytics.reducer';
 import { analyticsFeatureKey, AnalyticsState } from './analytics.state';
 
+export const { selectTimezone, selectCandleInterval, selectPresetDate, selectGlobalDate } = analyticsFeature;
+
 export const selectAnalyticsState = createFeatureSelector<AnalyticsState>(analyticsFeatureKey);
-
-export const selectGlobalDateRange = createSelector(selectAnalyticsState, (s) => s.globalDate as DateRangeObj | null);
-
-export const selectGlobalPreset = createSelector(selectAnalyticsState, (s) => s.presetDate as DatePresetKey | null);
 
 export const selectInitialized = createSelector(selectAnalyticsState, (s) => !!s.globalDate && !!s.presetDate);

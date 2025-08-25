@@ -5,7 +5,7 @@ import { Action } from '@ngrx/store';
 import { filter, map } from 'rxjs/operators';
 import { DatePresetKey } from '../date-range-filter/enums';
 import { DateRangeMathService } from '../date-range-filter/services/date-range-math.service';
-import * as analyticsActions from './analytics.actions';
+import { analyticsActions } from './analytics.actions';
 
 @Injectable()
 export class AnalyticsDateRangeEffects {
