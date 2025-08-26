@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -12,6 +14,9 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductsRoutingModule } from './products-routing-module';
 import { ProductsComponent } from './products.component';
+import { ProductsEffects } from './state/products.effects';
+import { productsFeature } from './state/products.reducer';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
     declarations: [
@@ -29,6 +34,10 @@ import { ProductsComponent } from './products.component';
         PaginatorModule,
         ProgressSpinnerModule,
         TooltipModule,
+        StoreModule.forFeature(productsFeature),
+        EffectsModule.forFeature([ProductsEffects]),
+        SkeletonModule,
+        ProgressSpinnerModule,
     ],
     exports: [ProductsComponent, ProductListComponent],
     providers: [MessageService],

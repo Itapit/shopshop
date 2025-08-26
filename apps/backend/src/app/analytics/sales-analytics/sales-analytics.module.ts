@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchemaFactory } from '../../orders/repository/orders.schema';
+import { ProductsModule } from '../../products/products.module';
 import { ProductSchemaFactory } from '../../products/repository/product.schema';
 import { SALES_CUSTOM_ANALYTICS_REPOSITORY } from './custom/repository/sales-custom-repository.interface';
 import { SalesCustomAnalyticsRepository } from './custom/repository/sales-custom.repository';
@@ -17,6 +18,7 @@ import { SalesGeneralService } from './general/sales-general.service';
             { name: 'Order', schema: OrderSchemaFactory },
             { name: 'Product', schema: ProductSchemaFactory },
         ]),
+        ProductsModule,
     ],
     controllers: [SalesCustomController, SalesGeneralController],
     providers: [

@@ -19,7 +19,7 @@ export class UiStateService {
     logoClicked$ = this.logoClickSubject.asObservable();
     statsClicked$ = this.statsClickSubject.asObservable();
     signupClicked$ = this.signupClickSubject.asObservable();
-    logoutClicked$ = this.logoutClickSubject.asObservable()
+    logoutClicked$ = this.logoutClickSubject.asObservable();
 
     triggerOrder() {
         this.orderClickSubject.next();
@@ -44,7 +44,7 @@ export class UiStateService {
         this.signupClickSubject.next();
     }
 
-    triggerLogout(){
+    triggerLogout() {
         this.logoutClickSubject.next();
     }
 }

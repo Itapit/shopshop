@@ -1,21 +1,21 @@
 import { cartItem } from '@common/Interfaces/carts';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { EditItemInCartRequestDto } from '../carts/DTOs/request/Edit-item-to-cart-request.dto';
 import { CreateCartResponseDto } from '../carts/DTOs/response/Create-cart-response.dto';
 import { EditItemInCartResponseDto } from '../carts/DTOs/response/Edit-item-to-cart-response.dto';
 import { GetCartResponseDto } from '../carts/DTOs/response/Get-cart-by-ID-response';
-import { ProductsRepository } from '../products/repository/products.repository';
-import { CartsRepository } from './repository/carts.repository';
+
+import { IProductsRepository, PRODUCTS_REPOSITORY } from '../products/repository/products-repository.interface';
+import { CARTS_REPOSITORY, ICartsRepository } from './repository/carts-reposirtory.interface';
 
 @Injectable()
 export class CartsService {
-    //TODO use the repo interface token
-
+    
     constructor(
-        private readonly cartsRepository: CartsRepository,
-        private readonly productsRepo: ProductsRepository
+        @Inject(CARTS_REPOSITORY) private readonly cartsRepository: ICartsRepository,
+        @Inject(PRODUCTS_REPOSITORY) private readonly productsRepo: IProductsRepository
     ) {}
 
     async getCartByCustomerId(customerId: string): Promise<GetCartResponseDto | null> {

@@ -13,6 +13,7 @@ import { productListOptionsEnum } from './product-list-options.enum';
 export class ProductListComponent implements OnInit {
     @Input() mode!: productListOptionsEnum; // 'view' or 'cart'
     @Input() fetchFunction!: (page: number, limit: number, keyword: string) => Observable<ProductFull[]>;
+    @Input() loading: boolean = false;
     @Input() totalRecords!: number;
     @Output() removeClicked = new EventEmitter<string>();
     keyword: string = '';
@@ -22,6 +23,8 @@ export class ProductListComponent implements OnInit {
     products: ProductFull[] = [];
     page = 1;
     limit = 14;
+
+    skeletonItems = Array.from({ length: 50 });
 
     ngOnInit() {
         this.uiStateService.searchClicked$.subscribe((value) => {

@@ -1,4 +1,4 @@
-import { MonthlyProfit } from "@common/Interfaces";
+import { MonthlyProfit } from '@common/Interfaces';
 
 export class MonthlyProfitDto implements MonthlyProfit {
     month: string;

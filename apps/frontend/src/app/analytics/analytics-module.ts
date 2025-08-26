@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { AnalyticsComponent } from './analytics.component';
+import { ChartsModule } from './charts/chart.module';
 import { DateRangeFilterModule } from './date-range-filter/date-range.module';
 import { FireworksOnDirective } from './directives/fireworks-on.directive';
 import { AnalyticsDateRangeEffects } from './store/analytics.effects';
@@ -17,6 +18,7 @@ import { analyticsFeatureKey } from './store/analytics.state';
         EffectsModule.forFeature(AnalyticsDateRangeEffects),
         DateRangeFilterModule,
         FireworksOnDirective,
+        ChartsModule,
     ],
     exports: [AnalyticsComponent],
 })

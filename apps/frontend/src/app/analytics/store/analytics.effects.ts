@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
+import { CandleInterval } from '@common/Enums';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
 import { filter, map } from 'rxjs/operators';
 import { DatePresetKey } from '../date-range-filter/enums';
 import { DateRangeMathService } from '../date-range-filter/services/date-range-math.service';
@@ -10,12 +12,27 @@ export class AnalyticsDateRangeEffects {
     private actions$ = inject(Actions);
     private math = inject(DateRangeMathService);
 
-    private readonly DEFAULT_PRESET = DatePresetKey.LAST_30;
+    private readonly DEFAULT_PRESET = DatePresetKey.LAST_7;
+    private readonly DEFAULT_CANDLE_INTERVAL = CandleInterval.Day;
+    private readonly DEFAULT_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    init$ = createEffect(() =>
+    ngrxOnInitEffects(): Action {
+        return analyticsActions.applyDefaultsValues({
+            preset: this.DEFAULT_PRESET,
+            candleInterval: this.DEFAULT_CANDLE_INTERVAL,
+            timezone: this.DEFAULT_TIMEZONE,
+        });
+    }
+
+    defaultToRange$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(ROOT_EFFECTS_INIT),
-            map(() => analyticsActions.setGlobalByPreset({ preset: this.DEFAULT_PRESET }))
+            ofType(analyticsActions.applyDefaultsValues),
+            map(({ preset }) =>
+                analyticsActions.applyGlobalRange({
+                    range: this.math.computeRangeForPreset(preset),
+                    preset,
+                })
+            )
         )
     );
 

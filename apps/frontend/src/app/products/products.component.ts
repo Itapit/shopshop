@@ -1,12 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { Role } from '@common/Enums';
-import { GetProductsListRequest, GetProductsListResponse, ProductFull } from '@common/Interfaces';
+import { GetProductsListResponse, ProductFull } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
-import { map, Observable, tap } from 'rxjs';
+import { distinctUntilChanged, map, Observable, of, shareReplay, switchMap, timer } from 'rxjs';
 import { selectRole } from '../auth/store/auth.selectors';
 import { AuthState } from '../auth/store/auth.state';
 import { productListOptionsEnum } from './product-list/product-list-options.enum';
 import { ProductsHttpService } from './services/products-http.service';
+import { loadProducts } from './state/products.actions';
+import { selectProductsLoading, selectProductsState } from './state/products.selectors';
+import { ProductsState } from './state/products.state';
 
 @Component({
     selector: 'app-products',
@@ -15,8 +18,10 @@ import { ProductsHttpService } from './services/products-http.service';
     styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent {
-    private readonly store = inject<Store<{ auth: AuthState }>>(Store);
+    private readonly store = inject<Store<{ auth: AuthState; products: ProductsState }>>(Store);
     constructor(private productService: ProductsHttpService) {}
+
+    products$!: Observable<ProductFull[]>;
 
     productsResponse?: GetProductsListResponse;
     productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
@@ -32,13 +37,26 @@ export class ProductsComponent {
                       : productListOptionsEnum.PublicView
             )
         );
+    
+    // readonly MIN_LOADER_MS = 300; // tweak: 250–400 feels great
+
+    loading$ = this.store.select(selectProductsLoading);
+
+    // loadingUi$ = this.loading$.pipe(
+    //     // Show immediately when true; when false, wait MIN_LOADER_MS before hiding
+    //     switchMap((isLoading) => (isLoading ? of(true) : timer(this.MIN_LOADER_MS).pipe(map(() => false)))),
+    //     distinctUntilChanged(),
+    //     shareReplay({ bufferSize: 1, refCount: true })
+    // );
+
+    ngOnInit() {
+        this.products$ = this.store.select(selectProductsState).pipe(map((state) => state.items));
+
+        this.store.dispatch(loadProducts({ page: 1, limit: 14, keyword: '' }));
+    }
 
     fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {
-        const query: GetProductsListRequest = { page, limit, keyword };
-
-        return this.productService.getProducts(query).pipe(
-            tap((res) => (this.productsResponse = res)),
-            map((res) => res.products)
-        );
+        this.store.dispatch(loadProducts({ page, limit, keyword }));
+        return this.products$;
     };
 }

@@ -1,0 +1,212 @@
+/* ===== Date Range — Light-blue theme ===== */
+.date-range {
+    --dr-bg: transparent;
+    --dr-border: #cfe0ff; /* blue-tinted divider */
+    --dr-muted: #6e7d97;
+    --dr-strong: #0f172a;
+    --dr-chip-bg: #eaf2ff; /* light blue pill */
+    --dr-chip-text: #163660;
+    --dr-primary: #4f8dfc; /* brand blue */
+    --dr-primary-press: #306df0;
+    --dr-shadow: 0 8px 22px rgba(79, 141, 252, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+    .date-range {
+        --dr-bg: transparent;
+        --dr-border: #29406f;
+        --dr-muted: #9fb0cd;
+        --dr-strong: #e7e7e7;
+        --dr-chip-bg: #14223f;
+        --dr-chip-text: #dbe7ff;
+        --dr-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    }
+}
+
+/* layout */
+.date-range {
+    display: grid;
+    gap: 12px;
+    background: var(--dr-bg);
+}
+
+/* ===== Header ===== */
+.date-range .header {
+    display: flex;
+    align-items: center; /* centers the label with the toggle vertically */
+    gap: 12px;
+    padding-block-end: 10px;
+    border-block-end: 1px solid var(--dr-border);
+    color: var(--dr-strong);
+}
+
+/* “chip” that shows the date text — a little bolder + light blue */
+.date-range .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--dr-chip-bg);
+    color: var(--dr-chip-text);
+    font-weight: 600; /* a little more bold */
+    font-size: 13.5px; /* tiny bump for readability */
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+/* muted inline text (e.g., “Using Global…”, “No range”) */
+.date-range .muted {
+    color: var(--dr-muted);
+    font-size: 13px;
+}
+
+/* push toggle to the edge (RTL/LTR friendly) */
+.date-range .spacer {
+    margin-inline-start: auto;
+}
+
+/* ===== Local override toggle (ensures perfect vertical centering) ===== */
+app-date-override-toggle {
+    display: inline-flex;
+    align-items: center; /* centers label + switch */
+    gap: 10px;
+    color: var(--dr-muted);
+    font-size: 13px;
+    user-select: none;
+}
+
+/* PrimeNG InputSwitch polish & alignment */
+:host ::ng-deep app-date-override-toggle .p-inputswitch {
+    min-width: 44px;
+    height: 24px; /* exact height */
+    vertical-align: middle; /* aligns with label baseline */
+}
+:host ::ng-deep app-date-override-toggle .p-inputswitch .p-inputswitch-slider {
+    background: #d6e4ff;
+}
+:host ::ng-deep app-date-override-toggle .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background: var(--dr-primary);
+}
+:host ::ng-deep app-date-override-toggle .p-inputswitch .p-inputswitch-slider:before {
+    width: 18px;
+    height: 18px;
+    margin-top: -9px; /* perfect centering inside 24px track */
+    left: 3px;
+}
+:host ::ng-deep app-date-override-toggle .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+    transform: translateX(20px);
+}
+
+/* ===== Preset buttons row (works with native or PrimeNG buttons) ===== */
+app-date-preset-buttons {
+    display: block;
+}
+
+:host ::ng-deep app-date-preset-buttons .preset-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+:host ::ng-deep app-date-preset-buttons button,
+:host ::ng-deep app-date-preset-buttons .p-button {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: var(--dr-chip-bg);
+    color: var(--dr-chip-text);
+    font-size: 13px;
+    line-height: 1;
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+:host ::ng-deep app-date-preset-buttons button:hover,
+:host ::ng-deep app-date-preset-buttons .p-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--dr-shadow);
+}
+:host ::ng-deep app-date-preset-buttons .active,
+:host ::ng-deep app-date-preset-buttons .p-button.p-highlight {
+    background: var(--dr-primary);
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(79, 141, 252, 0.35);
+}
+
+/* ===== Calendar panel (light-blue frame) ===== */
+app-date-calendar-panel {
+    display: block;
+}
+
+:host ::ng-deep app-date-calendar-panel .panel {
+    background: var(--dr-bg);
+    border: 1px solid var(--dr-border);
+    border-radius: 14px;
+    box-shadow: var(--dr-shadow);
+    padding: 10px;
+}
+:host ::ng-deep app-date-calendar-panel .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px 10px;
+    border-block-end: 1px solid var(--dr-border);
+    color: var(--dr-strong);
+    font-weight: 600; /* slightly bolder header */
+}
+:host ::ng-deep app-date-calendar-panel .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    padding: 10px;
+}
+:host ::ng-deep app-date-calendar-panel .day {
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+:host ::ng-deep app-date-calendar-panel .day:hover {
+    background: rgba(79, 141, 252, 0.1);
+}
+:host ::ng-deep app-date-calendar-panel .day.in-range {
+    background: rgba(79, 141, 252, 0.18);
+    color: var(--dr-strong);
+}
+:host ::ng-deep app-date-calendar-panel .day.start,
+:host ::ng-deep app-date-calendar-panel .day.end {
+    background: var(--dr-primary);
+    color: #fff;
+}
+:host ::ng-deep app-date-calendar-panel .calendar-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid var(--dr-border);
+}
+:host ::ng-deep app-date-calendar-panel .calendar-actions .btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--dr-border);
+    background: #fff;
+    cursor: pointer;
+}
+:host ::ng-deep app-date-calendar-panel .calendar-actions .btn.primary {
+    background: var(--dr-primary);
+    color: #fff;
+    border-color: transparent;
+}
+/* More air between "Use custom range" and the switch */
+app-date-override-toggle {
+    gap: 16px; /* was 10px */
+    padding-inline-start: 4px; /* tiny nudge from the divider */
+}
+
+/* Works regardless of the internal markup: push the switch away from any label */
+:host ::ng-deep app-date-override-toggle .p-inputswitch {
+    margin-inline-start: 12px; /* extra space between text and toggle */
+}

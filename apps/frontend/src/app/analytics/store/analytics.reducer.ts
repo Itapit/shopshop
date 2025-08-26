@@ -11,5 +11,12 @@ export const analyticsReducer = createReducer(
         presetDate: preset,
     })),
 
-    on(analyticsActions.clearGlobalDateRange, () => initialAnalyticsState)
+    on(analyticsActions.clearGlobalDateRange, () => initialAnalyticsState),
+
+    on(analyticsActions.applyDefaultsValues, (state, { preset, candleInterval, timezone }) => ({
+        ...state,
+        presetDate: preset,
+        CandleInterval: candleInterval,
+        timezone: timezone,
+    }))
 );

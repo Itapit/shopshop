@@ -1,3 +1,4 @@
+<ng-template #productsGrid>
 <div *ngIf="mode === 'cartView'" class="main-layout">
     <div class="products-list">
         <app-product-card
@@ -21,6 +22,28 @@
     (onPageChange)="loadProducts($event)"
     [first]="(page - 1) * limit"
     styleClass="mt-4"
-/>
+/> 
 
-<!-- TODO add ngif or something for the loading of the products and visualize error upon calling the loadProducts function-->
+</ng-template>
+<div class="overlay" *ngIf="loading" aria-busy="true" aria-live="polite">
+  <p-progressSpinner strokeWidth="4"></p-progressSpinner>
+  <div class="overlay-text">Loading Products...</div>
+</div>
+
+
+<ng-container *ngIf="loading; else productsGrid">
+  <div class="products-grid skeleton-grid">
+    <div class="card-skeleton" *ngFor="let _ of skeletonItems">
+      <div class="img shimmer"></div>
+      <div class="body">
+        <div class="line shimmer w-70"></div>
+        <div class="line shimmer w-50"></div>
+        <div class="line shimmer w-30"></div>
+        <div class="btn shimmer w-40"></div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+
