@@ -7,13 +7,13 @@ export const analyticsFeatureKey = 'analytics';
 export interface AnalyticsState {
     globalDate: DateRangeObj | null;
     presetDate: DatePresetKey | null;
-    CandleInterval: CandleInterval | null;
+    candleInterval: CandleInterval | null;
     timezone: string | null;
 }
 
 export const initialAnalyticsState: AnalyticsState = {
     globalDate: null,
     presetDate: null,
-    CandleInterval: null,
+    candleInterval: null,
     timezone: null,
 };
