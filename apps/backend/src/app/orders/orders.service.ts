@@ -14,7 +14,6 @@ import { mapOrderToDto } from './order.mapper';
 import { IOrdersRepository, ORDERS_REPOSITORY } from './repository/orders-repository.interface';
 @Injectable()
 export class OrdersService {
-    //TODO use the repo interface token
 
     constructor(
         @Inject(ORDERS_REPOSITORY) private readonly ordersRepo: IOrdersRepository,
