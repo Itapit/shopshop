@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { CandleInterval } from '@common/Enums';
 import { DateRangeObj } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
@@ -9,14 +10,14 @@ import { selectCandleInterval, selectGlobalDate, selectPresetDate, selectTimezon
 const notNull = <T>(v: T | null | undefined): v is T => v != null;
 
 @Injectable({ providedIn: 'root' })
-export class DateRangeFacade {
+export class AnalyticsGlobalFacade {
     private store = inject(Store);
 
     readonly globalRange$ = this.store.select(selectGlobalDate).pipe(filter(notNull));
 
     readonly globalPreset$ = this.store.select(selectPresetDate).pipe(filter(notNull));
 
-    readonly candleInterval = this.store.select(selectCandleInterval);
+    readonly globalCandleInterval$ = this.store.select(selectCandleInterval);
 
     readonly timezone$ = this.store.select(selectTimezone);
 
@@ -26,5 +27,9 @@ export class DateRangeFacade {
 
     setCustom(range: DateRangeObj) {
         this.store.dispatch(analyticsActions.setGlobalByCustomRange({ range }));
+    }
+
+    setInterval(interval: CandleInterval) {
+        this.store.dispatch(analyticsActions.setGlobalCandleInterval({ interval }));
     }
 }

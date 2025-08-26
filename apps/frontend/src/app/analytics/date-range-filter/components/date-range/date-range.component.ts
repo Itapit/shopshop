@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DateRangeObj } from '@common/Interfaces';
-import { DateRangeFacade } from '../../../analytics-master/store/analytics.facade';
+import { AnalyticsGlobalFacade } from '../../../analytics-master/store/analytics.facade';
 import { DatePresetKey, DateRangeOptions } from '../../enums';
 import { DateRangeLocalSignalStore } from '../../signal-store';
 
@@ -18,7 +18,7 @@ export class DateRangeComponent implements OnInit, OnDestroy {
     @Input() mode: DateRangeOptions = DateRangeOptions.Global;
     DatePresetKey = DatePresetKey;
 
-    private facade = inject(DateRangeFacade);
+    private facade = inject(AnalyticsGlobalFacade);
     private parentStore = inject(DateRangeLocalSignalStore, { optional: true, skipSelf: true });
     public local = this.parentStore ?? inject(DateRangeLocalSignalStore);
     //public local = inject(DateRangeLocalSignalStore);

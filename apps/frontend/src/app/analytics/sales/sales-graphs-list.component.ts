@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SalesMetric } from '@common/Enums';
 import { DateRangeObj, SalesStatsRequest } from '@common/Interfaces';
 import { map } from 'rxjs';
+import { CandleIntervalOptions } from '../candle-interval-filter/enums/candle-interval-options.enum';
 import { DateRangeOptions } from '../date-range-filter';
 import { topProductsToChartData } from './services/chart-data-mapper';
 import { SalesAnalyticsCustomService } from './services/sales-analytics-custom.service';
@@ -27,6 +28,7 @@ const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
 export class SalesGraphsListComponent implements OnInit {
     constructor(private specialApi: SalesAnalyticsCustomService) {}
     DateRangeOptions = DateRangeOptions; // expose the enum to html
+    CandleIntervalOptions = CandleIntervalOptions;
 
     private facade = inject(SalesAnalyticsFacade);
 

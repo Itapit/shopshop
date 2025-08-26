@@ -8,6 +8,7 @@ export const analyticsActions = createActionGroup({
     events: {
         'Set Global By Preset': props<{ preset: DatePresetKey }>(),
         'Set Global By Custom Range': props<{ range: DateRangeObj }>(),
+        'Set Global Candle Interval': props<{ interval: CandleInterval }>(),
         'Apply Global Range': props<{ range: DateRangeObj; preset: DatePresetKey }>(),
         'Apply Defaults Values': props<{ preset: DatePresetKey; candleInterval: CandleInterval; timezone: string }>(),
         'Clear Global Date Range': emptyProps(),

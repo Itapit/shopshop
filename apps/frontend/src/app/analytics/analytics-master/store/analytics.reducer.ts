@@ -18,6 +18,11 @@ export const analyticsReducer = createReducer(
         presetDate: preset,
         CandleInterval: candleInterval,
         timezone: timezone,
+    })),
+
+    on(analyticsActions.setGlobalCandleInterval, (state, { interval }) => ({
+        ...state,
+        CandleInterval: interval,
     }))
 );
 

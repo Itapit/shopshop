@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DateRangeObj } from '@common/Interfaces';
 import { ChartData, ChartOptions } from 'chart.js';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { DateRangeFacade } from '../../analytics-master/store/analytics.facade';
+import { AnalyticsGlobalFacade } from '../../analytics-master/store/analytics.facade';
 import { DateRangeLocalSignalStore, DateRangeOptions } from '../../date-range-filter';
 
 type OverviewKeys = 'unitsSold' | 'distinctProducts' | 'newCustomers' | 'profit';
@@ -35,7 +35,7 @@ export class GraphWrapperComponent implements OnInit, OnDestroy {
     loading$!: Observable<boolean>;
     error$!: Observable<string | null>;
 
-    private facade = inject(DateRangeFacade);
+    private facade = inject(AnalyticsGlobalFacade);
     readonly local = inject(DateRangeLocalSignalStore);
 
     readonly globalRangeSig = toSignal(this.facade.globalRange$, { initialValue: null });

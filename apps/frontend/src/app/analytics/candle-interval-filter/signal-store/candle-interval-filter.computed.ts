@@ -18,7 +18,7 @@ function intervalLabel(interval: CandleInterval | null): string {
     }
 }
 
-export function withCandleIntervalLocalComputed() {
+export function withCandleIntervalFilterComputed() {
     return withComputed(({ enabled, localInterval, globalSnapshot }) => ({
         // Use local when enabled & present, otherwise fall back to global snapshot
         effectiveInterval: computed<CandleInterval | null>(() => {
@@ -36,5 +36,12 @@ export function withCandleIntervalLocalComputed() {
 
         // True if there is any effective value global or local
         hasEffective: computed<boolean>(() => (enabled() && !!localInterval()) || !!globalSnapshot()),
+
+        options: computed<{ label: string; value: CandleInterval }[]>(() => [
+            { label: 'Day', value: CandleInterval.Day },
+            { label: 'Week', value: CandleInterval.Week },
+            { label: 'Month', value: CandleInterval.Month },
+            { label: 'Quarter', value: CandleInterval.Quarter },
+        ]),
     }));
 }

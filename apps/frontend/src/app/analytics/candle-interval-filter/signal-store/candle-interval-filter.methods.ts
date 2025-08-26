@@ -1,7 +1,7 @@
 import { CandleInterval } from '@common/Enums';
 import { patchState, withMethods } from '@ngrx/signals';
 
-export function withCandleIntervalLocalMethods() {
+export function withCandleIntervalFilterMethods() {
     return withMethods((store) => {
         return {
             updateGlobalSnapshot(global: CandleInterval | null) {
