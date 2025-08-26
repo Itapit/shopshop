@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AnalyticsComponent } from '../analytics/analytics.component';
+import { AnalyticsMasterComponent } from '../analytics/analytics-master/analytics-master.component';
 import { RouteIds } from '../state/router/route-ids';
 
 const routes: Routes = [
     {
         path: 'stats',
-        component: AnalyticsComponent,
+        component: AnalyticsMasterComponent,
         data: { routeId: RouteIds.AdminStats },
     },
 ];

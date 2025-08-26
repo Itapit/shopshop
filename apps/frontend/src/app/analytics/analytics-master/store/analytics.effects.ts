@@ -3,8 +3,7 @@ import { CandleInterval } from '@common/Enums';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { filter, map } from 'rxjs/operators';
-import { DatePresetKey } from '../date-range-filter/enums';
-import { DateRangeMathService } from '../date-range-filter/services/date-range-math.service';
+import { DatePresetKey, DateRangeMathService } from '../../date-range-filter';
 import { analyticsActions } from './analytics.actions';
 
 @Injectable()

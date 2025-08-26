@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { DateRangeObj } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { DatePresetKey } from '../date-range-filter/enums';
+import { DatePresetKey } from '../../date-range-filter';
 import { analyticsActions } from './analytics.actions';
 import { selectCandleInterval, selectGlobalDate, selectPresetDate, selectTimezone } from './analytics.selectors';
 

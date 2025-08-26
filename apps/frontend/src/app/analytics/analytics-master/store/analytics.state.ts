@@ -1,6 +1,6 @@
 import { CandleInterval } from '@common/Enums';
 import { DateRangeObj } from '@common/Interfaces';
-import { DatePresetKey } from '../date-range-filter/enums';
+import { DatePresetKey } from '../../date-range-filter';
 
 export const analyticsFeatureKey = 'analytics';
 

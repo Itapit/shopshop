@@ -3,8 +3,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DateRangeObj } from '@common/Interfaces';
 import { ChartData, ChartOptions } from 'chart.js';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import { DateRangeFacade } from '../../analytics-master/store/analytics.facade';
 import { DateRangeLocalSignalStore, DateRangeOptions } from '../../date-range-filter';
-import { DateRangeFacade } from '../../store/analytics.facade';
 
 type OverviewKeys = 'unitsSold' | 'distinctProducts' | 'newCustomers' | 'profit';
 
@@ -13,17 +13,17 @@ type Source =
     | { type: 'special'; load: (q: DateRangeObj) => Observable<ChartData<'bar' | 'line'>> };
 
 @Component({
-    selector: 'app-chart-card-wrapper',
+    selector: 'app-graph-wrapper',
     standalone: false,
-    templateUrl: './chart-card-wrapper.component.html',
-    styleUrls: ['./chart-card-wrapper.component.css'],
+    templateUrl: './graph-wrapper.component.html',
+    styleUrls: ['./graph-wrapper.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [DateRangeLocalSignalStore],
 })
-export class ChartCardWrapperComponent implements OnInit, OnDestroy {
+export class GraphWrapperComponent implements OnInit, OnDestroy {
     @Input() title = '';
     @Input({ required: true }) source!: Source;
-    @Input() chartType: 'bar' | 'line' = 'bar';
+    @Input() chartType: 'bar' | 'line' = 'bar'; //TODO make this more generic so it can use more than the bar graph, pie line ect
     @Input() description: string | null = null;
     DateRangeOptions = DateRangeOptions;
 

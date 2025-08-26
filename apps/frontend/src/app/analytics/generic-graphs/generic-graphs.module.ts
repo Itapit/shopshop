@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { SkeletonModule } from 'primeng/skeleton';
 import { DateRangeFilterModule } from '../date-range-filter/date-range.module';
-import { ChartCardWrapperComponent } from './chart-card-wrapper/chart-card-wrapper.component';
-import { ChartCardComponent } from './chart-card/chart-card.component';
+import { BarGraphComponent } from './bar-graph/bar-graph.component';
+import { GraphWrapperComponent } from './graph-wrapper/graph-wrapper.component';
 
 @NgModule({
-    declarations: [ChartCardComponent, ChartCardWrapperComponent],
+    declarations: [BarGraphComponent, GraphWrapperComponent],
     imports: [CommonModule, DateRangeFilterModule, ChartModule, SkeletonModule],
-    exports: [ChartCardComponent, ChartCardWrapperComponent],
+    exports: [GraphWrapperComponent],
 })
-export class ChartsModule {}
+export class GenericGraphsModule {}

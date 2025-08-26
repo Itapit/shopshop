@@ -1,7 +1,7 @@
 import { CandleInterval } from '@common/Enums';
 import { DateRangeObj } from '@common/Interfaces';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { DatePresetKey } from '../date-range-filter/enums';
+import { DatePresetKey } from '../../date-range-filter';
 
 export const analyticsActions = createActionGroup({
     source: 'Analytics',
