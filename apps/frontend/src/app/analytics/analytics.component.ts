@@ -3,7 +3,7 @@ import { SalesMetric } from '@common/Enums';
 import { DateRangeObj } from '@common/Interfaces';
 import { map } from 'rxjs';
 import { DateRangeOptions } from './date-range-filter';
-import { topProductsToChartData } from './services/chart-adapters';
+import { topProductsToChartData } from './services/adapters/top-products-to-chart';
 import { SpecialApi } from './services/special-charts.service';
 
 const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
@@ -44,6 +44,7 @@ export class AnalyticsComponent {
             .pipe(
                 map((resp) =>
                     topProductsToChartData(resp, {
+                        metric: 'quantity',
                         includeTotals: false,
                     })
                 )
@@ -59,6 +60,7 @@ export class AnalyticsComponent {
             .pipe(
                 map((resp) =>
                     topProductsToChartData(resp, {
+                        metric: 'profit',
                         includeTotals: false,
                     })
                 )
