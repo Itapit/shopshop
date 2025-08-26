@@ -15,7 +15,7 @@ export function withDateRangeLocalMethods() {
                 patchState(store, { globalSnapshot: cloneRange(global) });
             },
 
-            /** Enable/disable local override. By default keeps cached local state across OFF→ON. */
+            /** Enable/disable local override. By default keeps cached local state across OFF->ON. */
             setEnabled(enabled: boolean, opts?: { dropCacheOnDisable?: boolean }) {
                 const drop = !!opts?.dropCacheOnDisable;
                 if (!enabled && drop) {
@@ -74,7 +74,7 @@ export function withDateRangeLocalMethods() {
                 return clean;
             },
 
-            /** Manually clear the local cache and allow reseeding on next enable */
+            /** Manually clear the local cache and allow reseeding on next enable        */
             clearCache() {
                 patchState(store, {
                     localRange: null,
