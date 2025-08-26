@@ -1,4 +1,5 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { isValidObjectId } from 'mongoose';
 import {
     CreateProductRequestDto,
     CreateProductResponseDto,
@@ -42,11 +43,17 @@ export class ProductsService {
     }
 
     async GetProductById(id: string): Promise<GetProductByIdResponseDto> {
+        if (!isValidObjectId(id)) {
+            throw new BadRequestException(`Invalid ObjectId: ${id}`);
+        }
         const product = await this.productsRepo.findById(id);
         return new GetProductByIdResponseDto(product);
     }
 
     async DeleteProductById(id: string): Promise<void> {
+        if (!isValidObjectId(id)) {
+            throw new BadRequestException(`Invalid ObjectId: ${id}`);
+        }
         const deleted = await this.productsRepo.deleteById(id);
         if (!deleted) {
             throw new NotFoundException(`Product with id ${id} not found`);
@@ -54,6 +61,9 @@ export class ProductsService {
     }
 
     async updateProduct(id: string, dto: UpdateProductRequestDto): Promise<UpdateProductResponseDto> {
+        if (!isValidObjectId(id)) {
+            throw new BadRequestException(`Invalid ObjectId: ${id}`);
+        }
         const updated = await this.productsRepo.updateById(id, dto);
         if (!updated) {
             throw new NotFoundException(`Product with id ${id} not found`);
