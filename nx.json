@@ -1,99 +1,73 @@
 {
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "namedInputs": {
-        "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": [
-            "default",
-            "!{projectRoot}/.eslintrc.json",
-            "!{projectRoot}/eslint.config.mjs",
-            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-            "!{projectRoot}/tsconfig.spec.json",
-            "!{projectRoot}/jest.config.[jt]s",
-            "!{projectRoot}/src/test-setup.[jt]s",
-            "!{projectRoot}/test-setup.[jt]s",
-            "default"
-        ],
-        "sharedGlobals": []
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "production": [
+      "default"
+    ],
+    "sharedGlobals": []
+  },
+  "targetDefaults": {
+    "@angular-devkit/build-angular:browser": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
+    }
+  },
+  "generators": {
+    "@nx/angular:application": {
+      "e2eTestRunner": "none",
+      "style": "css",
+      "unitTestRunner": "none",
+      "standalone": false
     },
-    "targetDefaults": {
-        "@angular-devkit/build-angular:browser": {
-            "cache": true,
-            "dependsOn": ["^build"],
-            "inputs": ["production", "^production"]
-        },
-        "@nx/js:tsc": {
-            "cache": true,
-            "dependsOn": ["^build"],
-            "inputs": ["production", "^production"]
-        },
-        "@nx/eslint:lint": {
-            "cache": true,
-            "inputs": [
-                "default",
-                "{workspaceRoot}/.eslintrc.json",
-                "{workspaceRoot}/.eslintignore",
-                "{workspaceRoot}/eslint.config.mjs"
-            ]
-        }
+    "@nx/angular:component": {
+      "style": "css",
+      "type": "component",
+      "skipTests": true,
+      "standalone": false
     },
-    "generators": {
-        "@nx/angular:application": {
-            "e2eTestRunner": "none",
-            "style": "css",
-            "unitTestRunner": "none",
-            "standalone": false
-        },
-        "@nx/angular:component": {
-            "style": "css",
-            "type": "component",
-            "skipTests": true,
-            "standalone": false
-        },
-        "@nx/angular:directive": {
-            "type": "directive",
-            "skipTests": true,
-            "standalone": false
-        },
-        "@nx/angular:pipe": {
-            "skipTests": true,
-            "standalone": false
-        },
-        "@nx/angular:service": {
-            "type": "service",
-            "skipTests": true
-        },
-        "@nx/angular:class": {
-            "skipTests": true
-        },
-        "@nx/angular:guard": {
-            "skipTests": true
-        },
-        "@nx/angular:interceptor": {
-            "skipTests": true
-        }
+    "@nx/angular:directive": {
+      "type": "directive",
+      "skipTests": true,
+      "standalone": false
     },
-    "plugins": [
-        {
-            "plugin": "@nx/webpack/plugin",
-            "options": {
-                "buildTargetName": "build",
-                "serveTargetName": "serve",
-                "previewTargetName": "preview",
-                "buildDepsTargetName": "build-deps",
-                "watchDepsTargetName": "watch-deps"
-            }
-        },
-        {
-            "plugin": "@nx/eslint/plugin",
-            "options": {
-                "targetName": "eslint:lint"
-            }
-        },
-        {
-            "plugin": "@nx/jest/plugin",
-            "options": {
-                "targetName": "test"
-            }
-        }
-    ]
+    "@nx/angular:pipe": {
+      "skipTests": true,
+      "standalone": false
+    },
+    "@nx/angular:service": {
+      "type": "service",
+      "skipTests": true
+    },
+    "@nx/angular:class": {
+      "skipTests": true
+    },
+    "@nx/angular:guard": {
+      "skipTests": true
+    },
+    "@nx/angular:interceptor": {
+      "skipTests": true
+    }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/webpack/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
+    }
+  ]
 }
