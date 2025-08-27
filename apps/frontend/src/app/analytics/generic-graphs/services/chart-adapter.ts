@@ -1,132 +1,202 @@
-// src/app/shared/chart-adapter.ts
 import { ChartData } from 'chart.js';
 
 type Agg = 'sum' | 'avg' | 'max' | 'min';
 
 export type LongFormChartConfig<T extends Record<string, any>> = {
-    /** x-axis field, e.g. 'month' */
-    categoryKey: keyof T;
-    /** series/group field, e.g. 'productId' */
-    seriesKey: keyof T;
-    /** numeric value field to plot, e.g. 'quantity' | 'profit' */
-    valueKey: keyof T;
+  /** x-axis field, e.g. 'month' */
+  categoryKey: keyof T;
+  /** series/group field, e.g. 'productId' */
+  seriesKey: keyof T;
+  /** numeric value field to plot, e.g. 'quantity' | 'profit' */
+  valueKey: keyof T;
 
-    /** optional: display label field for series (pretty name), e.g. 'productName' */
-    seriesLabelKey?: keyof T;
-    /** optional: override labels per series id */
-    seriesLabels?: Record<string, string>;
+  /** optional: display label field for series (pretty name), e.g. 'productName' */
+  seriesLabelKey?: keyof T;
+  /** optional: override labels per series id */
+  seriesLabels?: Record<string, string>;
 
-    /** optional: explicit category order (otherwise derived & sorted) */
-    categories?: string[];
-    /** optional: explicit series order (otherwise sorted by total desc) */
-    seriesOrder?: string[];
+  /** optional: explicit category order (otherwise derived & sorted) */
+  categories?: string[];
+  /** optional: explicit series order (otherwise sorted by total desc) */
+  seriesOrder?: string[];
 
-    /** optional: extra dataset of totals aligned to categories */
-    totals?: number[];
+  /** optional: extra dataset of totals aligned to categories */
+  totals?: number[];
 
-    /** how to aggregate duplicates (default: sum) */
-    aggregate?: Agg;
-    /** fill missing cells with (default: 0) */
-    fill?: number;
+  /** how to aggregate duplicates (default: sum) */
+  aggregate?: Agg;
+  /** fill missing cells with (default: 0) */
+  fill?: number;
 };
 
-/**
- * Generic adapter: converts "long-form" rows to Chart.js ChartData.
- * Long-form = one row per (category, series) with a numeric value.
- */
-export function toChartDataLong<T extends Record<string, any>>(
-    rows: T[],
-    cfg: LongFormChartConfig<T>
-): ChartData<'bar' | 'line'> {
-    const fill = cfg.fill ?? 0;
-    const agg: Agg = cfg.aggregate ?? 'sum';
+type NumMatrix = Record<string, number[]>;
 
-    // categories (x-axis)
-    const categories: string[] =
-        cfg.categories ?? Array.from(new Set(rows.map((r) => String(r[cfg.categoryKey])))).sort();
+function computeCategories<T extends Record<string, any>>(
+  rows: T[],
+  key: keyof T,
+  explicit?: string[],
+) {
+  const categories =
+    explicit ??
+    Array.from(new Set(rows.map((r) => String(r[key])))).sort();
 
-    const catIndex = new Map(categories.map((c, i) => [c, i]));
+  const catIndex = new Map(categories.map((c, i) => [c, i]));
+  return { categories, catIndex };
+}
 
-    // collect series ids
-    const seriesIds = Array.from(new Set(rows.map((r) => String(r[cfg.seriesKey])))).filter(Boolean);
+function collectSeriesIds<T extends Record<string, any>>(
+  rows: T[],
+  seriesKey: keyof T,
+) {
+  return Array.from(
+    new Set(rows.map((r) => String(r[seriesKey]))),
+  ).filter(Boolean);
+}
 
-    // init matrix
-    const bySeries: Record<string, number[]> = {};
-    for (const sid of seriesIds) bySeries[sid] = Array(categories.length).fill(fill);
+function initMatrix(seriesIds: string[], cols: number, fill: number): NumMatrix {
+  const by: NumMatrix = {};
+  for (const id of seriesIds) by[id] = Array(cols).fill(fill);
+  return by;
+}
 
-    // avg support (keep counts)
-    const counts: Record<string, number[]> | null =
-        agg === 'avg' ? Object.fromEntries(seriesIds.map((s) => [s, Array(categories.length).fill(0)])) : null;
+function maybeInitCounts(
+  agg: Agg,
+  seriesIds: string[],
+  cols: number,
+): NumMatrix | undefined {
+  if (agg !== 'avg') return;
+  const counts: NumMatrix = {};
+  for (const id of seriesIds) counts[id] = Array(cols).fill(0);
+  return counts;
+}
 
-    // aggregate helper
-    const reduceVal = (a: number, b: number) =>
-        agg === 'sum'
-            ? a + b
-            : agg === 'max'
-              ? Math.max(a, b)
-              : agg === 'min'
-                ? Math.min(a, b)
-                : /* avg intermediate */ a + b;
+function reducerFor(agg: Agg) {
+  return (a: number, b: number) =>
+    agg === 'sum'
+      ? a + b
+      : agg === 'max'
+      ? Math.max(a, b)
+      : agg === 'min'
+      ? Math.min(a, b)
+      : a + b;
+}
 
-    // fill matrix
-    for (const r of rows) {
-        const sid = String(r[cfg.seriesKey]);
-        const cat = String(r[cfg.categoryKey]);
-        const i = catIndex.get(cat);
-        if (!sid || i == null) continue;
+function aggregateRows<T extends Record<string, any>>(
+  rows: T[],
+  cfg: LongFormChartConfig<T>,
+  catIndex: Map<string, number>,
+  bySeries: NumMatrix,
+  counts?: NumMatrix,
+) {
+  const agg = cfg.aggregate ?? 'sum';
+  const reduceVal = reducerFor(agg);
 
-        const raw = r[cfg.valueKey];
-        const v = typeof raw === 'number' ? raw : Number(raw ?? 0);
+  for (const r of rows) {
+    const sid = String(r[cfg.seriesKey]);
+    const cat = String(r[cfg.categoryKey]);
+    const i = catIndex.get(cat);
+    if (!sid || i == null) continue;
 
-        if (agg === 'avg') {
-            bySeries[sid][i] = bySeries[sid][i] + v;
-            (counts as any)[sid][i] = (counts as any)[sid][i] + 1;
-        } else {
-            bySeries[sid][i] = reduceVal(bySeries[sid][i], v);
-        }
-    }
+    const raw = r[cfg.valueKey];
+    const v = typeof raw === 'number' ? raw : Number(raw ?? 0);
 
     if (agg === 'avg') {
-        for (const sid of seriesIds) {
-            for (let i = 0; i < categories.length; i++) {
-                const c = (counts as any)[sid][i];
-                if (c > 0) bySeries[sid][i] = bySeries[sid][i] / c;
-            }
-        }
-    }
-
-    // label resolver for series
-    const labelOf = (sid: string): string => {
-        if (cfg.seriesLabels?.[sid]) return cfg.seriesLabels[sid]!;
-        if (cfg.seriesLabelKey) {
-            const row = rows.find((x) => String(x[cfg.seriesKey]) === sid && x[cfg.seriesLabelKey!]);
-            if (row) return String(row[cfg.seriesLabelKey!]);
-        }
-        return sid;
-    };
-
-    // decide order of series (datasets)
-    let ordered: string[];
-    if (cfg.seriesOrder?.length) {
-        const present = new Set(seriesIds);
-        ordered = cfg.seriesOrder.filter((id) => present.has(id));
+      bySeries[sid][i] = bySeries[sid][i] + v;
+      if (counts) counts[sid][i] = counts[sid][i] + 1;
     } else {
-        ordered = [...seriesIds].sort((a, b) => {
-            const ta = bySeries[a].reduce((s, v) => s + v, 0);
-            const tb = bySeries[b].reduce((s, v) => s + v, 0);
-            return tb - ta;
-        });
+      bySeries[sid][i] = reduceVal(bySeries[sid][i], v);
     }
+  }
+}
 
-    // datasets
-    const datasets = ordered.map((sid) => ({
-        label: labelOf(sid),
-        data: bySeries[sid],
-    }));
-
-    if (cfg.totals && cfg.totals.length === categories.length) {
-        datasets.push({ label: 'Total', data: cfg.totals });
+function finalizeAverages(bySeries: NumMatrix, counts?: NumMatrix) {
+  if (!counts) return;
+  for (const sid of Object.keys(bySeries)) {
+    const row = bySeries[sid];
+    const cnt = counts[sid];
+    for (let i = 0; i < row.length; i++) {
+      if (cnt[i] > 0) row[i] = row[i] / cnt[i];
     }
+  }
+}
 
-    return { labels: categories, datasets };
+function makeSeriesLabelResolver<T extends Record<string, any>>(
+  rows: T[],
+  cfg: LongFormChartConfig<T>,
+) {
+  return (sid: string): string => {
+    if (cfg.seriesLabels?.[sid]) return cfg.seriesLabels[sid]!;
+    if (cfg.seriesLabelKey) {
+      const row = rows.find(
+        (x) => String(x[cfg.seriesKey]) === sid && x[cfg.seriesLabelKey!],
+      );
+      if (row) return String(row[cfg.seriesLabelKey!]);
+    }
+    return sid;
+  };
+}
+
+function orderSeries(
+  seriesIds: string[],
+  bySeries: NumMatrix,
+  explicit?: string[],
+) {
+  if (explicit?.length) {
+    const present = new Set(seriesIds);
+    return explicit.filter((id) => present.has(id));
+  }
+  
+  return [...seriesIds].sort((a, b) => {
+    const ta = bySeries[a].reduce((s, v) => s + v, 0);
+    const tb = bySeries[b].reduce((s, v) => s + v, 0);
+    return tb - ta;
+  });
+}
+
+function buildDatasets(
+  orderedIds: string[],
+  bySeries: NumMatrix,
+  labelOf: (sid: string) => string,
+  categoriesLen: number,
+  totals?: number[],
+) {
+  const datasets = orderedIds.map((sid) => ({
+    label: labelOf(sid),
+    data: bySeries[sid],
+  }));
+
+  if (totals && totals.length === categoriesLen) {
+    datasets.push({ label: 'Total', data: totals });
+  }
+  return datasets;
+}
+
+
+export function toChartDataLong<T extends Record<string, any>>(
+  rows: T[],
+  cfg: LongFormChartConfig<T>,
+): ChartData<'bar' | 'line'> {
+  const fill = cfg.fill ?? 0;
+  const agg: Agg = cfg.aggregate ?? 'sum';
+
+  
+  const { categories, catIndex } = computeCategories(rows, cfg.categoryKey, cfg.categories);
+
+  
+  const seriesIds = collectSeriesIds(rows, cfg.seriesKey);
+  const bySeries = initMatrix(seriesIds, categories.length, fill);
+  const counts = maybeInitCounts(agg, seriesIds, categories.length);
+
+  
+  aggregateRows(rows, cfg, catIndex, bySeries, counts);
+  finalizeAverages(bySeries, counts);
+
+  
+  const labelOf = makeSeriesLabelResolver(rows, cfg);
+  const ordered = orderSeries(seriesIds, bySeries, cfg.seriesOrder);
+
+  
+  const datasets = buildDatasets(ordered, bySeries, labelOf, categories.length, cfg.totals);
+
+  return { labels: categories, datasets };
 }

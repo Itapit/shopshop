@@ -12,18 +12,20 @@ import { SalesMasterListComponent } from './sales-master-list.component';
 import { SalesAnalyticsEffects } from './store/sales-analytics.effects';
 import { salesAnalyticsReducer } from './store/sales-analytics.reducer';
 import { salesAnalyticsFeatureKey } from './store/sales-analytics.state';
+import { FireworksOnDirective } from "../analytics-master/directives/fireworks-on.directive";
 
 @NgModule({
     imports: [
-        CommonModule,
-        StoreModule.forFeature(salesAnalyticsFeatureKey, salesAnalyticsReducer),
-        EffectsModule.forFeature(SalesAnalyticsEffects),
-        GenericGraphsModule,
-        DateRangeFilterModule,
-        CandleIntervalFilterModule,
-        DividerModule,
-        CardModule,
-    ],
+    CommonModule,
+    StoreModule.forFeature(salesAnalyticsFeatureKey, salesAnalyticsReducer),
+    EffectsModule.forFeature(SalesAnalyticsEffects),
+    GenericGraphsModule,
+    DateRangeFilterModule,
+    CandleIntervalFilterModule,
+    DividerModule,
+    CardModule,
+    FireworksOnDirective
+],
     declarations: [SalesMasterListComponent, SalesKpiListComponent],
     exports: [SalesMasterListComponent],
 })

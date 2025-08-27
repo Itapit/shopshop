@@ -73,17 +73,20 @@ export class ProductsRepository implements IProductsRepository {
             [sortBy]: 1,
         };
 
-        const [docs, totalCount] = await Promise.all([
+        const filter = { name: { $regex: keyword, $options: 'i' } };
+
+        const [docs] = await Promise.all([
             this.productModel
-                .find({ name: { $regex: keyword } })
+                .find(filter)
                 .skip(skip)
                 .limit(limit)
                 .sort(sort)
                 .exec(),
-            this.productModel.countDocuments().exec(),
+            
         ]);
 
         const products = docs.map(mapToProductDto);
+        const totalCount = docs.length;
 
         return { products, totalCount };
     }
