@@ -1,25 +1,18 @@
-# ---------- Builder ----------
-FROM node:20-alpine AS builder
-WORKDIR /workspace
-RUN apk add --no-cache python3 make g++ libc6-compat
+# --- Super simple single-stage Dockerfile ---
+FROM node:20-alpine
+WORKDIR /app
+
+# 1) Install deps once (for build + runtime)
 COPY package*.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
+
+# 2) Copy source and build
 COPY . .
 RUN npx nx build backend
 
-# ---------- Runner ----------
-FROM node:20-alpine AS runner
-WORKDIR /workspace
-ENV NODE_ENV=production
-# let npm ignore peer conflicts during install
-ENV NPM_CONFIG_LEGACY_PEER_DEPS=true
+# 3) Drop dev deps to slim down (keeps /app/node_modules)
+# RUN npm prune --omit=dev
 
-COPY package*.json ./
-# install only production deps
-RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev
-
-# bring in compiled app
-COPY --from=builder /workspace/dist ./dist
-
+# 4) Run the server using root node_modules (Node will find them)
 EXPOSE 3000
-CMD ["node", "dist/apps/backend/main.js"]
+CMD ["node", "dist/backend/main.js"]
