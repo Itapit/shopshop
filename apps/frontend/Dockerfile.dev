@@ -1,14 +1,13 @@
-# ---------- Builder ----------
-FROM node:20-alpine AS builder
-WORKDIR /workspace
+# --- Build Angular app ---
+FROM node:20-alpine AS build
+WORKDIR /app
 COPY package*.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci
+RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npx nx build frontend --configuration=production
 
-# ---------- Runner (Nginx) ----------
-FROM nginx:alpine AS runner
+# --- Serve with Nginx ---
+FROM nginx:alpine
 COPY apps/frontend/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /workspace/dist/apps/frontend /usr/share/nginx/html
+COPY --from=build /app/dist/apps/frontend /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
