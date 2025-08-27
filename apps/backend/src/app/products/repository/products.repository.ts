@@ -57,7 +57,7 @@ export class ProductsRepository implements IProductsRepository {
     }
 
     async updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null> {
-        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { new: false }).exec();
+        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { returnDocument: 'after' }).exec();
         return updatedDoc ? mapToProductDto(updatedDoc) : null;
     }
 

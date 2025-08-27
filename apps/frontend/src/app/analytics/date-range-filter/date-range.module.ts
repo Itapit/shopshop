@@ -33,6 +33,6 @@ import { PresetLabelPipe } from './pipes/preset-label.pipe';
         ChipModule,
         FormsModule,
     ],
-    exports: [DateRangeComponent],
+    exports: [DateRangeComponent, DateOverrideToggleComponent],
 })
 export class DateRangeFilterModule {}
