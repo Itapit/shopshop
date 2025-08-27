@@ -8,7 +8,7 @@ import { DateRangeLocalSignalStore, DateRangeOptions } from '../../date-range-fi
 
 
 
-type Source = { type: 'special'; load: (q: DateRangeObj) => Observable<ChartData<'bar' | 'line'>> };
+type Source = { type: 'special'; load: (q: DateRangeObj) => Observable<ChartData<ChartType>> };
 
 @Component({
     selector: 'app-graph-wrapper',
