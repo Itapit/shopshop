@@ -1,18 +1,8 @@
-# --- Super simple single-stage Dockerfile ---
 FROM node:20-alpine
 WORKDIR /app
-
-# 1) Install deps once (for build + runtime)
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
-
-# 2) Copy source and build
 COPY . .
 RUN npx nx build backend
-
-# 3) Drop dev deps to slim down (keeps /app/node_modules)
-# RUN npm prune --omit=dev
-
-# 4) Run the server using root node_modules (Node will find them)
 EXPOSE 3000
 CMD ["node", "dist/backend/main.js"]
