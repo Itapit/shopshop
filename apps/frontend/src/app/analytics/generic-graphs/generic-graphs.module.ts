@@ -5,10 +5,11 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { DateRangeFilterModule } from '../date-range-filter/date-range.module';
 import { BarGraphComponent } from './bar-graph/bar-graph.component';
 import { GraphWrapperComponent } from './graph-wrapper/graph-wrapper.component';
+import { KpiTileComponent } from './kpi-tile/kpi-tile.component';
 
 @NgModule({
-    declarations: [BarGraphComponent, GraphWrapperComponent],
+    declarations: [BarGraphComponent, GraphWrapperComponent, KpiTileComponent],
     imports: [CommonModule, DateRangeFilterModule, ChartModule, SkeletonModule],
-    exports: [GraphWrapperComponent],
+    exports: [GraphWrapperComponent, KpiTileComponent],
 })
 export class GenericGraphsModule {}
