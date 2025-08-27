@@ -34,6 +34,8 @@ import { AppStoreModule } from './state/app-store/app-store.module';
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             name: 'shopshop ngrx',
+            trace: true,
+            traceLimit: 25,
         }),
     ],
     providers: [

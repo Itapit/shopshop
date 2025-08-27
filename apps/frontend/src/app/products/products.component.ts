@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Role } from '@common/Enums';
 import { GetProductsListResponse, ProductFull } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, map, Observable, of, shareReplay, switchMap, timer } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { selectRole } from '../auth/store/auth.selectors';
 import { AuthState } from '../auth/store/auth.state';
 import { productListOptionsEnum } from './product-list/product-list-options.enum';
@@ -37,7 +37,7 @@ export class ProductsComponent {
                       : productListOptionsEnum.PublicView
             )
         );
-    
+
     // readonly MIN_LOADER_MS = 300; // tweak: 250–400 feels great
 
     loading$ = this.store.select(selectProductsLoading);

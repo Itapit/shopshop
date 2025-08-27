@@ -1,12 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SalesMetric } from '@common/Enums';
-import { DateRangeObj, SalesStatsRequest } from '@common/Interfaces';
+import { DateRangeObj } from '@common/Interfaces';
 import { map } from 'rxjs';
 import { CandleIntervalOptions } from '../candle-interval-filter/enums/candle-interval-options.enum';
 import { DateRangeOptions } from '../date-range-filter';
 import { topProductsToChartData } from './services/chart-data-mapper';
 import { SalesAnalyticsCustomService } from './services/sales-analytics-custom.service';
-import { SalesAnalyticsFacade } from './store/sales-analytics.facade';
 
 const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
     const parts = new Intl.DateTimeFormat('en-CA', {
@@ -25,12 +24,10 @@ const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
     templateUrl: './sales-graphs-list.component.html',
     styleUrl: './sales-graphs-list.component.css',
 })
-export class SalesGraphsListComponent implements OnInit {
+export class SalesGraphsListComponent {
     constructor(private specialApi: SalesAnalyticsCustomService) {}
     DateRangeOptions = DateRangeOptions; // expose the enum to html
     CandleIntervalOptions = CandleIntervalOptions;
-
-    private facade = inject(SalesAnalyticsFacade);
 
     loadTopQty = (q: DateRangeObj) =>
         this.specialApi
@@ -64,12 +61,4 @@ export class SalesGraphsListComponent implements OnInit {
                     })
                 )
             );
-
-    ngOnInit(): void {
-        this.facade.loadSalesGeneralStats({
-            dateRange: { start: '2025-06-01T00:00:00.000Z', end: '2025-08-26T23:59:59.999Z' },
-            candleInterval: 'day',
-            timezone: 'Asia/Jerusalem',
-        } as SalesStatsRequest);
-    }
 }
