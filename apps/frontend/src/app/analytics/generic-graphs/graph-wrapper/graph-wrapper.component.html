@@ -1,12 +1,14 @@
-<h3>{{ title }}</h3>
+<p-card>
+    <h3>{{ title }}</h3>
 
-<app-bar-graph
-    [data]="(data$ | async) || { labels: [], datasets: [] }"
-    [options]="options"
-    [loading]="(loading$ | async) ?? false"
-    [error]="(error$ | async) ?? null"
-    [description]="description"
->
-    <app-date-range card-actions [mode]="DateRangeOptions.Local"></app-date-range>
-    <ng-content select="[card-actions]"></ng-content>
-</app-bar-graph>
+    <app-bar-graph
+        [data]="(data$ | async) || { labels: [], datasets: [] }"
+        [options]="options"
+        [loading]="(loading$ | async) ?? false"
+        [error]="(error$ | async) ?? null"
+        [description]="description"
+    >
+        <app-date-range card-actions [mode]="DateRangeOptions.Local"></app-date-range>
+        <ng-content select="[card-actions]"></ng-content>
+    </app-bar-graph>
+</p-card>

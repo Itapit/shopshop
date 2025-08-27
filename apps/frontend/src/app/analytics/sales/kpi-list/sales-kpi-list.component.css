@@ -1,0 +1,45 @@
+:host {
+    display: block;
+    /* enable container queries if you want later */
+    /* container-type: inline-size; */
+}
+
+/* Responsive, equal-height grid */
+.kpi-grid {
+    --kpi-min: 220px; /* min tile width */
+    --kpi-gap: 12px; /* gap between tiles */
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--kpi-min), 1fr));
+    gap: var(--kpi-gap);
+
+    /* make each row's items the same height */
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+}
+
+/* Ensure each tile fills its grid cell height */
+.kpi-grid app-kpi-tile {
+    height: 100%;
+}
+
+/* Density presets (optional): add class on the wrapper div */
+.kpi-grid.compact {
+    --kpi-min: 180px;
+    --kpi-gap: 8px;
+}
+.kpi-grid.cozy {
+    --kpi-min: 240px;
+    --kpi-gap: 12px;
+}
+.kpi-grid.comfy {
+    --kpi-min: 280px;
+    --kpi-gap: 16px;
+}
+
+/* Small screens: allow 2-up before collapsing to single */
+@media (max-width: 480px) {
+    .kpi-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+}

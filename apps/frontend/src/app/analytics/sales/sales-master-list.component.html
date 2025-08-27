@@ -2,6 +2,13 @@
     <app-date-range [mode]="DateRangeOptions.Global"></app-date-range>
     <app-candle-interval-filter [mode]="CandleIntervalOptions.Global"></app-candle-interval-filter>
 </section>
+
+<p-divider></p-divider>
+<p-card>
+    <sales-app-kpi-list></sales-app-kpi-list>
+</p-card>
+<p-divider></p-divider>
+
 <app-graph-wrapper
     [title]="'Top Products by Quantity'"
     [source]="{ type: 'special', load: loadTopQty }"
