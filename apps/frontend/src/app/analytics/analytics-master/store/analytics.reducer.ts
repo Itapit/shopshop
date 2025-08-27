@@ -1,4 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { logoutSuccess } from '../../../auth/store/auth.actions';
 import { analyticsActions } from './analytics.actions';
 import { analyticsFeatureKey, initialAnalyticsState } from './analytics.state';
 
@@ -23,7 +24,9 @@ export const analyticsReducer = createReducer(
     on(analyticsActions.setGlobalCandleInterval, (state, { interval }) => ({
         ...state,
         candleInterval: interval,
-    }))
+    })),
+
+    on(logoutSuccess, () => initialAnalyticsState)
 );
 
 export const analyticsFeature = createFeature({

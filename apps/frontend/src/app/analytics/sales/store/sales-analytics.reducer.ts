@@ -1,4 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { logoutSuccess } from '../../../auth/store/auth.actions';
 import { salesAnalyticsActions } from './sales-analytics.actions';
 import { initialSalesAnalyticsState, salesAnalyticsFeatureKey } from './sales-analytics.state';
 
@@ -25,7 +26,8 @@ export const salesAnalyticsReducer = createReducer(
         ...state,
         loading: false,
         error: error,
-    }))
+    })),
+    on(logoutSuccess, () => initialSalesAnalyticsState)
 );
 
 export const salesAnalyticsFeature = createFeature({
