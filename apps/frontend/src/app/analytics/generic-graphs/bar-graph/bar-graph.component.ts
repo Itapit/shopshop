@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
 
 @Component({
     selector: 'app-bar-graph',
@@ -14,4 +14,5 @@ export class BarGraphComponent {
     @Input() loading = false;
     @Input() error: string | null = null;
     @Input() description: string | null = null;
+    @Input({required:true}) chartType!: ChartType ;
 }
