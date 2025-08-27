@@ -1,7 +1,7 @@
 <p-card>
     <h3>{{ title }}</h3>
 
-    <app-bar-graph
+    <app-graph
         [data]="(data$ | async) || { labels: [], datasets: [] }"
         [options]="options"
         [loading]="(loading$ | async) ?? false"
@@ -11,5 +11,5 @@
     >
         <app-date-range card-actions [mode]="DateRangeOptions.Local"></app-date-range>
         <ng-content select="[card-actions]"></ng-content>
-    </app-bar-graph>
+    </app-graph>
 </p-card>

@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 
 @Component({
-    selector: 'app-bar-graph',
+    selector: 'app-graph',
     standalone: false,
-    templateUrl: './bar-graph.component.html',
-    styleUrls: ['./bar-graph.component.css'],
+    templateUrl: './graph.component.html',
+    styleUrls: ['./graph.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarGraphComponent {
+export class GraphComponent {
     @Input() data!: ChartData;
     @Input() options: ChartOptions = {};
     @Input() loading = false;
