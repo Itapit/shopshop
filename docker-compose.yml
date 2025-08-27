@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile.ronen 
+    image: shopshop-backend:prod
+    container_name: shopshop-backend
+    env_file: .env
+    ports:
+      - "3000:3000"   # optional to expose to host; keep for easy debugging
+    # healthcheck:
+    #   test: ["CMD-SHELL", "wget -qO- http://localhost:3000/health || exit 1"]
+    #   interval: 10s
+    #   timeout: 3s
+    #   retries: 10
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile.ronen
+    image: shopshop-frontend:prod
+    container_name: shopshop-frontend
+    depends_on:
+      - backend
+        # condition: service_healthy
+    ports:
+      - "8080:80"
