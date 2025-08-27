@@ -1,0 +1,19 @@
+<header class="card-header">
+    <div class="actions">
+        <ng-content select="[card-actions]"></ng-content>
+    </div>
+</header>
+
+<section class="card-body" style="height: 320px">
+    <p-skeleton *ngIf="loading" height="100%"></p-skeleton>
+    <ng-container *ngIf="!loading && !error">
+        <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+    </ng-container>
+    <p *ngIf="error" class="error">{{ error }}</p>
+</section>
+
+<footer class="card-footer" *ngIf="description">
+    <span class="info-chip"><i class="pi pi-info"></i></span>
+    <div class="description" *ngIf="description">{{ description }}</div>
+    <ng-content select="[card-description]"></ng-content>
+</footer>

@@ -1,13 +1,34 @@
-<nav class="flex justify-content-between align-items-center px-4 py-3 shadow-2 surface-card">
-  <div class="text-xl font-bold">
-    <app-website-logo></app-website-logo>
-  </div>
+<nav class="navbar">
+    <div class="logo">
+        <app-website-logo></app-website-logo>
+    </div>
 
-  <div class="w-full max-w-30rem mx-4 hidden md:block">
-    <app-search-products></app-search-products>
-  </div>
+    @if (vm$ | async; as vm) {
+        @if (vm.showSearch) {
+            <div class="search">
+                <app-search-products></app-search-products>
+            </div>
+        }
 
-  <div class="flex align-items-center gap-3">
-    <app-sign-in-link></app-sign-in-link>
-  </div>
+        <div class="actions">
+            @if (vm.showCartLink) {
+                <app-cart-link></app-cart-link>
+            }
+            @if (vm.showSignInLink) {
+                <app-sign-in-link></app-sign-in-link>
+            }
+            @if (vm.showSignUpLink) {
+                <app-sign-up-link></app-sign-up-link>
+            }
+            @if (vm.showStatsLink) {
+                <app-stats-link></app-stats-link>
+            }
+            @if (vm.showOrderLink) {
+                <app-order-link></app-order-link>
+            }
+            @if (vm.showLogoutLink) {
+                <app-log-out></app-log-out>
+            }
+        </div>
+    }
 </nav>

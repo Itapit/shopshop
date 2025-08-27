@@ -1,0 +1,6 @@
+<app-product-list
+    [mode]="(productListMode$ | async) ?? productListOptionsEnum.PublicView"
+    [fetchFunction]="fetchProducts"
+    [loading]="(loading$ | async) ?? false "
+    [totalRecords]="productsResponse?.totalCount || 0"
+/>

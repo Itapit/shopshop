@@ -1,0 +1,23 @@
+<div class="panel" *ngIf="open">
+    <p-calendar
+        [(ngModel)]="selected"
+        selectionMode="range"
+        [disabled]="disabled"
+        [inline]="true"
+        [defaultDate]="defaultDate"
+        (ngModelChange)="onModelChange($event)"
+    >
+    </p-calendar>
+
+    <div class="actions">
+        <button pButton type="button" label="Cancel" class="p-button-text" (click)="onCancel()"></button>
+        <button
+            pButton
+            type="button"
+            label="Apply"
+            icon="pi pi-check"
+            (click)="onApply()"
+            [disabled]="!selected || selected.length < 2"
+        ></button>
+    </div>
+</div>
