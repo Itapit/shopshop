@@ -6,11 +6,9 @@ import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { AnalyticsGlobalFacade } from '../../analytics-master/store/analytics.facade';
 import { DateRangeLocalSignalStore, DateRangeOptions } from '../../date-range-filter';
 
-type OverviewKeys = 'unitsSold' | 'distinctProducts' | 'newCustomers' | 'profit';
 
-type Source =
-    | { type: 'overview'; keys: OverviewKeys[] }
-    | { type: 'special'; load: (q: DateRangeObj) => Observable<ChartData<'bar' | 'line'>> };
+
+type Source = { type: 'special'; load: (q: DateRangeObj) => Observable<ChartData<'bar' | 'line'>> };
 
 @Component({
     selector: 'app-graph-wrapper',
@@ -45,6 +43,7 @@ export class GraphWrapperComponent implements OnInit, OnDestroy {
         maintainAspectRatio: false,
         plugins: { legend: { position: 'bottom' } },
         scales: { y: { beginAtZero: true } },
+        layout: { padding: 0 }
     };
 
     readonly query = computed<DateRangeObj | null>(() => {
@@ -67,21 +66,19 @@ export class GraphWrapperComponent implements OnInit, OnDestroy {
             });
     });
 
-    private seed = effect(() => {
-        const g = this.globalRangeSig();
-        if (g) this.local.updateGlobalSnapshot(g);
-    });
+    // private seed = effect(() => {
+    //     const g = this.globalRangeSig();
+    //     if (g) this.local.updateGlobalSnapshot(g);
+    // });
 
     private cancelPrevious?: () => void;
 
     ngOnInit(): void {
-        if (this.source.type === 'overview') {
-            return;
-        } else {
+        
             this.data$ = this.dataSub.asObservable();
             this.loading$ = this.loadingSub.asObservable();
             this.error$ = this.errorSub.asObservable();
-        }
+        
     }
 
     ngOnDestroy(): void {
