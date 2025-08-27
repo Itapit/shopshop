@@ -51,8 +51,6 @@ export class ProductsComponent {
 
     ngOnInit() {
         this.products$ = this.store.select(selectProductsState).pipe(map((state) => state.items));
-
-        this.store.dispatch(loadProducts({ page: 1, limit: 14, keyword: '' }));
     }
 
     fetchProducts = (page: number, limit: number, keyword: string): Observable<ProductFull[]> => {
