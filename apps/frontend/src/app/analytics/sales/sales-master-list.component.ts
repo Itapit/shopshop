@@ -19,12 +19,12 @@ const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
 };
 
 @Component({
-    selector: 'app-sales-graphs-list',
+    selector: 'app-sales-master-list',
     standalone: false,
-    templateUrl: './sales-graphs-list.component.html',
-    styleUrl: './sales-graphs-list.component.css',
+    templateUrl: './sales-master-list.component.html',
+    styleUrl: './sales-master-list.component.css',
 })
-export class SalesGraphsListComponent {
+export class SalesMasterListComponent {
     constructor(private specialApi: SalesAnalyticsCustomService) {}
     DateRangeOptions = DateRangeOptions; // expose the enum to html
     CandleIntervalOptions = CandleIntervalOptions;
