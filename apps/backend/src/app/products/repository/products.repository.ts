@@ -57,7 +57,7 @@ export class ProductsRepository implements IProductsRepository {
     }
 
     async updateById(id: string, update: Partial<ProductBase>): Promise<ProductDto | null> {
-        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { new: false }).exec();
+        const updatedDoc = await this.productModel.findByIdAndUpdate(id, update, { returnDocument: 'after' }).exec();
         return updatedDoc ? mapToProductDto(updatedDoc) : null;
     }
 
@@ -73,17 +73,12 @@ export class ProductsRepository implements IProductsRepository {
             [sortBy]: 1,
         };
 
-        const [docs, totalCount] = await Promise.all([
-            this.productModel
-                .find({ name: { $regex: keyword } })
-                .skip(skip)
-                .limit(limit)
-                .sort(sort)
-                .exec(),
-            this.productModel.countDocuments().exec(),
-        ]);
+        const filter = { name: { $regex: keyword, $options: 'i' } };
+
+        const [docs] = await Promise.all([this.productModel.find(filter).skip(skip).limit(limit).sort(sort).exec()]);
 
         const products = docs.map(mapToProductDto);
+        const totalCount = docs.length;
 
         return { products, totalCount };
     }

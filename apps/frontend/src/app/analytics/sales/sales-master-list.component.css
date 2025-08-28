@@ -1,0 +1,139 @@
+/* ---------- design tokens ---------- */
+:root {
+    --surface: #f6f7fb;
+    --card-bg: #fff;
+    --card-border: #e7ecf3;
+    --card-shadow: 0 10px 28px rgba(16, 24, 40, 0.08);
+    --text-strong: #0f172a;
+    --text-muted: #6b7280;
+    --brand: #3b82f6;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --surface: #0b1220;
+        --card-bg: #0f172a;
+        --card-border: #1d2840;
+        --card-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        --text-strong: #e7e7e7;
+        --text-muted: #a3adc2;
+    }
+}
+
+/* ---------- page background ---------- */
+:host {
+    display: block;
+    background: var(--surface);
+    padding: 24px;
+}
+
+/* Center the charts and control their width without wrapping HTML */
+app-chart-card-wrapper {
+    display: block;
+    max-width: 1180px;
+    margin: 0 auto 28px auto;
+
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    box-shadow: var(--card-shadow);
+
+    /* Some wrappers render their own padding; this ensures breathing room anyway */
+    padding: 16px 18px 22px;
+
+    /* subtle appear animation */
+    animation: fadeUp 0.35s ease both;
+}
+app-chart-card-wrapper + app-chart-card-wrapper {
+    margin-top: 10px;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional accent line under the title the wrapper prints */
+app-chart-card-wrapper::part(header),
+app-chart-card-wrapper .chart-title {
+    /* If your wrapper exposes a part or a class; harmless otherwise */
+    color: var(--text-strong);
+    font-weight: 700;
+}
+app-chart-card-wrapper::part(subtitle) {
+    color: var(--text-muted);
+}
+
+/* Make any canvas inside the wrapper nicely sized and responsive */
+app-chart-card-wrapper canvas {
+    width: 100% !important;
+    height: 340px !important; /* tweak to 300–380 as you like */
+    display: block;
+}
+@media (min-width: 1200px) {
+    app-chart-card-wrapper canvas {
+        height: 380px !important;
+    }
+}
+
+/* ---------- bottom fixed global filter bar ---------- */
+.global-filter-bar.bottom-fixed {
+    position: sticky; /* sticks near bottom of viewport */
+    bottom: 12px;
+    z-index: 30;
+    display: flex;
+    justify-content: center;
+    padding: 12px 16px;
+    margin-top: 12px;
+
+    max-width: 1180px;
+    margin-inline: auto;
+
+    background: color-mix(in srgb, var(--card-bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: var(--card-shadow);
+}
+
+/* If your <app-date-range> renders buttons/inputs, give them some spacing */
+.global-filter-bar app-date-range {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ---------- fireworks overlay host (so it won't block clicks) ---------- */
+[appFireworksOn] {
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- (Optional) if wrappers contain PrimeNG <p-chart> ---------- */
+app-chart-card-wrapper .p-chart,
+app-chart-card-wrapper .p-chart canvas {
+    width: 100% !important;
+    height: 340px !important;
+}
+
+/* ---------- If you need to reach inside child templates from this file ---------- */
+/* Angular component styles don't normally penetrate children.
+   Use ::ng-deep (scoped, not global) only if necessary. */
+:host ::ng-deep app-chart-card-wrapper .chart-header {
+    /* example: style an internal header in the wrapper if it exists */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+}
+:host ::ng-deep app-chart-card-wrapper .chart-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+}

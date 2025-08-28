@@ -1,0 +1,25 @@
+<div class="kpi">
+    <div class="kpi__label">{{ label }}</div>
+
+    @if (isReady) {
+        @switch (format) {
+            @case (FormatOptions.Currency) {
+                <div class="kpi__value">
+                    {{ value | currency: currency : 'symbol' }}
+                </div>
+            }
+            @case (FormatOptions.Percentage) {
+                <div class="kpi__value">
+                    {{ value | percent }}
+                </div>
+            }
+            @default {
+                <div class="kpi__value">
+                    {{ value | number }}
+                </div>
+            }
+        }
+    } @else {
+        <div class="kpi__value kpi__value--loading">—</div>
+    }
+</div>

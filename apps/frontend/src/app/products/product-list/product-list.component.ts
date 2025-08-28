@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductFull } from '@common/Interfaces';
 import { PaginatorState } from 'primeng/paginator';
 import { Observable } from 'rxjs';
-import { UiStateService } from '../../shared/ui-state.service';
-import { productListOptionsEnum } from './product-list-options-enum';
+import { productListOptionsEnum } from './product-list-options.enum';
+
 @Component({
     selector: 'app-product-list',
     standalone: false,
@@ -13,24 +13,20 @@ import { productListOptionsEnum } from './product-list-options-enum';
 export class ProductListComponent implements OnInit {
     @Input() mode!: productListOptionsEnum; // 'view' or 'cart'
     @Input() fetchFunction!: (page: number, limit: number, keyword: string) => Observable<ProductFull[]>;
+    @Input() loading: boolean = false;
     @Input() totalRecords!: number;
     @Output() removeClicked = new EventEmitter<string>();
-    keyword: string = '';
-    constructor(private uiStateService: UiStateService) {}
+
     productListOptionsEnum = productListOptionsEnum; //expose the enum to the html
 
     products: ProductFull[] = [];
+    keyword = '';
     page = 1;
     limit = 14;
 
+    skeletonItems = Array.from({ length: 50 });
+
     ngOnInit() {
-        this.uiStateService.searchClicked$.subscribe((value) => {
-            this.handleSearch(value);
-        });
-        this.loadProducts();
-    }
-    async handleSearch(value: string) {
-        this.keyword = value;
         this.loadProducts();
     }
 

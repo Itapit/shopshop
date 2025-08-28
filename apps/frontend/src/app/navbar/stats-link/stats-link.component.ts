@@ -14,5 +14,5 @@ export class StatsLinkComponent {
         this.nav.toAdminStats();
     }
 
-    buttonText = signal('Statistics');
+    buttonText = signal('Analytics');
 }

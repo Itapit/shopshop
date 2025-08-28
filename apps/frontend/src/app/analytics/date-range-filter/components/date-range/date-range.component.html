@@ -1,0 +1,63 @@
+<div class="date-range">
+    <div class="header">
+        <span class="chip" *ngIf="!isLocal(); else localChip">
+            <!-- Global label -->
+            <ng-container *ngIf="globalRange() && globalPreset(); else noRange">
+                {{ globalRange() | dateRangeLabel: globalPreset()! }}
+            </ng-container>
+        </span>
+
+        <ng-template #localChip>
+            <ng-container *ngIf="local.enabled(); else usingGlobal">
+                <!-- Local override label -->
+                <ng-container *ngIf="local.effectiveRange() as r; else noRange">
+                    {{ r | dateRangeLabel: local.effectivePreset() ?? globalPreset() ?? DatePresetKey.CUSTOM }}
+                </ng-container>
+            </ng-container>
+        </ng-template>
+
+        <ng-template #usingGlobal>
+            <span class="muted">
+                Using Global:
+                <ng-container *ngIf="globalRange() && globalPreset(); else noRange">
+                    {{ globalRange() | dateRangeLabel: globalPreset()! }}
+                </ng-container>
+            </span>
+        </ng-template>
+
+        <ng-template #noRange>
+            <span class="muted">No range</span>
+        </ng-template>
+
+        <span class="spacer"></span>
+
+        <!-- Local toggle only in local mode -->
+        <app-date-override-toggle
+            *ngIf="isLocal()"
+            [enabled]="local.enabled()"
+            [disabled]="false"
+            (enabledChange)="onToggleLocal($event)"
+        >
+        </app-date-override-toggle>
+    </div>
+
+    <!-- Presets row -->
+    <app-date-preset-buttons
+        [disabled]="controlsDisabled()"
+        [active]="activePreset()"
+        (presetClick)="onPresetClick($event)"
+        (openCustom)="openCalendar()"
+    >
+    </app-date-preset-buttons>
+
+    <!-- Calendar panel -->
+    <app-date-calendar-panel
+        [open]="local.calendarOpen()"
+        [initialRange]="local.workingRange() ?? local.effectiveRange()"
+        [disabled]="controlsDisabled()"
+        (rangeChange)="onCalendarRangeChange($event)"
+        (apply)="onCalendarApply($event)"
+        (cancel)="onCalendarCancel()"
+    >
+    </app-date-calendar-panel>
+</div>

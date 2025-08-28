@@ -6,13 +6,13 @@ import { ButtonModule } from 'primeng/button';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { AnalyticsMasterModule } from '../analytics/analytics-master/analytics-master.module';
 import { AdminRoutingModule } from './admin-routing-module';
 import { AdminComponent } from './admin.component';
 import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
-import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
 
 @NgModule({
-    declarations: [AdminComponent, EditProductDialogComponent, OrdersStatsComponent],
+    declarations: [AdminComponent, EditProductDialogComponent],
     imports: [
         CommonModule,
         AdminRoutingModule,
@@ -21,6 +21,7 @@ import { OrdersStatsComponent } from './orders-stats/orders-stats.component';
         InputNumberModule,
         InputTextModule,
         ButtonModule,
+        AnalyticsMasterModule,
     ],
     exports: [EditProductDialogComponent],
 })

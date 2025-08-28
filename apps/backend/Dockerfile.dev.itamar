@@ -1,0 +1,13 @@
+FROM node:24.5.0
+
+WORKDIR /usr/src/app
+
+COPY package*.json nx.json tsconfig.base.json ./
+
+RUN npm ci --legacy-peer-deps
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npx", "nx", "serve", "backend", "--host=0.0.0.0"]

@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { MessageService } from 'primeng/api';
+import { firstValueFrom } from 'rxjs';
 import { selectItems } from '../../cart/state/cart.selectors';
 import { placeOrder } from '../../order/state/order.actions';
 import { selectOrderSaving } from '../../order/state/order.selectors';
-import { firstValueFrom } from 'rxjs';
-import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-order-link',

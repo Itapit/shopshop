@@ -59,3 +59,94 @@
         height: 400px;
     }
 }
+
+/* רשת כרטיסים רספונסיבית */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+    padding: 8px 0;
+}
+
+/* כרטיס שלד */
+.card-skeleton {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-skeleton .img {
+    height: 160px;
+}
+
+.card-skeleton .body {
+    padding: 12px;
+}
+
+.line {
+    height: 14px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.btn {
+    height: 38px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+
+/* רוחבים נאים לשורות */
+.w-70 {
+    width: 70%;
+}
+.w-50 {
+    width: 50%;
+}
+.w-30 {
+    width: 30%;
+}
+.w-40 {
+    width: 40%;
+}
+
+/* אפקט שימר */
+.shimmer {
+    position: relative;
+    background: #e9edf2;
+    overflow: hidden;
+}
+.shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Overlay עדין במרכז הרשת */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000; /* נשאר מעל הרשת */
+    top: 0;
+    z-index: 5;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0 16px;
+    backdrop-filter: blur(2px);
+}
+.overlay-text {
+    font-weight: 600;
+    opacity: 0.8;
+}

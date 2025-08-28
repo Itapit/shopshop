@@ -1,0 +1,12 @@
+<p-button
+    *ngFor="let p of presets"
+    [label]="p | presetLabel"
+    [disabled]="disabled"
+    [severity]="isActive(p) ? 'secondary' : undefined"
+    class="preset-btn"
+    (onClick)="onClick(p)"
+>
+</p-button>
+
+<p-button label="Custom…" icon="pi pi-calendar" [disabled]="disabled" class="preset-btn" (onClick)="onCustom()">
+</p-button>

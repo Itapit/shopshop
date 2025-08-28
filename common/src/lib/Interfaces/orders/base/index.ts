@@ -1,2 +1,2 @@
-export * from './Order-Base.interface';
-export * from './Order-Full.interface';
+export * from './order-base.interface';
+export * from './order-full.interface';

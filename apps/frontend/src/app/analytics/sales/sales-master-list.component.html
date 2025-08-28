@@ -1,0 +1,67 @@
+<section class="global-filter-bar bottom-fixed">
+    <app-date-range [mode]="DateRangeOptions.Global"></app-date-range>
+    <app-candle-interval-filter [mode]="CandleIntervalOptions.Global"></app-candle-interval-filter>
+</section>
+
+<p-divider></p-divider>
+<p-card>
+    <sales-app-kpi-list></sales-app-kpi-list>
+</p-card>
+<p-divider></p-divider>
+
+<app-graph-wrapper
+    [mode]="'custom'"
+    [title]="'Top Products by Quantity'"
+    [load]="loadTopQty"
+    [description]="
+        'For the chosen period, calculate the top-selling products by quantity and their contribution by month.'
+    "
+    [chartType]="'bar'"
+>
+</app-graph-wrapper>
+
+<app-graph-wrapper
+    [mode]="'custom'"
+    [title]="'Top Products by Profit'"
+    [load]="loadTopProfit"
+    [description]="'For the chosen period, calculate the most profitable products and their contribution by month.'"
+    [chartType]="'bar'"
+>
+</app-graph-wrapper>
+
+<p-divider></p-divider>
+
+<app-graph-wrapper
+    [mode]="'general'"
+    [title]="revenueTitle"
+    [description]="revenueDesc"
+    [chartType]="revenueType"
+    [dataStream$]="revenueData$"
+></app-graph-wrapper>
+
+<!-- Orders, Items & Revenue -->
+<app-graph-wrapper
+    [mode]="'general'"
+    [title]="salesMixTitle"
+    [description]="salesMixDesc"
+    [chartType]="salesMixType"
+    [dataStream$]="salesMixData$"
+></app-graph-wrapper>
+
+<!-- Unique Customers -->
+<app-graph-wrapper
+    [mode]="'general'"
+    [title]="uniqueCustomersTitle"
+    [description]="uniqueCustomersDesc"
+    [chartType]="uniqueCustomersType"
+    [dataStream$]="uniqueCustomersData$"
+></app-graph-wrapper>
+
+<!-- New Customers -->
+<app-graph-wrapper
+    [mode]="'general'"
+    [title]="newCustomersTitle"
+    [description]="newCustomersDesc"
+    [chartType]="newCustomersType"
+    [dataStream$]="newCustomersData"
+></app-graph-wrapper>

@@ -1,0 +1,18 @@
+services:
+    backend:
+        build:
+            context: .
+            dockerfile: apps/backend/Dockerfile.dev.itamar
+        env_file:
+            - .env
+        ports:
+            - '3000:3000'
+
+    frontend:
+        build:
+            context: .
+            dockerfile: apps/frontend/Dockerfile.dev.itamar
+        ports:
+            - '4200:4200'
+        depends_on:
+            - backend
