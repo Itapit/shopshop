@@ -9,7 +9,7 @@
         [description]="description"
         [chartType]="chartType"
     >
-        <app-date-range card-actions [mode]="DateRangeOptions.Local"></app-date-range>
+        <app-date-range *ngIf="mode == 'custom'" card-actions [mode]="DateRangeOptions.Local"></app-date-range>
         <ng-content select="[card-actions]"></ng-content>
     </app-graph>
 </p-card>

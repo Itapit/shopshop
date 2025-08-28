@@ -3,7 +3,9 @@ import { SalesMetrics, SalesStatsRequest } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
 import { ChartData, ChartType } from 'chart.js';
 import { filter, Observable } from 'rxjs';
+import { selectCandleInterval } from '../../analytics-master/store/analytics.selectors';
 import { NumericKeys } from '../services/candles-graph-mapper';
+import { ChartLabelFormatterService } from '../services/chart-label-fromatter.service';
 import { salesAnalyticsActions } from './sales-analytics.actions';
 import {
     makeChartDataForMetrics,
@@ -18,6 +20,7 @@ const notNull = <T>(v: T | null | undefined): v is T => v != null;
 @Injectable({ providedIn: 'root' })
 export class SalesAnalyticsFacade {
     private store = inject(Store);
+    private prettify = inject(ChartLabelFormatterService);
 
     readonly salesAnalyticsCandles$ = this.store.select(selectCandles).pipe(filter(notNull));
 
@@ -26,6 +29,8 @@ export class SalesAnalyticsFacade {
     readonly salesAnalyticsLoading$ = this.store.select(selectLoading).pipe(filter(notNull));
 
     readonly salesAnalyticsError$ = this.store.select(selectError).pipe();
+
+    readonly candleInterval$ = this.store.select(selectCandleInterval);
 
     loadSalesGeneralStats(salesStatsRequest: SalesStatsRequest) {
         this.store.dispatch(salesAnalyticsActions.loadGeneralStats({ salesStatsRequest }));
@@ -38,7 +43,8 @@ export class SalesAnalyticsFacade {
         metrics: NumericKeys<SalesMetrics>[],
         opts?: { seriesLabels?: Record<string, string>; seriesOrder?: string[] }
     ): Observable<ChartData<TType>> {
-        return this.store.select(makeChartDataForMetrics<TType>(metrics, opts));
+        const raw$ = this.store.select(makeChartDataForMetrics<TType>(metrics, opts));
+        return this.prettify.withPrettyLabels(raw$, this.candleInterval$);
     }
 
     chartDataForMetric$<K extends NumericKeys<SalesMetrics>, TType extends ChartType = ChartType>(

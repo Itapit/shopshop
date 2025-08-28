@@ -37,7 +37,7 @@ export class SalesMasterListComponent {
     error$ = this.salesFacade.salesAnalyticsError$;
 
     revenueTitle = 'Revenue';
-    revenueDesc = 'Revenue per period.';
+    revenueDesc = 'Total revenue per selected period. Spot growth, seasonality, and promo impact.';
     revenueType: ChartType = 'line';
     revenueData$ = this.salesFacade.chartDataForMetric$('grossRevenue', {
         seriesLabels: { grossRevenue: 'Revenue' },
@@ -56,14 +56,14 @@ export class SalesMasterListComponent {
     });
 
     uniqueCustomersTitle = 'Unique Customers';
-    uniqueCustomersDesc = 'Number of unique customers per period.';
+    uniqueCustomersDesc = 'Distinct customers who purchased in each period. Useful for reach and retention tracking.';
     uniqueCustomersType: ChartType = 'line';
     uniqueCustomersData$ = this.salesFacade.chartDataForMetric$('uniqueCustomersCount', {
         seriesLabels: { uniqueCustomersCount: 'Unique Customers' },
     });
 
     newCustomersTitle = 'New Customers';
-    newCustomersDesc = 'New customers per period.';
+    newCustomersDesc = 'First-time buyers per period. Track acquisition and the effectiveness of campaigns.';
     newCustomersType: ChartType = 'bar';
     newCustomersData = this.salesFacade.chartDataForMetric$('newCustomersCount', {
         seriesLabels: { newCustomersCount: 'New Customers' },
