@@ -1,4 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { EditProductDialogComponent } from '../../admin/edit-product-dialog/edit-product-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
     selector: 'app-add-product',
@@ -7,8 +9,23 @@ import { Component, signal } from '@angular/core';
     styleUrl: './add-product.component.css',
 })
 export class AddProductComponent {
-    addProduct() {
-        console.log('Add Product clicked');
-    }
+
+    @Output() productUpdated = new EventEmitter<void>();
+
+    constructor(private dialogService: DialogService) {}
+
+    openDialog() {
+            const ref = this.dialogService.open(EditProductDialogComponent, {
+                data: { type: 'add' },
+                header: 'Add Product',
+                width: '500px',
+            });
+    
+            ref.onClose.subscribe((updated: boolean) => {
+            if (updated) {
+                this.productUpdated.emit();
+            }
+        });
+        }
     buttonText = signal('Add Product');
 }

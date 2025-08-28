@@ -15,6 +15,7 @@ import { NavbarModule } from './navbar/navbar-module';
 import { OrderModule } from './order/order-module';
 import { ProductsModule } from './products/products-module';
 import { AppStoreModule } from './state/app-store/app-store.module';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
     declarations: [AppComponent],
@@ -36,7 +37,8 @@ import { AppStoreModule } from './state/app-store/app-store.module';
             name: 'shopshop ngrx',
             trace: true,
             traceLimit: 25,
-        }),
+        }), 
+        
     ],
     providers: [
         {
