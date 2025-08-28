@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SalesMetric } from '@common/Enums';
 import { DateRangeObj } from '@common/Interfaces';
+import { ChartType } from 'chart.js';
 import { map } from 'rxjs';
 import { CandleIntervalOptions } from '../candle-interval-filter/enums/candle-interval-options.enum';
 import { DateRangeOptions } from '../date-range-filter';
 import { topProductsToChartData } from './services/chart-data-mapper';
 import { SalesAnalyticsCustomService } from './services/sales-analytics-custom.service';
+import { SalesAnalyticsFacade } from './store/sales-analytics.facade';
 
 const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
     const parts = new Intl.DateTimeFormat('en-CA', {
@@ -26,8 +28,46 @@ const fmtYYYYMM = (d: Date, tz = 'Asia/Jerusalem') => {
 })
 export class SalesMasterListComponent {
     constructor(private specialApi: SalesAnalyticsCustomService) {}
-    DateRangeOptions = DateRangeOptions; // expose the enum to html
+    private salesFacade = inject(SalesAnalyticsFacade);
+
+    DateRangeOptions = DateRangeOptions; // expose the enums to html
     CandleIntervalOptions = CandleIntervalOptions;
+
+    loading$ = this.salesFacade.salesAnalyticsLoading$;
+    error$ = this.salesFacade.salesAnalyticsError$;
+
+    revenueTitle = 'Revenue';
+    revenueDesc = 'Revenue per period.';
+    revenueType: ChartType = 'line';
+    revenueData$ = this.salesFacade.chartDataForMetric$('grossRevenue', {
+        seriesLabels: { grossRevenue: 'Revenue' },
+    });
+
+    salesMixTitle = 'Orders, Items & Revenue';
+    salesMixDesc = 'Compare orders, items sold, and revenue per period.';
+    salesMixType: ChartType = 'bar';
+    salesMixData$ = this.salesFacade.chartDataForMetrics$(['ordersCount', 'itemsSold', 'grossRevenue'], {
+        seriesLabels: {
+            ordersCount: 'Orders',
+            itemsSold: 'Items Sold',
+            grossRevenue: 'Revenue',
+        },
+        seriesOrder: ['ordersCount', 'itemsSold', 'grossRevenue'],
+    });
+
+    uniqueCustomersTitle = 'Unique Customers';
+    uniqueCustomersDesc = 'Number of unique customers per period.';
+    uniqueCustomersType: ChartType = 'line';
+    uniqueCustomersData$ = this.salesFacade.chartDataForMetric$('uniqueCustomersCount', {
+        seriesLabels: { uniqueCustomersCount: 'Unique Customers' },
+    });
+
+    newCustomersTitle = 'New Customers';
+    newCustomersDesc = 'New customers per period.';
+    newCustomersType: ChartType = 'bar';
+    newCustomersData = this.salesFacade.chartDataForMetric$('newCustomersCount', {
+        seriesLabels: { newCustomersCount: 'New Customers' },
+    });
 
     loadTopQty = (q: DateRangeObj) =>
         this.specialApi

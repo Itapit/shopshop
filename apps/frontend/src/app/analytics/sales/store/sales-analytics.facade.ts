@@ -1,9 +1,17 @@
-import { Injectable, inject } from '@angular/core';
-import { SalesStatsRequest } from '@common/Interfaces';
+import { inject, Injectable } from '@angular/core';
+import { SalesMetrics, SalesStatsRequest } from '@common/Interfaces';
 import { Store } from '@ngrx/store';
-import { filter } from 'rxjs';
+import { ChartData, ChartType } from 'chart.js';
+import { filter, Observable } from 'rxjs';
+import { NumericKeys } from '../services/candles-graph-mapper';
 import { salesAnalyticsActions } from './sales-analytics.actions';
-import { selectCandles, selectError, selectLoading, selectSummary } from './sales-analytics.selectors';
+import {
+    makeChartDataForMetrics,
+    selectCandles,
+    selectError,
+    selectLoading,
+    selectSummary,
+} from './sales-analytics.selectors';
 
 const notNull = <T>(v: T | null | undefined): v is T => v != null;
 
@@ -25,5 +33,18 @@ export class SalesAnalyticsFacade {
 
     clearSalesStats() {
         this.store.dispatch(salesAnalyticsActions.clearStats());
+    }
+    chartDataForMetrics$<TType extends ChartType = ChartType>(
+        metrics: NumericKeys<SalesMetrics>[],
+        opts?: { seriesLabels?: Record<string, string>; seriesOrder?: string[] }
+    ): Observable<ChartData<TType>> {
+        return this.store.select(makeChartDataForMetrics<TType>(metrics, opts));
+    }
+
+    chartDataForMetric$<K extends NumericKeys<SalesMetrics>, TType extends ChartType = ChartType>(
+        metric: K,
+        opts?: { seriesLabels?: Record<string, string>; seriesOrder?: string[] }
+    ): Observable<ChartData<TType>> {
+        return this.chartDataForMetrics$<TType>([metric], opts);
     }
 }
