@@ -1,7 +1,6 @@
 import { TopProductsProfitResponse, TopProductsQuantityResponse } from '@common/Interfaces';
 import { ChartData, ChartType } from 'chart.js';
 import { toChartDataLong } from '../../generic-graphs/services/chart-adapter';
-import { Chart } from 'node_modules/chart.js/dist';
 
 type MetricKey = 'quantity' | 'profit';
 type TopProductsResponse = TopProductsQuantityResponse | TopProductsProfitResponse;

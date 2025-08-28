@@ -78,3 +78,7 @@ app-chart-card app-date-override-toggle {
         height: 380px !important;
     }
 }
+h3 {
+    text-align: center;
+    margin: 0 0 12px;
+}

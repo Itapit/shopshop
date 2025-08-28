@@ -7,7 +7,12 @@
 <section class="card-body" style="height: 320px">
     <p-skeleton *ngIf="loading" height="100%"></p-skeleton>
     <ng-container *ngIf="!loading && !error">
-        <p-chart [type]="chartType" [data]="data" [options]="options" [style]="{ height: '100%', width: '100%' }"></p-chart>
+        <p-chart
+            [type]="chartType"
+            [data]="data"
+            [options]="options"
+            [style]="{ height: '100%', width: '100%' }"
+        ></p-chart>
     </ng-container>
     <p *ngIf="error" class="error">{{ error }}</p>
 </section>

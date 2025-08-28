@@ -14,5 +14,5 @@ export class GraphComponent {
     @Input() loading = false;
     @Input() error: string | null = null;
     @Input() description: string | null = null;
-    @Input({required:true}) chartType!: ChartType ;
+    @Input({ required: true }) chartType!: ChartType;
 }

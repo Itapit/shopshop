@@ -53,6 +53,5 @@ export class CreateUserComponent {
         this.username = '';
         this.email = '';
         this.password = '';
-
     }
 }

@@ -31,5 +31,4 @@ export const selectNavbarVM = createSelector(selectRole, selectRouteId, (role, r
         showStatsLink: isAdmin,
         showAddProductLink: isAdmin,
     };
-}); 
-
+});
