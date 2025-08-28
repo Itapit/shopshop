@@ -14,6 +14,7 @@ import { AdminProductsService } from '../services/admin-products.service';
 export class EditProductDialogComponent {
     form: FormGroup;
     isSubmitting = false;
+    imgError = false;
 
     constructor(
         private fb: FormBuilder,

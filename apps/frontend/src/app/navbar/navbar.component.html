@@ -20,6 +20,9 @@
             @if (vm.showSignUpLink) {
                 <app-sign-up-link></app-sign-up-link>
             }
+            @if (vm.showAddProductLink) {
+                <app-add-product></app-add-product>
+            }
             @if (vm.showStatsLink) {
                 <app-stats-link></app-stats-link>
             }
@@ -28,7 +31,8 @@
             }
             @if (vm.showLogoutLink) {
                 <app-log-out></app-log-out>
-            }
+            } 
+            
         </div>
     }
 </nav>

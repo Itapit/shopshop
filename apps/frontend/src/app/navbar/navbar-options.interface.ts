@@ -1,4 +1,5 @@
 export interface NavBarOptions {
+    showAddProductLink: boolean;
     showSignInLink: boolean;
     showOrderLink: boolean;
     showSignUpLink: boolean;
