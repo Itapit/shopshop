@@ -88,3 +88,14 @@ JWT_SECRET=supersecret
 ```
 
 ---
+
+## API testing
+
+A ready to use **Postman collection** is included in the repository for quickly testing the backend API.  
+It covers authentication, products, carts, and orders endpoints.
+
+- Import the collection into Postman.  
+- Set the `{{baseUrl}}` variable to the backend (e.g., `http://localhost:3000`).  
+- Use it to try out requests such as login, add product, place order, or fetch analytics.
+
+---
