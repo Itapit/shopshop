@@ -17,6 +17,7 @@ import { ProductsRoutingModule } from './products-routing-module';
 import { ProductsComponent } from './products.component';
 import { ProductsEffects } from './store/products.effects';
 import { productsFeature } from './store/products.reducer';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,6 @@ import { productsFeature } from './store/products.reducer';
         ProgressSpinnerModule,
     ],
     exports: [ProductsComponent, ProductListComponent],
-    providers: [MessageService],
+    providers: [MessageService , DialogService],
 })
 export class ProductsModule {}

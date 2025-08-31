@@ -14,6 +14,7 @@ import { SignInLinkComponent } from './sign-in-link/sign-in-link.component';
 import { SignUpLinkComponent } from './sign-up-link/sign-up-link.component';
 import { StatsLinkComponent } from './stats-link/stats-link.component';
 import { WebsiteLogoComponent } from './website-logo/website-logo.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { WebsiteLogoComponent } from './website-logo/website-logo.component';
         StatsLinkComponent,
         CartLinkComponent,
         LogOutComponent,
+        AddProductComponent
     ],
     imports: [CommonModule, NavbarRoutingModule, ButtonModule, FormsModule, InputTextModule, ConfirmDialogModule],
     exports: [NavbarComponent],

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductFull, UpdateProductRequest } from '@common/Interfaces';
+import { ProductFull } from '@common/Interfaces';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AdminProductsService } from '../services/admin-products.service';
@@ -14,6 +14,7 @@ import { AdminProductsService } from '../services/admin-products.service';
 export class EditProductDialogComponent {
     form: FormGroup;
     isSubmitting = false;
+    imgError = false;
 
     constructor(
         private fb: FormBuilder,
@@ -23,15 +24,27 @@ export class EditProductDialogComponent {
         private adminService: AdminProductsService
     ) {
         const product: ProductFull = this.config.data.product;
+        const type: 'edit' | 'add' = this.config.data.type;
 
         this.form = this.fb.group({
-            id: [product.productID],
-            name: [product.name, Validators.required],
-            description: [product.description, Validators.required],
-            price: [product.price, [Validators.required, Validators.min(0)]],
-            quantity: [product.quantity, [Validators.required, Validators.min(0)]],
-            imageUrl: [product.imageUrl],
+            id: [''],
+            name: [''],
+            description: [''],
+            price: [0, [Validators.required, Validators.min(0)]],
+            quantity: [0, [Validators.required, Validators.min(0)]],
+            imageUrl: [''],
         });
+
+        if (this.config.data.type === 'edit') {
+            this.form = this.fb.group({
+                id: [product.productID],
+                name: [product.name, Validators.required],
+                description: [product.description, Validators.required],
+                price: [product.price, [Validators.required, Validators.min(0)]],
+                quantity: [product.quantity, [Validators.required, Validators.min(0)]],
+                imageUrl: [product.imageUrl],
+            });
+        }
     }
 
     submit() {
@@ -42,7 +55,7 @@ export class EditProductDialogComponent {
 
         const id: string = this.form.value.id;
 
-        const payload: UpdateProductRequest = {
+        const payload: any = {
             name: this.form.value.name,
             description: this.form.value.description,
             price: this.form.value.price,
@@ -50,23 +63,43 @@ export class EditProductDialogComponent {
             imageUrl: this.form.value.imageUrl,
         };
 
-        this.adminService.updateProduct(id, payload).subscribe({
-            next: () => {
-                this.msgService.add({
-                    severity: 'success',
-                    summary: 'Product updated',
-                });
-                this.ref.close(true);
-            },
-            error: (err) => {
-                this.msgService.add({
-                    severity: 'error',
-                    summary: 'Update failed',
-                    detail: err.message,
-                });
-                this.isSubmitting = false;
-            },
-        });
+        if (this.config.data.type === 'edit') {
+            this.adminService.updateProduct(id, payload).subscribe({
+                next: () => {
+                    this.msgService.add({
+                        severity: 'success',
+                        summary: 'Product updated',
+                    });
+                    this.ref.close(true);
+                },
+                error: (err) => {
+                    this.msgService.add({
+                        severity: 'error',
+                        summary: 'Update failed',
+                        detail: err.message,
+                    });
+                    this.isSubmitting = false;
+                },
+            });
+        } else if (this.config.data.type === 'add') {
+            this.adminService.addProduct(payload).subscribe({
+                next: () => {
+                    this.msgService.add({
+                        severity: 'success',
+                        summary: 'Product added',
+                    });
+                    this.ref.close(true);
+                },
+                error: (err) => {
+                    this.msgService.add({
+                        severity: 'error',
+                        summary: 'Add product failed',
+                        detail: err.message,
+                    });
+                    this.isSubmitting = false;
+                },
+            });
+        }
     }
 
     cancel() {
