@@ -1,8 +1,8 @@
 import { CreateOrderRequest, GetOrdersListRequest } from '@common/Interfaces';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { ProductsRepository } from '../products/repository/products.repository';
+import { IProductsRepository, PRODUCTS_REPOSITORY } from '../products/repository/products-repository.interface';
 import {
     CreateOrderRequestDto,
     CreateOrderResponseDto,
@@ -11,12 +11,12 @@ import {
     OrderDto,
 } from './DTOs';
 import { mapOrderToDto } from './order.mapper';
-import { OrdersRepository } from './repository/orders.repository';
+import { IOrdersRepository, ORDERS_REPOSITORY } from './repository/orders-repository.interface';
 @Injectable()
 export class OrdersService {
     constructor(
-        private readonly ordersRepo: OrdersRepository,
-        private readonly productRepo: ProductsRepository
+        @Inject(ORDERS_REPOSITORY) private readonly ordersRepo: IOrdersRepository,
+        @Inject(PRODUCTS_REPOSITORY) private readonly productRepo: IProductsRepository
     ) {}
 
     async saveOrder(dto: CreateOrderRequest, customerId: string): Promise<CreateOrderResponseDto> {
@@ -52,7 +52,7 @@ export class OrdersService {
             total_price: totalPrice,
         });
 
-        return new CreateOrderResponseDto(createdOrder); //TODO create a constructor in the class
+        return new CreateOrderResponseDto(createdOrder);
     }
 
     async totalProfit(): Promise<number> {

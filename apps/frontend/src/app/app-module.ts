@@ -12,9 +12,9 @@ import { AuthModule } from './auth/auth-module';
 import { WithCredentialsInterceptor } from './auth/interceptors/with-credential.interceptor';
 import { CartModule } from './cart/cart-module';
 import { NavbarModule } from './navbar/navbar-module';
+import { OrderModule } from './order/order-module';
 import { ProductsModule } from './products/products-module';
 import { AppStoreModule } from './state/app-store/app-store.module';
-import { OrderModule } from './order/order-module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -34,6 +34,8 @@ import { OrderModule } from './order/order-module';
         StoreDevtoolsModule.instrument({
             maxAge: 25,
             name: 'shopshop ngrx',
+            trace: true,
+            traceLimit: 25,
         }),
     ],
     providers: [

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { SalesAnalyticsModule } from './analytics/sales-analytics/sales-analytics.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -18,6 +19,7 @@ import { UsersModule } from './users/users.module';
         ProductsModule,
         OrdersModule,
         CartModule,
+        SalesAnalyticsModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -1,0 +1,15 @@
+<p-card>
+    <h3>{{ title }}</h3>
+
+    <app-graph
+        [data]="(data$ | async) || { labels: [], datasets: [] }"
+        [options]="options"
+        [loading]="(loading$ | async) ?? false"
+        [error]="(error$ | async) ?? null"
+        [description]="description"
+        [chartType]="chartType"
+    >
+        <app-date-range *ngIf="mode == 'custom'" card-actions [mode]="DateRangeOptions.Local"></app-date-range>
+        <ng-content select="[card-actions]"></ng-content>
+    </app-graph>
+</p-card>

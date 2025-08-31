@@ -1,0 +1,158 @@
+/* Card stays white & airy */
+:host {
+    display: block;
+    max-width: 1180px;
+    margin: 0 auto 28px;
+    background: #fff;
+    border: 1px solid #e8eef9;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    padding: 16px 18px 18px;
+}
+
+/* Header */
+.card-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #111827;
+}
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* --- Chart rectangle --- */
+.card-body {
+    /* let the rounded rect be THE chart container */
+    height: 320px; /* you already set inline; keep or move here */
+    border: 1px solid #e9effa;
+    border-radius: 16px;
+    background: #fff;
+    padding: 0; /* no inner gap */
+    overflow: hidden; /* clip canvas to rounded corners */
+    position: relative;
+}
+
+/* Make the PrimeNG chart fill the rectangle fully */
+:host ::ng-deep .p-chart {
+    width: 100% !important;
+    height: 100% !important;
+}
+:host ::ng-deep .p-chart > canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    background: #fff !important; /* guarantees white plotting area */
+    /* Optional: slightly smoother edges if you use shadows inside chart */
+    border-radius: 16px;
+}
+
+/* Loading skeleton & error (optional polish) */
+:host ::ng-deep p-skeleton,
+.card-body .p-skeleton {
+    height: 100%;
+    border-radius: 16px;
+}
+.error {
+    margin: 0;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: #fff4f6;
+    border: 1px solid #ffd7df;
+    color: #9a1a3a;
+    font-weight: 600;
+} /* --- footer: קופסת הסבר לבנה ומלוטשת --- */
+.card-footer {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: 1px solid #e6efff; /* כחול־בהיר עדין */
+    border-radius: 12px;
+    background: #fafcff; /* כמעט־לבן עם נגיעה כחולה */
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #475569;
+    font-size: 13.5px;
+    line-height: 1.6;
+    animation: cardFooterFade 0.25s ease-out both;
+}
+
+/* אייקון מידע עגול (נוצר בלי לשנות HTML – עם ::before) */
+
+/* טקסט התיאור עצמו */
+.card-footer .description {
+    margin: 0; /* מסיר רווחי ברירת־מחדל */
+}
+.card-footer .description strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+.card-footer .description a {
+    color: #2b63d9;
+    text-decoration: none;
+    border-bottom: 1px dashed #c7d8ff;
+}
+.card-footer .description a:hover {
+    border-bottom-style: solid;
+}
+
+/* רשימות בתוך התיאור (אם תשתמש/י) */
+.card-footer .description ul {
+    margin: 6px 0 0;
+    padding-inline-start: 18px;
+}
+
+/* אנימציה קטנה ונעימה */
+@keyframes cardFooterFade {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* תמיכה במצב כהה (רק אם מישהו מפעיל prefers-color-scheme: dark) */
+@media (prefers-color-scheme: dark) {
+    /* Keep footer white even in dark mode */
+    .card-footer {
+        background: #fff;
+        border-color: #e6efff;
+        color: #475569;
+    }
+    .card-footer::before {
+        background-color: #2b63d9;
+    }
+    .card-footer .description strong {
+        color: #0f172a;
+    }
+    .card-footer .description a {
+        color: #2b63d9;
+        border-bottom-color: #c7d8ff;
+    }
+}
+
+.info-chip {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #eaf2ff;
+    color: #2b63d9;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+}

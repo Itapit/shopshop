@@ -1,5 +1,10 @@
 <div class="flex align-items-center gap-2">
     <input type="text" pInputText [(ngModel)]="value" (keydown.enter)="onSearch()" placeholder="Search products..." />
 
-    <p-button icon="pi pi-search" label="Search" (onClick)="onSearch()"></p-button>
+    <p-button
+        icon="pi pi-search"
+        label="Search"
+        (onClick)="onSearch()"
+        [loading]="(loading$ | async) ?? false"
+    ></p-button>
 </div>

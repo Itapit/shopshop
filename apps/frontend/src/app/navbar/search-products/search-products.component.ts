@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { UiStateService } from '../../shared/ui-state.service';
+import { Component, inject } from '@angular/core';
+import { ProductsFacade } from '../../products/store/products.facade';
 
 @Component({
     selector: 'app-search-products',
@@ -8,10 +8,13 @@ import { UiStateService } from '../../shared/ui-state.service';
     styleUrl: './search-products.component.css',
 })
 export class SearchProductsComponent {
-    value: string = '';
-    constructor(private uiStateService: UiStateService) {}
+    private productsFacade = inject(ProductsFacade);
+
+    value = '';
+
+    loading$ = this.productsFacade.loading$;
 
     onSearch() {
-        this.uiStateService.triggerSearch(this.value);
+        this.productsFacade.search(this.value);
     }
 }
