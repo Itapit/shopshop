@@ -1,0 +1,154 @@
+/* מבנה כללי בדיאלוג */
+:host {
+  display: block;
+  min-width: 320px;
+}
+
+/* גריד רספונסיבי לשדות הטופס */
+.p-fluid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* בדסקטופ: 2 עמודות, ושדות מסוימים יתפרסו לרוחב מלא */
+@media (min-width: 720px) {
+  .p-fluid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* שם, תיאור, ו־Image URL ברוחב מלא */
+  .p-field:nth-child(1),
+  .p-field:nth-child(2),
+  .p-field:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* תוויות */
+.p-field label {
+  display: inline-block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-color, #2b2b2b);
+}
+
+/* אינפוטים — מראה מודרני */
+.p-field input[pInputText],
+:host ::ng-deep .p-inputnumber .p-inputtext {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--surface-border, #e5e7eb);
+  padding: 0.65rem 0.85rem;
+  background: var(--surface-card, #fff);
+  transition: box-shadow 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+/* כפתורי פלוס/מינוס של InputNumber */
+:host ::ng-deep .p-inputnumber .p-inputtext {
+  height: 42px;
+}
+:host ::ng-deep .p-inputnumber .p-inputnumber-button {
+  border-radius: 10px;
+}
+
+/* פוקוס נעים ונגיש */
+.p-field input[pInputText]:focus,
+:host ::ng-deep .p-inputnumber .p-inputtext:focus {
+  outline: none;
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* מצב שגיאה */
+.ng-invalid.ng-touched {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+/* פידבק עדין כאשר השדה Disabled (אם תשתמש) */
+.p-field input[pInputText][disabled],
+:host ::ng-deep .p-inputnumber .p-inputtext:disabled {
+  background: #f7f7f7;
+  color: #9aa1a9;
+}
+
+/* פוטר הדיאלוג — יישור ורווח */
+.p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border, #e5e7eb);
+}
+
+/* ריווח פנימי נעים בדיאלוג — עובד גם בלי לגעת ב־p-dialog עצמו */
+:host ::ng-deep .p-dialog-content {
+  padding-top: 1rem;
+}
+
+/* תמיכה ב־RTL (לא חובה; אם כל המסך RTL זה יתמזג יפה) */
+:host([dir="rtl"]) .p-field label {
+  text-align: right;
+} 
+
+
+
+
+/* ====================== */
+/*   IMAGE PREVIEW AREA   */
+/* ====================== */
+
+.image-preview-field label {
+  display: inline-block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  border: 1px dashed var(--surface-border);
+  background: var(--surface-card);
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9; /* יחס נעים – משנה גובה לפי רוחב */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-preview img.hidden {
+  display: none;
+}
+
+.image-preview .placeholder {
+  font-size: .9rem;
+  color: var(--muted-text);
+  text-align: center;
+  padding: .5rem .75rem;
+}
+
+/* טקסט עזר מתחת לשדה ה-URL, אם תרצה */
+.helper-text {
+  margin-top: 4px;
+  font-size: .8rem;
+  color: var(--muted-text);
+}
+
+.image-preview-field {
+  margin-top: 16px;   /* tweak: 12–20px */
+}
+
+/* (optional) a bit more space between the "Image Preview" label and the box */
+.image-preview-field .image-preview {
+  margin-top: 8px;
+}

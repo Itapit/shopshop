@@ -18,8 +18,8 @@ export class TopProductsRequestDto implements TopProductsRequest {
     @IsInt()
     @Min(1)
     @Max(20)
-    k?: number; 
+    k?: number;
 
     @IsOptional()
-    timezone?: string; 
+    timezone?: string;
 }

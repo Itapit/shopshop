@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UpdateProductRequest, UpdateProductResponse } from '@common/Interfaces';
+import { CreateProductRequest, CreateProductResponse, UpdateProductRequest, UpdateProductResponse } from '@common/Interfaces';
 import { environment } from 'apps/frontend/src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -14,5 +14,9 @@ export class AdminProductsService {
 
     updateProduct(id: string, payload: UpdateProductRequest): Observable<UpdateProductResponse> {
         return this.http.put<UpdateProductResponse>(`${this.baseUrl}/${id}`, payload);
+    }
+
+    addProduct(payload: CreateProductRequest): Observable<CreateProductResponse>{
+        return this.http.post<CreateProductResponse>(`${this.baseUrl}`, payload);
     }
 }

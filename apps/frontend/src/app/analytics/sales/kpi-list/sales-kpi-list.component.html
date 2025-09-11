@@ -1,0 +1,60 @@
+<div class="kpi-grid">
+    @if (summary$ | async; as s) {
+        <app-kpi-tile
+            label="Total revenue"
+            [value]="s.TotalGrossRevenue"
+            [loading]="!!(loading$ | async)"
+            [format]="FormatOptions.Currency"
+            currency="ILS"
+        />
+
+        <app-kpi-tile
+            label="Total orders"
+            [value]="s.TotalOrdersCount"
+            [loading]="!!(loading$ | async)"
+            [format]="FormatOptions.Number"
+        />
+
+        <app-kpi-tile
+            label="Items sold"
+            [value]="s.TotalItemsSold"
+            [loading]="!!(loading$ | async)"
+            [format]="FormatOptions.Number"
+        />
+
+        <app-kpi-tile
+            label="Unique products"
+            [value]="s.TotalUniqueProductsSold"
+            [loading]="!!(loading$ | async)"
+            [format]="FormatOptions.Number"
+        />
+
+        <app-kpi-tile
+            label="Unique customers"
+            [value]="s.TotalUniqueCustomersCount"
+            [loading]="!!(loading$ | async)"
+            [format]="FormatOptions.Number"
+        />
+
+        <app-kpi-tile
+            label="New customers"
+            [value]="s.TotalNewCustomersCount"
+            [loading]="!!(loading$ | async)"
+            [format]="FormatOptions.Number"
+        />
+    } @else {
+        <!-- placeholders -->
+        <app-kpi-tile
+            label="Total revenue"
+            [value]="null"
+            [loading]="true"
+            [format]="FormatOptions.Currency"
+            currency="ILS"
+        />
+        <app-kpi-tile label="Total orders" [value]="null" [loading]="true" [format]="FormatOptions.Number" />
+        <app-kpi-tile label="Items sold" [value]="null" [loading]="true" [format]="FormatOptions.Number" />
+        <app-kpi-tile label="Unique products" [value]="null" [loading]="true" [format]="FormatOptions.Number" />
+        <app-kpi-tile label="Unique customers" [value]="null" [loading]="true" [format]="FormatOptions.Number" />
+        <app-kpi-tile label="New customers" [value]="null" [loading]="true" [format]="FormatOptions.Number" />
+    }
+</div>

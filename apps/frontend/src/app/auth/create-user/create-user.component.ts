@@ -50,5 +50,8 @@ export class CreateUserComponent {
             password: this.password ?? '',
         };
         this.auth.signUp(dto);
+        this.username = '';
+        this.email = '';
+        this.password = '';
     }
 }

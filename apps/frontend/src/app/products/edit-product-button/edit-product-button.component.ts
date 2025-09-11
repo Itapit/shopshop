@@ -18,7 +18,7 @@ export class EditProductButtonComponent {
 
     openDialog() {
         const ref = this.dialogService.open(EditProductDialogComponent, {
-            data: { product: this.product },
+            data: { product: this.product , type: 'edit' },
             header: 'Edit Product',
             width: '500px',
         });

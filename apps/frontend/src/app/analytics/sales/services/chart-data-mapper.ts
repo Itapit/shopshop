@@ -1,5 +1,5 @@
 import { TopProductsProfitResponse, TopProductsQuantityResponse } from '@common/Interfaces';
-import { ChartData } from 'chart.js';
+import { ChartData, ChartType } from 'chart.js';
 import { toChartDataLong } from '../../generic-graphs/services/chart-adapter';
 
 type MetricKey = 'quantity' | 'profit';
@@ -13,7 +13,7 @@ export function topProductsToChartData(
         metric?: MetricKey;
         order?: string[];
     }
-): ChartData<'bar' | 'line'> {
+): ChartData<ChartType> {
     const months: string[] = (resp as any).months ?? [];
     const rows: any[] = (resp as any).rows ?? [];
     const totals = opts?.includeTotals ? (resp as any).totalsPerMonth : undefined;

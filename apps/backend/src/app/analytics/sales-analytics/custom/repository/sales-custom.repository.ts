@@ -14,13 +14,7 @@ export class SalesCustomAnalyticsRepository {
         @InjectModel('Product') private readonly ProductModel: Model<ProductDocument>
     ) {}
 
-    async fetchMonthlyProductQuantity(
-        startUtc: Date,
-        endUtc: Date,
-        months: string[],
-        timezone : string,
-        k = 5
-    ) {
+    async fetchMonthlyProductQuantity(startUtc: Date, endUtc: Date, months: string[], timezone: string, k = 5) {
         const pipeline: PipelineStage[] = buildTopKQuantityPipeline({ startUtc, endUtc, months, timezone, k });
         const rows = await this.OrderModel.aggregate<{ month: string; productId: string; quantity: number }>(pipeline)
             .allowDiskUse(true)
@@ -28,13 +22,7 @@ export class SalesCustomAnalyticsRepository {
         return mapMonthlyQuantity(rows);
     }
 
-    async fetchMonthlyProductProfit(
-        startUtc: Date,
-        endUtc: Date,
-        months: string[],
-        timezone : string,
-        k = 5
-    ) {
+    async fetchMonthlyProductProfit(startUtc: Date, endUtc: Date, months: string[], timezone: string, k = 5) {
         const productsColl = this.ProductModel.collection.name;
         const pipeline: PipelineStage[] = buildTopKProfitPipeline(productsColl)({
             startUtc,

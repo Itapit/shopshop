@@ -62,6 +62,23 @@
         </div>
     </div>
 
+    
+
+    
+    <div class="p-field image-preview-field">
+        <label>Image Preview</label>
+        <div class="image-preview">
+            <img
+                [src]="form.get('imageUrl')?.value || ''"
+                alt="Preview"
+                (error)="imgError = true"
+                (load)="imgError = false"
+                [class.hidden]="imgError || !form.get('imageUrl')?.value"
+            />
+            
+        </div>
+    </div>
+
     <!-- Footer -->
     <div class="p-dialog-footer">
         <button

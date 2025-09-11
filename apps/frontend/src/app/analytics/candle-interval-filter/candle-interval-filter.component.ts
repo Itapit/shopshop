@@ -14,7 +14,7 @@ import { CandleIntervalFilterStore } from './signal-store';
     providers: [CandleIntervalFilterStore],
 })
 export class CandleIntervalFilterComponent {
-    @Input() mode: CandleIntervalOptions = CandleIntervalOptions.Global; //TODO as of now it does update the store but doesnt send a new request
+    @Input() mode: CandleIntervalOptions = CandleIntervalOptions.Global;
 
     private facade = inject(AnalyticsGlobalFacade);
 

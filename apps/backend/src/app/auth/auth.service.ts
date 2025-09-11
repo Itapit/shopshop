@@ -4,6 +4,7 @@ import { Response } from 'express';
 
 import * as bcrypt from 'bcrypt';
 import { IUsersRepository, USERS_REPOSITORY } from '../users/repository/users-repository.interface';
+import { AUTH_COOKIE } from './auth.constants';
 import { SignInResponseDTO } from './DTOs';
 import { SignInRequestDto } from './DTOs/request/sign-In-request.dto';
 import { GetProfileResponseDto } from './DTOs/response/Get-Profile-response.dto';
@@ -32,12 +33,14 @@ export class AuthService {
         };
         const accessToken = await this.jwtService.signAsync(payload);
 
-        res.cookie('access_token', accessToken, {
+        res.cookie(AUTH_COOKIE.NAME, accessToken, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 15 * 60 * 1000,
+            secure: AUTH_COOKIE.SECURE,
+            sameSite: AUTH_COOKIE.SAME_SITE,
+            maxAge: AUTH_COOKIE.MAX_AGE_MS,
+            path: AUTH_COOKIE.PATH,
         });
+
         const responseDto = new SignInResponseDTO();
         responseDto.message = 'Signed in successfully';
         return responseDto;
@@ -63,11 +66,11 @@ export class AuthService {
     }
 
     logout(res: Response): any {
-        res.clearCookie('access_token', {
+        res.clearCookie(AUTH_COOKIE.NAME, {
             httpOnly: true,
-            sameSite: 'lax',
-            secure: true,
-            path: '/',
+            sameSite: AUTH_COOKIE.SAME_SITE,
+            secure: AUTH_COOKIE.SECURE,
+            path: AUTH_COOKIE.PATH,
         });
 
         return { message: 'Logout successful' };

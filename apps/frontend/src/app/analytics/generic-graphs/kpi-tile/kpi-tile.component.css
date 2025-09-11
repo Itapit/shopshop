@@ -1,0 +1,55 @@
+/* kpi-tile.component.css */
+
+/* Default accent (Chart.js blue) */
+:host {
+    --kpi-accent: #36a2eb; /* blue */
+    display: block;
+}
+
+/* Chart.js palette as host classes */
+:host(.accent-red) {
+    --kpi-accent: #ff6384;
+}
+:host(.accent-blue) {
+    --kpi-accent: #36a2eb;
+}
+:host(.accent-yellow) {
+    --kpi-accent: #ffcd56;
+}
+:host(.accent-green) {
+    --kpi-accent: #4bc0c0;
+}
+:host(.accent-purple) {
+    --kpi-accent: #9966ff;
+}
+:host(.accent-orange) {
+    --kpi-accent: #ff9f40;
+}
+
+/* Tile styling */
+.kpi {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--kpi-accent) 24%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--kpi-accent) 10%, transparent) inset;
+}
+
+/* Label */
+.kpi__label {
+    font-size: 0.875rem;
+}
+
+/* Value */
+.kpi__value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--kpi-accent);
+}
+
+/* Loading state */
+.kpi__value--loading {
+    opacity: 0.5;
+}

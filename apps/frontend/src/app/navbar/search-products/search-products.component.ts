@@ -1,8 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { UiStateService } from '../../shared/ui-state.service';
-import { ProductsState } from '../../products/state/products.state';
-import { Store } from '@ngrx/store';
-import { selectProductsLoading } from '../../products/state/products.selectors';
+import { ProductsFacade } from '../../products/store/products.facade';
 
 @Component({
     selector: 'app-search-products',
@@ -11,14 +8,13 @@ import { selectProductsLoading } from '../../products/state/products.selectors';
     styleUrl: './search-products.component.css',
 })
 export class SearchProductsComponent {
-    value: string = '';
-    constructor(private uiStateService: UiStateService) {} 
+    private productsFacade = inject(ProductsFacade);
 
-    private store = inject(Store<{products: ProductsState}>);
+    value = '';
 
-    loading$ = this.store.select(selectProductsLoading);
+    loading$ = this.productsFacade.loading$;
 
     onSearch() {
-        this.uiStateService.triggerSearch(this.value);
+        this.productsFacade.search(this.value);
     }
 }

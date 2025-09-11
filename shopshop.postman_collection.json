@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "fbe230d1-8fc9-4f17-8e9a-e6ff685bfe52",
+		"name": "shopshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38951979"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODgwYWViOTNiOGE4OWRlM2JmMDI3OWMiLCJ1c2VybmFtZSI6Ikl0YXBpdCIsImVtYWlsIjoiaXRhbWFyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mzk2MjY1OSwiZXhwIjoxNzU0MjYyNjU5fQ.Z__xRXfJYwR_UkAsuVEiCZWLfKcnv7kpN-_vA79vPKU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"client2\",\n    \"email\":\"client2@gmail.com\",\n    \"password\":\"123456\",\n    \"role\":\"client\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "info about token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth/profile",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODgwYWViOTNiOGE4OWRlM2JmMDI3OWMiLCJ1c2VybmFtZSI6Ikl0YXBpdCIsImVtYWlsIjoiaXRhbWFyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mzk2MjY1OSwiZXhwIjoxNzU0MjYyNjU5fQ.Z__xRXfJYwR_UkAsuVEiCZWLfKcnv7kpN-_vA79vPKU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"example\",\n    \"description\": \"hello this is the! product\",\n    \"price\": 50,\n    \"quantity\": 20,\n    \"imageUrl\": \"https://itppackaging.com/wp-content/uploads/2021/02/box.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/products",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get products list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"page\": 1,\n    \"limit\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/products",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikl0YXBpdCIsImVtYWlsIjoiaXRhbWFyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzYwMjE4MSwiZXhwIjoxNzUzOTAyMTgxfQ.e9tq9pUQnJto9vlu8mhfn86qFoUzRPd11JlWoXPT4gw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/products/6882cf306256e89c538e52bc",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						"6882cf306256e89c538e52bc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikl0YXBpdCIsImVtYWlsIjoiaXRhbWFyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzYwNTQ4NSwiZXhwIjoxNzUzOTA1NDg1fQ.lOdgssXZjb2S7g1FkvbvTfwlHu2yWy8oOwdeL2frvSU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"imageUrl\": \"picture.png\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/products/6885e07ec49aa4eea5346530",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						"6885e07ec49aa4eea5346530"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "info about product",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODgwYWViOTNiOGE4OWRlM2JmMDI3OWMiLCJ1c2VybmFtZSI6Ikl0YXBpdCIsImVtYWlsIjoiaXRhbWFyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mzk2MjY1OSwiZXhwIjoxNzU0MjYyNjU5fQ.Z__xRXfJYwR_UkAsuVEiCZWLfKcnv7kpN-_vA79vPKU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/orders/total-profit",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"orders",
+						"total-profit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "total profit Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODgyYzU5ZmZlODM1NzA1YzI3Njg1N2QiLCJ1c2VybmFtZSI6ImNsaWVudCIsImVtYWlsIjoiY2xpZW50QGdtYWlsLmNvbSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3NTM5NjMyMTIsImV4cCI6MTc1NDI2MzIxMn0.Z4NAh6qTwxP4SLMOi19DvQiJsH4iEWXlDZJFdBJeFSA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerID\": \"6880aeb93b8a89de3bf0279c\",\n    \"items\":[\n        {\n            \"product_id\": \"688749e8f486397dc049e39f\",\n            \"quantity\": 3\n        }\n    ],\n    \"totalPrice\": 15\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/orders",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"itamar@gmail.com\",\n    \"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth/signin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "general stats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<canvas id=\"metricsChart\" height=\"75\"></canvas>",
+							"",
+							"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> ",
+							"",
+							"<script>",
+							"    var ctx = document.getElementById(\"metricsChart\");",
+							"",
+							"    var myChart = new Chart(ctx, {",
+							"        type: \"line\",",
+							"        data: {",
+							"            labels: [],",
+							"            datasets: [{",
+							"                label: 'Orders Count',",
+							"                data: [],",
+							"                borderColor: 'rgba(75, 192, 192, 1)',",
+							"                borderWidth: 1,",
+							"                fill: false",
+							"            }, {",
+							"                label: 'Items Sold',",
+							"                data: [],",
+							"                borderColor: 'rgba(153, 102, 255, 1)',",
+							"                borderWidth: 1,",
+							"                fill: false",
+							"            }]",
+							"        },",
+							"        options: {",
+							"            scales: {",
+							"                xAxes: [{",
+							"                    display: true,",
+							"                    scaleLabel: {",
+							"                        display: true,",
+							"                        labelString: 'Date'",
+							"                    }",
+							"                }],",
+							"                yAxes: [{",
+							"                    display: true,",
+							"                    scaleLabel: {",
+							"                        display: true,",
+							"                        labelString: 'Count'",
+							"                    }",
+							"                }]",
+							"            }",
+							"        }",
+							"    });",
+							"",
+							"    pm.getData(function (err, value) {",
+							"        myChart.data.labels = value.response.candles.map(candle => candle.dateRange.start);",
+							"        myChart.data.datasets[0].data = value.response.candles.map(candle => candle.metrics.ordersCount);",
+							"        myChart.data.datasets[1].data = value.response.candles.map(candle => candle.metrics.itemsSold);",
+							"        myChart.update();",
+							"    });",
+							"",
+							"</script>`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    var res = pm.response.json();",
+							"    ",
+							"    return {response: res};",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/analytics/general-metrics?dateRange[start]=2025-06-01T00:00:00.000Z&dateRange[end]=2025-08-26T23:59:59.999Z&candleInterval=day&timezone=Asia/Jerusalem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"analytics",
+						"general-metrics"
+					],
+					"query": [
+						{
+							"key": "dateRange[start]",
+							"value": "2025-06-01T00:00:00.000Z"
+						},
+						{
+							"key": "dateRange[end]",
+							"value": "2025-08-26T23:59:59.999Z"
+						},
+						{
+							"key": "candleInterval",
+							"value": "day"
+						},
+						{
+							"key": "timezone",
+							"value": "Asia/Jerusalem"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3000",
+			"type": "default"
+		}
+	]
+}
